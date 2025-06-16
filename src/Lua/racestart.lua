@@ -13,4 +13,3 @@ addHook("ThinkFrame", function()
 		S_ChangeMusic(mapmusname, true, player)
 	end
 end)
-
