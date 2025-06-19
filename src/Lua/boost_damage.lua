@@ -10,12 +10,13 @@ mobjinfo[MT_DAMAGEBOOST] = {
         radius = 35*FRACUNIT,
         height = 50*FRACUNIT,
         mass = 1,
-		flags = MF_NOGRAVITY|MF_FLOAT|MF_NOCLIPHEIGHT|MF_MISSILE
+		flags = MF_NOGRAVITY|MF_FLOAT|MF_NOCLIPHEIGHT
 }
 
 local function BoostConditions(p)
 	if (p.powers[pw_sneakers]
 	or p.Ringboostmode)
+	--if p and p.mo and p.mo.valid
 		return true
 	end
 end
@@ -107,24 +108,61 @@ addHook("PlayerThink", function(p)
 	if not (p and p.mo and p.mo.valid) return end
 	if BoostConditions(p)
 		SpawnVFX(p, MT_DAMAGEBOOST, p.mo.scale*3/2)
+		p.boost_pvp_speed = FixedHypot(p.rmomx, p.rmomy)
+		if not p.boost_pvp_hasSneakers
+			P_StartQuake(10*p.mo.scale, TICRATE/5, {p.mo.x, p.mo.y, p.mo.z})
+			p.boost_pvp_hasSneakers = true
+		end
+	elseif (p.boost_pvp_speed or p.boost_pvp_hasSneakers)
+		p.boost_pvp_speed = 0
+		p.boost_pvp_hasSneakers = false
 	end
+	--print(p.boost_pvp_speed/FU)
+	--print(p.boost_pvp_hasSneakers)
 end)
+
+
+--debug
+/*addHook("PlayerSpawn", function(p)
+	if (p and p.mo and p.mo.valid)
+		P_GivePlayerRings(p, 20)	
+	end
+end)*/
 
 local function pvp(mobj, pmo)
     if not (mobj and mobj.valid and pmo and pmo.valid) then return end
-	
-    local mobjTop = mobj.z + mobj.height
-    local pmoTop = pmo.z + pmo.height
 
-    if mobjTop > pmo.z and mobj.z < pmoTop then
-        P_DamageMobj(pmo, mobj, mobj.target, 10, DMG_FIRE)
-    end
+    local mobjPlayer = mobj.target and mobj.target.player
+    local pmoPlayer = pmo.player
+
+    if (mobjPlayer and pmoPlayer)
+
+		local mobjSpeed = mobjPlayer.boost_pvp_speed or 0
+		local pmoSpeed = pmoPlayer.boost_pvp_speed or 0
+		local mobjHasSneakers = mobjPlayer.boost_pvp_hasSneakers or false
+		local pmoHasSneakers = pmoPlayer.boost_pvp_hasSneakers or false
+		
+		if not (mobjHasSneakers or pmoHasSneakers) then return end
+		
+		if mobjHasSneakers and pmoHasSneakers then
+			if mobjSpeed >= pmoSpeed then
+				P_DamageMobj(pmo, mobj, mobj.target, 10, DMG_FIRE)
+			elseif pmoSpeed >= mobjSpeed then
+				P_DamageMobj(mobj, pmo, pmo.target, 10, DMG_FIRE)
+			end
+		elseif mobjHasSneakers and not pmoHasSneakers and mobjSpeed > pmoSpeed then
+			P_DamageMobj(pmo, mobj, mobj.target, 10, DMG_FIRE)
+		elseif not mobjHasSneakers and pmoHasSneakers and pmoSpeed > mobjSpeed then
+			P_DamageMobj(mobj, pmo, pmo.target, 10, DMG_FIRE)
+		end
+	else
+		P_DamageMobj(pmo, mobj, mobj.target, 10, DMG_FIRE)
+	end
 end
 
 addHook("MobjMoveCollide", pvp, MT_DAMAGEBOOST)
 addHook("MobjCollide", pvp, MT_DAMAGEBOOST)
 addHook("PlayerCanDamage", function(p)
-	if not (p and p.mo and p.mo.valid) return end
 	if BoostConditions(p)
 		return true
 	end
