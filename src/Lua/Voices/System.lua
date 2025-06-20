@@ -1,4 +1,5 @@
 --Script by GLide KS
+--TODO: Add command to switch this
 
 if not GKSR_Voices
 	rawset(_G, "GKSR_Voices", {})

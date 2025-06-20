@@ -1,6 +1,7 @@
 -- j2b2's Hurry Up!
-
 --edited by GLide KS
+
+--TODO: Refactor music
 
 local victorysoundplayed = 0
 local countdownstart = 0

@@ -1,3 +1,5 @@
+--TODO: Refactor
+
 local racestartmus = "RCSTR"..P_RandomRange(1,4)
 
 addHook("MapLoad", function()
