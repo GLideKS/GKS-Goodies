@@ -1,4 +1,6 @@
-local DidYouKnow = {}
+//TODO: Adapt this to make it customizable
+
+/*local DidYouKnow = {}
 
 DidYouKnow[0] = "\128Tip: Press \130Custom 1 \128after a spring to use advance trick. You can gain speed with it!"
 DidYouKnow[1] = "\128Tip: Press \130forward or jump \128repeated times to charge your spindash fast! like classic games."
@@ -34,4 +36,4 @@ addHook("ThinkFrame", function()
 			server_motd = true
 		end
 	end
-end)
+end)*/
