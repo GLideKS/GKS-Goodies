@@ -1,3 +1,8 @@
+//Code from Nick WolfFang's Wolf Buster
+//Get a power up while using super sneakers and take down your rivals!
+
+--TODO: Command to switch and debug this
+
 freeslot("MT_DAMAGEBOOST", "S_DAMAGEBOOST", "SPR_DAMAGEBOOST")
 
 states[S_DAMAGEBOOST] = {SPR_DAMAGEBOOST, FF_FULLBRIGHT|FF_ADD|FF_ANIMATE, -1, nil, 2, 1, S_DAMAGEBOOST}
@@ -14,9 +19,9 @@ mobjinfo[MT_DAMAGEBOOST] = {
 }
 
 local function BoostConditions(p)
-	if (p.powers[pw_sneakers]
-	or p.Ringboostmode)
-	--if p and p.mo and p.mo.valid
+	if (p.powers[pw_sneakers] or p.Ringboostmode)
+	--if (p and p.mo and p.mo.valid)
+	and not (p.playerstate & PST_DEAD or P_PlayerInPain(p))
 		return true
 	end
 end
@@ -104,37 +109,42 @@ else
 end
 end
 
+local poweruplist = STR_PUNCH|STR_BUST|STR_SPIKE|STR_ANIM
+
 addHook("PlayerThink", function(p)
 	if not (p and p.mo and p.mo.valid) return end
 	if BoostConditions(p)
-		SpawnVFX(p, MT_DAMAGEBOOST, p.mo.scale*3/2)
 		p.boost_pvp_speed = FixedHypot(p.rmomx, p.rmomy)
+		p.powers[pw_strong] = $|poweruplist
 		if not p.boost_pvp_hasSneakers
+			SpawnVFX(p, MT_DAMAGEBOOST, p.mo.scale*3/2)
 			P_StartQuake(10*p.mo.scale, TICRATE/5, {p.mo.x, p.mo.y, p.mo.z})
+			S_StartSound(p.mo, sfx_s1b3)
 			p.boost_pvp_hasSneakers = true
 		end
 	elseif (p.boost_pvp_speed or p.boost_pvp_hasSneakers)
+		p.powers[pw_strong] = $ &~poweruplist
 		p.boost_pvp_speed = 0
 		p.boost_pvp_hasSneakers = false
 	end
-	--print(p.boost_pvp_speed/FU)
-	--print(p.boost_pvp_hasSneakers)
 end)
 
-
---debug
-/*addHook("PlayerSpawn", function(p)
+--Initial ring count
+addHook("PlayerSpawn", function(p)
 	if (p and p.mo and p.mo.valid)
 		P_GivePlayerRings(p, 20)	
 	end
-end)*/
+end)
 
 local function pvp(mobj, pmo)
     if not (mobj and mobj.valid and pmo and pmo.valid) then return end
 
     local mobjPlayer = mobj.target and mobj.target.player
     local pmoPlayer = pmo.player
-
+	local mobjTop = mobj.z + mobj.height
+	local pmoTop = pmo.z + pmo.height
+	
+	if mobjTop > pmo.z and mobj.z < pmoTop
     if (mobjPlayer and pmoPlayer)
 
 		local mobjSpeed = mobjPlayer.boost_pvp_speed or 0
@@ -143,7 +153,6 @@ local function pvp(mobj, pmo)
 		local pmoHasSneakers = pmoPlayer.boost_pvp_hasSneakers or false
 		
 		if not (mobjHasSneakers or pmoHasSneakers) then return end
-		
 		if mobjHasSneakers and pmoHasSneakers then
 			if mobjSpeed >= pmoSpeed then
 				P_DamageMobj(pmo, mobj, mobj.target, 10, DMG_FIRE)
@@ -157,6 +166,7 @@ local function pvp(mobj, pmo)
 		end
 	else
 		P_DamageMobj(pmo, mobj, mobj.target, 10, DMG_FIRE)
+	end
 	end
 end
 
