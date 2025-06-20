@@ -1,4 +1,4 @@
---Prevent damage from other players 
+--Prevent damage from other players on countdown
 addHook("PlayerThink", function(p)
 	if not (gametype == GT_RACE) return end
 	if not (p and p.mo and p.mo.valid) return end
