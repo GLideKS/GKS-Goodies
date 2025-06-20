@@ -33,10 +33,3 @@ GKSR_Voices["metalsonic"] = {
 	go = sfx_mtlgo,
 	victory = {sfx_mtlvc1, sfx_mtlvc2, sfx_mtlvc3}
 }
-
-GKSR_Voices["fang"] = {
-	ready = {sfx_mtlrd1, sfx_mtlrd2, sfx_mtlrd3, sfx_mtlrd4},
-	hurry = sfx_mtlhur,
-	go = sfx_mtlgo,
-	victory = {sfx_mtlvc1, sfx_mtlvc2, sfx_mtlvc3}
-}
