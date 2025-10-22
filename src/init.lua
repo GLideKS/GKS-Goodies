@@ -1,3 +1,9 @@
+--Must load first
+local libs = "Libraries/"
+rawset(_G,"MENULIB_ROOT",libs.."MenuLib/")
+dofile(MENULIB_ROOT .. "exec.lua")
+dofile(MENULIB_ROOT .. "debug.lua") -- Not required
+
 local voicesdir = "Voices/"
 dofile(voicesdir.."System")
 
