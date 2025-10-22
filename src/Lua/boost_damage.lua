@@ -15,7 +15,7 @@ mobjinfo[MT_DAMAGEBOOST] = {
         radius = 35*FRACUNIT,
         height = 50*FRACUNIT,
         mass = 1,
-		flags = MF_NOGRAVITY|MF_FLOAT|MF_NOCLIPHEIGHT
+		flags = MF_NOGRAVITY
 }
 
 local function BoostConditions(p)
