@@ -1,6 +1,6 @@
 # GKS Goodies - Extras and balancing for gamemodes
 
-Before named GKS Racing, now rebranded to GKS Goodies! it's the main file that GKS Racing Server was using for Sonic Robo Blast 2, now serves for many purposes!
+Before named GKS Racing, now rebranded to GKS Goodies! it's the main file that GKS Racing Server and GKS RS Revolution Server was using for Sonic Robo Blast 2, now serves for many purposes!
 
 The point of this Sonic Robo Blast 2 addon is to overall make the gamemodes interesting, with some mechanics for balancing, music change on overtime/lowtime, and cosmetic stuff like a custom hud as a future feature.
 
