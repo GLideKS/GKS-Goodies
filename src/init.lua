@@ -1,8 +1,5 @@
 local voicesdir = "Voices/"
-
 dofile(voicesdir.."System")
-dofile(voicesdir.."Freeslots")
-dofile(voicesdir.."Definition")
 
 dofile("Race Adjustments")
 dofile("Boost Damage")
