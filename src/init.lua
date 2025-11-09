@@ -9,7 +9,6 @@ dofile(voicesdir.."System")
 
 local racedir = "Race/"
 dofile(racedir.."Race Adjustments")
-dofile(racedir.."Boost Damage")
 dofile(racedir.."Hurry Up.lua")
 dofile(racedir.."Race Start")
 
