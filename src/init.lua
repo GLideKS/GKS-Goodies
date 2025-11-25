@@ -2,7 +2,6 @@
 local libs = "Libraries/"
 rawset(_G,"MENULIB_ROOT",libs.."MenuLib/")
 dofile(MENULIB_ROOT .. "exec.lua")
-dofile(MENULIB_ROOT .. "debug.lua") -- Not required
 
 local voicesdir = "Voices/"
 dofile(voicesdir.."System")
@@ -10,6 +9,7 @@ dofile(voicesdir.."System")
 local racedir = "Race/"
 dofile(racedir.."Race Adjustments")
 dofile(racedir.."Hurry Up.lua")
+dofile(racedir.."Nonspin Headstart")
 dofile(racedir.."Race Start")
 
 dofile("Round Control")
