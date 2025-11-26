@@ -24,11 +24,11 @@ local red_variants = {
 }
 
 local teamcolorvariants = function(p)
-	if not (p and p.mo and p.mo.valid) return end
-	if not (gametyperules & GTR_TEAMS) return end
-	if p.ctfteam == 1
+	if not (p and p.mo and p.mo.valid) then return end
+	if not (gametyperules & GTR_TEAMS) then return end
+	if p.ctfteam == 1 then
 		p.mo.color = red_variants[P_RandomRange(1, #red_variants)]
-	elseif p.ctfteam == 2
+	elseif p.ctfteam == 2 then
 		p.mo.color = blue_variants[P_RandomRange(1, #blue_variants)]
 	end
 end

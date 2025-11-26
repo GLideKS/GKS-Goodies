@@ -47,7 +47,7 @@ local timelimitchanges = function()
 		or ((redscore == pointlimit-1 and bluescore == pointlimit-1) and gametype == (GT_RSRCTF or GT_CTF)))
 		and not overtime then
 			local ovtmmus
-			if not ptsr_chance
+			if not ptsr_chance then
 				ovtmmus = overtime_musics[P_RandomRange(1, #overtime_musics)]
 				S_ChangeGlobalMusic(ovtmmus, PRECIP_STORM, 12)
 			else --hehe

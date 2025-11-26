@@ -33,8 +33,8 @@ local comStartCountdown = COM_AddCommand("hurry_startcountdown",function(player,
 	S_StartSound(nil,43)
 	P_SetupLevelSky(33)
 	P_StartQuake(3*FRACUNIT, -1)
-	for player in players.iterate
-		if not player.hurryplayedsound
+	for player in players.iterate do
+		if not player.hurryplayedsound then
 			player.hurryplayedsound = false
 		end
 		player.hurry_voice = true
@@ -61,7 +61,7 @@ addHook("MapChange",function()
 end)
 
 addHook("MapLoad",function()
-	for player in players.iterate
+	for player in players.iterate do
 		player.hurryplayedsound = false
 		player.hurry_voice = false
 	end
@@ -79,7 +79,7 @@ addHook("ThinkFrame",function()
 				for player in players.iterate() do
 					if IsValid(player) then
 						local lapcount = (CV_FindVar("numlaps").value) or (mapheaderinfo[gamemap].numlaps) or 4
-						if player.laps >= lapcount or player.pflags & PF_FINISHED
+						if player.laps >= lapcount or player.pflags & PF_FINISHED then
 							finishedCount = finishedCount+1
 						end
 						if player.lives > 0 then
@@ -105,8 +105,8 @@ addHook("ThinkFrame",function()
 					S_StartSound(nil,43)
 					P_SetupLevelSky(33)
 					P_StartQuake(3*FRACUNIT, -1)
-					for player in players.iterate
-						if not player.hurryplayedsound
+					for player in players.iterate do
+						if not player.hurryplayedsound then
 							player.hurryplayedsound = false
 						end
 						player.hurry_voice = true

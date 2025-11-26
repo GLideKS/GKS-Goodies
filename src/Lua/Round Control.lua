@@ -3,8 +3,8 @@ local g_pointlimit = 5
 
 local function onThink()
 	if (isdedicatedserver or isserver)
-	and (gametyperules & GTR_RINGSLINGER)
-		if (gametyperules & GTR_TEAMFLAGS)
+	and (gametyperules & GTR_RINGSLINGER) then
+		if (gametyperules & GTR_TEAMFLAGS) then
 			COM_BufInsertText(server,"pointlimit "..g_pointlimit)
 			COM_BufInsertText(server,"timelimit "..g_timelimit+1)
 		else

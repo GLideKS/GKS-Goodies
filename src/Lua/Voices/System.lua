@@ -1,7 +1,7 @@
 --Script by GLide KS
 --TODO: Add command to switch this
 
-if not GKSR_Voices
+if not GKSR_Voices then
 	rawset(_G, "GKSR_Voices", {})
 end
 
@@ -38,14 +38,14 @@ end
 addHook("PlayerThink", function(player)
 	local p = player
 	local check_lapcount = (CV_FindVar("numlaps").value) or (mapheaderinfo[gamemap].numlaps) or 4
-	if not p.victorysoundplayed
+	if not p.victorysoundplayed then
 		p.victorysoundplayed = false
 	end
-	if p.mo and p.mo.valid and (gametyperules & GTR_RACE) --previous checks
-		if GKSR_Voices[p.mo.skin]
+	if p.mo and p.mo.valid and (gametyperules & GTR_RACE) then --previous checks
+		if GKSR_Voices[p.mo.skin] then
 /*--------------GOAL SOUNDS---------------*/
-			if p.laps >= check_lapcount or p.pflags & PF_FINISHED
-				if GKSR_Voices[p.mo.skin].victory
+			if p.laps >= check_lapcount or p.pflags & PF_FINISHED then
+				if GKSR_Voices[p.mo.skin].victory then
 					if not p.victorysoundplayed then
 						PlayCharacterVoice(p.mo, p.mo.skin, "victory")
 						p.victorysoundplayed = true
@@ -57,20 +57,20 @@ addHook("PlayerThink", function(player)
 /*--------------HURRY SOUNDS---------------*/
 
 			if p.hurry_voice and not p.hurryplayedsound then
-				if GKSR_Voices[p.mo.skin].hurry
+				if GKSR_Voices[p.mo.skin].hurry then
 					PlayCharacterVoice(p.mo, p.mo.skin, "hurry")
 					player.hurryplayedsound = true
 				end
 			end
 /*--------------READY SOUNDS---------------*/
 			if leveltime == 25 then --Ready Sound
-				if GKSR_Voices[p.mo.skin].ready
+				if GKSR_Voices[p.mo.skin].ready then
 					PlayCharacterVoice(p.mo, p.mo.skin, "ready", p)
 				end
 			end
 /*--------------GO SOUNDS---------------*/
 			if leveltime == 140 then
-				if GKSR_Voices[p.mo.skin].go
+				if GKSR_Voices[p.mo.skin].go then
 					PlayCharacterVoice(p.mo, p.mo.skin, "go", p)
 				end
 			end

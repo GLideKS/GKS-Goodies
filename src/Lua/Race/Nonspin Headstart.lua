@@ -15,8 +15,8 @@ local function TapToCharge()
             p.attackhold = false
         end
 
-        if (leveltime < 4*TICRATE) --do it only during the countdown
-            if (cmd.buttons & BT_ATTACK) and not p.attackhold and p.race_charge != maxcharge then
+        if (leveltime < 4*TICRATE) then --do it only during the countdown
+            if (cmd.buttons & BT_ATTACK) and not p.attackhold and p.race_charge ~= maxcharge then
                 p.race_charge = $+1
                 S_StartSound(p.mo, sfx_thok)
                 if p.race_charge == maxcharge then
@@ -42,7 +42,7 @@ local function GOThrustCharge(p)
     if not p.race_charge then return end
     if p.charability2 == CA2_SPINDASH then return end
     
-    if leveltime == 4*TICRATE
+    if leveltime == 4*TICRATE then
         P_InstaThrust(p.mo, p.mo.angle, FixedMul(p.race_charge * FRACUNIT, 3 * FRACUNIT))
         P_SpawnSkidDust(p, 10*p.mo.scale, false)
         P_SpawnSkidDust(p, 10*p.mo.scale, false)
