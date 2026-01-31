@@ -20,8 +20,23 @@ local function flaghold_behavior(mo)
         return
     end
 
+    local f = P_MobjFlip(target)
     local x, y = cos(p.drawangle),sin(p.drawangle)
-    P_FollowMobj(mo, 25*-x, 25*-y, target.height/2, nil, true)
+
+    mo.dontdrawforviewmobj = target --Don't draw in first person
+	P_MoveOrigin(mo, target.x+(25*-x), target.y+(25*-y), target.z+(f*(target.height/3)))
+	mo.angle = target.player.drawangle
+	mo.spriteroll = target.spriteroll
+	mo.scale = target.scale
+
+	--Flip Checks
+	if P_MobjFlip(target) == -1 then
+		if not (mo.eflags & MFE_VERTICALFLIP) then
+			mo.eflags = $|MFE_VERTICALFLIP
+		end
+	elseif (mo.eflags & MFE_VERTICALFLIP) then
+		mo.eflags = $ & ~MFE_VERTICALFLIP
+	end
 end
 
 local function flaghold(p)
