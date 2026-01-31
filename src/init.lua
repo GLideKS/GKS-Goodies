@@ -12,7 +12,8 @@ dofile(racedir.."Hurry Up.lua")
 dofile(racedir.."Nonspin Headstart")
 dofile(racedir.."Race Start")
 
-dofile("Round Control")
-dofile("Team Color Variants")
-dofile("TimeLimit stuff")
+local rsdir = "Ringslinger/"
+dofile(rsdir.."Round Control")
+dofile(rsdir.."Team Color Variants")
+dofile(rsdir.."TimeLimit stuff")
 --dofile("tips.lua") --wip
