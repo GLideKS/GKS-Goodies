@@ -33,6 +33,7 @@ end
 
 local timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
+	if CBW_Battle then return end -- BattleMod has already this kind of stuff
 	if not gamemap then return end
 	if (gametyperules & GTR_RINGSLINGER|GTR_TIMELIMIT) and timelimit then
 		local ptsr_chance = P_RandomChance(FU/7) --around 14% chance. very low
