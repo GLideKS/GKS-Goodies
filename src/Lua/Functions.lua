@@ -55,8 +55,6 @@ if (p.flagmobj and p.flagmobj.valid) then return end
 		p.flagmobj.sprite = SPR_RFLG
 	end
     p.flagmobj.frame = FF_PAPERSPRITE|B
-    p.flagmobj.pitch = ANGLE_45
-    print("Flag Created")
 end
 
 rawset(_G, "P_SpawnVisualFlag", P_SpawnVisualFlag)
