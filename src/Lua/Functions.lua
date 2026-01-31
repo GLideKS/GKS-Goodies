@@ -13,4 +13,3 @@ if (p.flagmobj and p.flagmobj.valid) then return end
 end
 
 rawset(_G, "P_SpawnVisualFlag", P_SpawnVisualFlag)
-rawset(_G, "NK_SpawnVFX", NK_SpawnVFX)
