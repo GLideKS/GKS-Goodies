@@ -41,7 +41,7 @@ local function GOThrustCharge(p)
     if not (p.mo and p.mo.valid) then return end
     if not p.race_charge then return end
     if p.charability2 == CA2_SPINDASH then return end
-    
+
     if leveltime == 4*TICRATE then
         P_InstaThrust(p.mo, p.mo.angle, FixedMul(p.race_charge * FRACUNIT, 3 * FRACUNIT))
         P_SpawnSkidDust(p, 10*p.mo.scale, false)
@@ -49,6 +49,7 @@ local function GOThrustCharge(p)
         P_SpawnSkidDust(p, 10*p.mo.scale, false)
         P_SpawnSkidDust(p, 10*p.mo.scale, false)
         S_StartSound(p.mo, sfx_cdfm62)
+        P_MovePlayer(p)
     end
 end
 addHook("PlayerThink", GOThrustCharge)
@@ -59,7 +60,7 @@ local function DrawChargeHUD(v, p)
     if p.charability2 == CA2_SPINDASH then return end
     if gametype != GT_RACE then return end
     if leveltime >= 4*TICRATE then return end
-    
+
     local chargehudx, chargehudy = 276,31
     local charge_flags = V_SNAPTORIGHT
     local charge_width = 13
@@ -71,7 +72,7 @@ local function DrawChargeHUD(v, p)
     else
         charge_color = 0
     end
-    
+
     local showcharge
 
     v.drawString(chargehudx+(charge_width/2), chargehudy-10, "Charge!" , charge_flags, "center")
