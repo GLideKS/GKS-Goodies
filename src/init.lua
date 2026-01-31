@@ -1,5 +1,6 @@
 --Must load first
 local libs = "Libraries/"
+dofile("Functions.lua")
 rawset(_G,"MENULIB_ROOT",libs.."MenuLib/")
 dofile(MENULIB_ROOT .. "exec.lua")
 
@@ -13,7 +14,9 @@ dofile(racedir.."Nonspin Headstart")
 dofile(racedir.."Race Start")
 
 local rsdir = "Ringslinger/"
-dofile(rsdir.."Round Control")
 dofile(rsdir.."Team Color Variants")
 dofile(rsdir.."TimeLimit stuff")
+dofile(rsdir.."Visual Flag Hold")
+
+dofile("Round Control")
 --dofile("tips.lua") --wip
