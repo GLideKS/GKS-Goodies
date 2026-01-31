@@ -10,7 +10,6 @@ end
 local overtime
 local lowtime
 local currentmusicplaying = mapmusname
-local ptsr_chance = P_RandomChance(FU/7) --around 14% chance. very low
 
 local lowtime_musics = {
 	"_PINCH", "LWTM1", "LWTM2", "LWTM3", "LWTM4", "LWTM5"
@@ -36,6 +35,7 @@ local timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
 	if not gamemap then return end
 	if (gametyperules & GTR_RINGSLINGER|GTR_TIMELIMIT) and timelimit then
+		local ptsr_chance = P_RandomChance(FU/7) --around 14% chance. very low
 		--Low Time
 		if getRemainingTics() > 0 and (getRemainingTics() <= LowTime_Trigger
 		or ((redscore == pointlimit-1) or (bluescore == pointlimit-1)))
@@ -48,9 +48,8 @@ local timelimitchanges = function()
 		if ((getRemainingTics() == 0)
 		or ((redscore == pointlimit-1 and bluescore == pointlimit-1) and gametype == (GT_RSRCTF or GT_CTF)))
 		and not overtime then
-			local ovtmmus
 			if not ptsr_chance then
-				ovtmmus = overtime_musics[P_RandomRange(1, #overtime_musics)]
+				local ovtmmus = overtime_musics[P_RandomRange(1, #overtime_musics)]
 				S_ChangeGlobalMusic(ovtmmus, PRECIP_STORM, 12)
 			else --hehe
 				S_StartSound(nil, sfx_litng2)
@@ -58,7 +57,7 @@ local timelimitchanges = function()
 			end
 			overtime = true
 		end
-		
+
 		--Did the player joined mid game? play the current music and weather going on
 		for p in players.iterate do
 			if lowtime and S_MusicName(p) != currentmusicplaying then
