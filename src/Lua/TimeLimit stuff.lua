@@ -33,6 +33,8 @@ local S_ChangeGlobalMusic = function(music, weather, sky)
 end
 
 local timelimitchanges = function()
+	if gamestate != GS_LEVEL then return end
+	if not gamemap then return end
 	if (gametyperules & GTR_RINGSLINGER|GTR_TIMELIMIT) and timelimit then
 		--Low Time
 		if getRemainingTics() > 0 and (getRemainingTics() <= LowTime_Trigger
