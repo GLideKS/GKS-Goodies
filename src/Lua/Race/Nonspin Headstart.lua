@@ -1,7 +1,7 @@
 local maxcharge = 20
 
 --Tap to charge mechanic
-local function TapToCharge()
+GoodiesHook.PreThinkFrame.TapToCharge = function()
     if gamestate != GS_LEVEL then return end
     for p in players.iterate do
         if not (p.mo and p.mo.valid) then continue end
@@ -28,16 +28,14 @@ local function TapToCharge()
         end
     end
 end
-addHook("PreThinkFrame", TapToCharge)
 
-local function ResetCharge()
+GoodiesHook.MapLoad.ResetCharge = function()
     for p in players.iterate do
         p.race_charge = 0
     end
 end
-addHook("MapLoad", ResetCharge)
 
-local function GOThrustCharge(p)
+GoodiesHook.PlayerThink.GOThrustCharge = function(p)
     if not (p.mo and p.mo.valid) then return end
     if not p.race_charge then return end
     if p.charability2 == CA2_SPINDASH then return end
@@ -52,10 +50,8 @@ local function GOThrustCharge(p)
         P_MovePlayer(p)
     end
 end
-addHook("PlayerThink", GOThrustCharge)
 
 --HUD
-
 local function DrawChargeHUD(v, p)
     if p.charability2 == CA2_SPINDASH then return end
     if gametype != GT_RACE then return end

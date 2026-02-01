@@ -39,13 +39,10 @@ local function flaghold_behavior(mo)
 	end
 end
 
-local function flaghold(p)
+GoodiesHook.PlayerThink.FlagHold = function (p)
     if not (p and p.mo and p.mo.valid) then return end
     if not p.gotflag then return end
-
     P_SpawnVisualFlag(p)
-
 end
 
 addHook("MobjThinker", flaghold_behavior, MT_GKS_FLAGHOLD)
-addHook("PlayerThink", flaghold)

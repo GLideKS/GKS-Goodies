@@ -2,16 +2,16 @@
 
 local racestartmus = "RCSTR"..P_RandomRange(1,4)
 
-addHook("MapLoad", function()
+GoodiesHook.MapLoad.RaceStartMus = function()
 	if leveltime <= 139 and (gametyperules & GTR_RACE)
 	and not mapheaderinfo[gamemap].riders then
 		S_ChangeMusic(racestartmus, false, player)
 	end
-end)
+end
 
-addHook("ThinkFrame", function()
+GoodiesHook.ThinkFrame.RaceRestoreMusic = function()
 	if leveltime == 140 and (gametyperules & GTR_RACE)
 	and not mapheaderinfo[gamemap].riders then
 		S_ChangeMusic(mapmusname, true, player)
 	end
-end)
+end

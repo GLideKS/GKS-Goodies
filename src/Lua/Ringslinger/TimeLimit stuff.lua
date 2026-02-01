@@ -28,7 +28,7 @@ local S_ChangeGlobalMusic = function(music, weather, sky)
 	end
 end
 
-local timelimitchanges = function()
+GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
 	if not gamemap then return end
@@ -67,7 +67,6 @@ local timelimitchanges = function()
 		end
 	end
 end
-addHook("ThinkFrame", timelimitchanges)
 
 --reset the music checks
 local resetmus = function()
@@ -75,5 +74,5 @@ local resetmus = function()
 	gd.lowtime = false
 	gd.currentmusicplaying = mapmusname
 end
-addHook("MapChange", resetmus)
-addHook("MapLoad", resetmus)
+GoodiesHook.MapChange.ResetMus = resetmus
+GoodiesHook.MapLoad.ResetMus = resetmus
