@@ -1,7 +1,7 @@
 local g_timelimit = 6
 local g_pointlimit = 5
 
-local function onThink()
+GoodiesHook.MapLoad.RoundControl = function()
 	if (isdedicatedserver or isserver)
 	and (gametyperules & GTR_RINGSLINGER) then
 		if (gametyperules & GTR_TEAMFLAGS) then
@@ -13,4 +13,3 @@ local function onThink()
 		end
 	end
 end
-addHook("MapLoad",onThink)

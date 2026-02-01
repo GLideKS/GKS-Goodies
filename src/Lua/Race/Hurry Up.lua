@@ -50,24 +50,24 @@ local function ShouldHurry()
 	return multiplayer
 end
 
-addHook("NetVars",function(network)
+GoodiesHook.NetVars.countdownstart = function(network)
 	countdownstart = network(countdownstart)
-end)
+end
 
-addHook("MapChange",function()
+GoodiesHook.MapChange.countdownreset = function()
 	countdownstart = 0
 	hurrymusic = "HURRY"..P_RandomRange(1,5)
 	victorysoundplayed = 0
-end)
+end
 
-addHook("MapLoad",function()
+GoodiesHook.MapChange.ResetVoices = function()
 	for player in players.iterate do
 		player.hurryplayedsound = false
 		player.hurry_voice = false
 	end
-end)
+end
 
-addHook("ThinkFrame",function()
+GoodiesHook.ThinkFrame.HurryUp = function()
 	if ShouldHurry() then
 		if countdownstart == 0 then
 			if cvHurryTimeLimit.value ~= 0 and leveltime+cvCountdown.value*TICRATE >= cvHurryTimeLimit.value*TICRATE*60 then
@@ -115,7 +115,7 @@ addHook("ThinkFrame",function()
 			end
 		end
 	end
-end)
+end
 
 local HUD_TEXT_Y = 168
 local HUD_NUMBER_Y = HUD_TEXT_Y+10

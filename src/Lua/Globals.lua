@@ -3,13 +3,6 @@ rawset(_G, "GKSGoodies", {
     lowtime = false,
     currentmusicplaying = mapmusname,
 })
-local gd = GKSGoodies
---Sync for everyone
-addHook("NetVars", function(network)
-	gd.overtime = network($)
-	gd.lowtime = network($)
-	gd.currentmusicplaying = network($)
-end)
 
 --Hook functions to pack everything in a single addHook for each
 local GoodiesHook = {
@@ -22,3 +15,8 @@ local GoodiesHook = {
 	NetVars = {},
 }
 rawset(_G, "GoodiesHook", GoodiesHook)
+
+--Sync for everyone
+GoodiesHook.NetVars.SyncValues = function(network)
+	GKSGoodies = network($)
+end

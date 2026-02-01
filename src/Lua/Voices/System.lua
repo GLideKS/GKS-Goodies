@@ -39,7 +39,7 @@ local function PlayCharacterVoice(origin, charname, voiceType, playeronly)
     end
 end
 
-addHook("PlayerThink", function(player)
+GoodiesHook.PlayerThink.VoicesSys = function(player)
 	local p = player
 	local check_lapcount = (CV_FindVar("numlaps").value) or (mapheaderinfo[gamemap].numlaps) or 4
 	if not p.victorysoundplayed then
@@ -91,5 +91,5 @@ addHook("PlayerThink", function(player)
 			end
 		end
 	end
-end)
+end
 
