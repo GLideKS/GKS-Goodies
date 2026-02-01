@@ -97,7 +97,7 @@ addHook("ThinkFrame",function()
 				else
 					requiredForFinish = max(1,1)
 				end
-				
+
 				if finishedCount >= requiredForFinish and finishedCount ~= totalCount then
 					S_ChangeMusic(hurrymusic, true, player)
 					mapmusname = hurrymusic
@@ -129,7 +129,7 @@ hud.add(function(v,stplyr)
 			local videoFlags = V_SNAPTOBOTTOM | V_PERPLAYER
 			if time%2 then videoFlags = videoFlags | V_YELLOWMAP end
 				v.drawString(160, HUD_TEXT_Y, "HURRY UP!", videoFlags, "center")
-				
+
 			end
 		end
 end,"game")
