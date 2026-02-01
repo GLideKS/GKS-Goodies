@@ -1,4 +1,5 @@
 local LowTime_Trigger = 30*TICRATE
+local gd = GKSGoodies
 
 local function getRemainingTics()
     local totalTics = timelimit * 60 * TICRATE
@@ -6,10 +7,6 @@ local function getRemainingTics()
     local remainingTics = totalTics - elapsedTics
     return remainingTics
 end
-
-local overtime
-local lowtime
-local currentmusicplaying = mapmusname
 
 local lowtime_musics = {
 	"_PINCH", "LWTM1", "LWTM2", "LWTM3", "LWTM4", "LWTM5"
@@ -21,7 +18,7 @@ local overtime_musics = {
 local S_ChangeGlobalMusic = function(music, weather, sky)
 	S_ChangeMusic(music, true, nil, 128)
 	mapmusname = music
-	currentmusicplaying = music
+	gd.currentmusicplaying = music
 	if weather and globalweather != weather then
 		P_SwitchWeather(weather)
 	end
@@ -40,15 +37,15 @@ local timelimitchanges = function()
 		--Low Time
 		if getRemainingTics() > 0 and (getRemainingTics() <= LowTime_Trigger
 		or ((redscore == pointlimit-1) or (bluescore == pointlimit-1)))
-		and not lowtime then
+		and not gd.lowtime then
 			local lowtmmus = lowtime_musics[P_RandomRange(1, #lowtime_musics)]
 			S_ChangeGlobalMusic(lowtmmus)
-			lowtime = true
+			gd.lowtime = true
 		end
 		--Overtime
 		if ((getRemainingTics() == 0)
 		or ((redscore == pointlimit-1 and bluescore == pointlimit-1) and gametype == (GT_RSRCTF or GT_CTF)))
-		and not overtime then
+		and not gd.overtime then
 			if not ptsr_chance then
 				local ovtmmus = overtime_musics[P_RandomRange(1, #overtime_musics)]
 				S_ChangeGlobalMusic(ovtmmus, PRECIP_STORM, 12)
@@ -56,34 +53,27 @@ local timelimitchanges = function()
 				S_StartSound(nil, sfx_litng2)
 				S_ChangeGlobalMusic("OTPTSR", nil, 34)
 			end
-			overtime = true
+			gd.overtime = true
 		end
 
 		--Did the player joined mid game? play the current music and weather going on
 		for p in players.iterate do
-			if lowtime and S_MusicName(p) != currentmusicplaying then
-				S_ChangeGlobalMusic(currentmusicplaying)
+			if gd.lowtime and S_MusicName(p) != gd.currentmusicplaying then
+				S_ChangeGlobalMusic(gd.currentmusicplaying)
 			end
-			if overtime and S_MusicName(p) != currentmusicplaying then
-				S_ChangeGlobalMusic(currentmusicplaying, globalweather, globallevelskynum)
+			if gd.overtime and S_MusicName(p) != gd.currentmusicplaying then
+				S_ChangeGlobalMusic(gd.currentmusicplaying, globalweather, globallevelskynum)
 			end
 		end
 	end
 end
 addHook("ThinkFrame", timelimitchanges)
 
---Sync for everyone
-addHook("NetVars", function(network)
-	overtime = network($)
-	lowtime = network($)
-	currentmusicplaying = network($)
-end)
-
 --reset the music checks
 local resetmus = function()
-	overtime = false
-	lowtime = false
-	currentmusicplaying = mapmusname
+	gd.overtime = false
+	gd.lowtime = false
+	gd.currentmusicplaying = mapmusname
 end
 addHook("MapChange", resetmus)
 addHook("MapLoad", resetmus)

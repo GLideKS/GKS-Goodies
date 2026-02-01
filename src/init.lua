@@ -1,6 +1,8 @@
 --Must load first
 local libs = "Libraries/"
+dofile("Globals.lua")
 dofile("Functions.lua")
+dofile("Commands.lua")
 rawset(_G,"MENULIB_ROOT",libs.."MenuLib/")
 dofile(MENULIB_ROOT .. "exec.lua")
 
