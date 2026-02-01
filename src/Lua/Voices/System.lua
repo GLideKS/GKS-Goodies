@@ -10,6 +10,10 @@ local voicesdir = "Voices/"
 dofile(voicesdir.. "Freeslots")
 dofile(voicesdir.. "Definition")
 
+local sfx_defset = defset
+local sfx_defgo = sfx_defgo
+local sfx_defred = sfx_defred
+
 --Play character voice function
 local function PlayCharacterVoice(origin, charname, voiceType, playeronly)
     local charVoiceTable = GKSR_Voices[charname]

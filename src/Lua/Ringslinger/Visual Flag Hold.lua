@@ -12,6 +12,8 @@ mobjinfo[MT_GKS_FLAGHOLD] = {
     flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP
 }
 
+local MT_GKS_FLAGHOLD = MT_GKS_FLAGHOLD
+
 local function flaghold_behavior(mo)
     local target = mo.target
     local p = target.player
