@@ -3,6 +3,7 @@
 
 --TODO: Refactor music
 
+local GoodiesHook = GoodiesHook
 local victorysoundplayed = 0
 local countdownstart = 0
 local hurrymusic = "HURRY"..P_RandomRange(1,5)

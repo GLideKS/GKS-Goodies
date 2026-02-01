@@ -1,3 +1,4 @@
+local GKSR_Voices = GKSR_Voices
 local sfx_amyvc1 = sfx_amyvc1
 local sfx_amyvc2 = sfx_amyvc2
 local sfx_amyrd = sfx_amyrd

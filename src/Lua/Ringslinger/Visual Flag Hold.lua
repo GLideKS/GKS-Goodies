@@ -1,3 +1,5 @@
+local GoodiesHook = GoodiesHook
+
 freeslot(
 "MT_GKS_FLAGHOLD",
 "S_GKS_FLAGHOLD"

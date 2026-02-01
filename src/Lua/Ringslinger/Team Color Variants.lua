@@ -1,3 +1,5 @@
+local GoodiesHook = GoodiesHook
+
 local blue_variants = {
 	SKINCOLOR_WAVE,
 	SKINCOLOR_COBALT,

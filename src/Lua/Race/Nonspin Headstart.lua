@@ -1,3 +1,4 @@
+local GoodiesHook = GoodiesHook
 local maxcharge = 20
 
 --Tap to charge mechanic

@@ -5,6 +5,9 @@ if not GKSR_Voices then
 	rawset(_G, "GKSR_Voices", {})
 end
 
+local GKSR_Voices = GKSR_Voices
+local GoodiesHook = GoodiesHook
+
 local voicesdir = "Voices/"
 
 dofile(voicesdir.. "Freeslots")

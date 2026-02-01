@@ -1,4 +1,5 @@
 local LowTime_Trigger = 30*TICRATE
+local GoodiesHook = GoodiesHook
 local gd = GKSGoodies
 
 local function getRemainingTics()

@@ -1,3 +1,4 @@
+local GoodiesHook = GoodiesHook
 local g_timelimit = 6
 local g_pointlimit = 5
 

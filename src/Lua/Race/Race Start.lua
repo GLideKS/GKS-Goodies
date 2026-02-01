@@ -1,5 +1,6 @@
 --TODO: Refactor
 
+local GoodiesHook = GoodiesHook
 local racestartmus = "RCSTR"..P_RandomRange(1,4)
 
 GoodiesHook.MapLoad.RaceStartMus = function()

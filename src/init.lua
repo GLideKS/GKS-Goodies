@@ -24,6 +24,7 @@ dofile("Round Control") --Round Control
 --dofile("tips.lua") --wip
 
 --Hook Everything
+local addHook = addHook
 for hookName, subTable in pairs(GoodiesHook) do
     print("[GKS Goodies] \x82\Registering functions for the hook :" .. hookName)
 

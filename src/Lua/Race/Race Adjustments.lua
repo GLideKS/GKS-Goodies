@@ -1,3 +1,5 @@
+local GoodiesHook = GoodiesHook
+
 --Prevent damage from other players on countdown
 GoodiesHook.PlayerThink.RaceCountdownNoDMG = function(p)
 	if not (gametype == GT_RACE) then return end
