@@ -1,3 +1,5 @@
+local gd = GKSGoodies
+
 ---Spawns a flag for the player
 ---@param p player_t
 local function P_SpawnVisualFlag(p)
@@ -12,4 +14,22 @@ if (p.flagmobj and p.flagmobj.valid) then return end
     p.flagmobj.frame = FF_PAPERSPRITE|B
 end
 
+--Changes the music for everyone. also you can set weather and sky for everyone if desired
+---@param music string
+---@param weather any
+---@param sky any
+local S_ChangeGlobalMusic = function(music, weather, sky)
+	S_ChangeMusic(music, true, nil, 128)
+	mapmusname = music
+	gd.currentmusicplaying = music
+	if weather and globalweather != weather then
+		P_SwitchWeather(weather)
+	end
+	if sky then
+		P_SetSkyboxMobj(nil)
+		P_SetupLevelSky(sky)
+	end
+end
+
 rawset(_G, "P_SpawnVisualFlag", P_SpawnVisualFlag)
+rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)

@@ -16,19 +16,6 @@ local overtime_musics = {
 	"_OVRTM", "OVTM1", "OVTM2"
 }
 
-local S_ChangeGlobalMusic = function(music, weather, sky)
-	S_ChangeMusic(music, true, nil, 128)
-	mapmusname = music
-	gd.currentmusicplaying = music
-	if weather and globalweather != weather then
-		P_SwitchWeather(weather)
-	end
-	if sky then
-		P_SetSkyboxMobj(nil)
-		P_SetupLevelSky(sky)
-	end
-end
-
 local settings = GKSGoodies.serversettings
 
 GoodiesHook.ThinkFrame.timelimitchanges = function()
