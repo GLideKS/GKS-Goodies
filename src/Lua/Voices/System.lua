@@ -13,7 +13,7 @@ local voicesdir = "Voices/"
 dofile(voicesdir.. "Freeslots")
 dofile(voicesdir.. "Definition")
 
-local sfx_defset = defset
+local sfx_defset = sfx_defset
 local sfx_defgo = sfx_defgo
 local sfx_defred = sfx_defred
 
