@@ -29,6 +29,8 @@ local S_ChangeGlobalMusic = function(music, weather, sky)
 	end
 end
 
+local settings = GKSGoodies.serversettings
+
 GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
@@ -49,7 +51,7 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 		and not gd.overtime then
 			if not ptsr_chance then
 				local ovtmmus = overtime_musics[P_RandomRange(1, #overtime_musics)]
-				S_ChangeGlobalMusic(ovtmmus, PRECIP_STORM, 12)
+				S_ChangeGlobalMusic(ovtmmus, settings.overtime_weather, settings.overtime_sky)
 			else --hehe
 				S_StartSound(nil, sfx_litng2)
 				S_ChangeGlobalMusic("OTPTSR", nil, 34)
