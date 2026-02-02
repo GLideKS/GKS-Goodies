@@ -3,11 +3,11 @@
 
 --TODO: Refactor music
 
+local gd = GKSGoodies
 local GoodiesHook = GoodiesHook
 local settings = GKSGoodies.serversettings
 local victorysoundplayed = 0
 local countdownstart = 0
-local hurrymusic = "HURRY"..P_RandomRange(1,5)
 
 local CV_Fractions = {
 	["3/4"]=0,
@@ -23,6 +23,7 @@ local cvHurryPlayers = CV_RegisterVar({name="hurry_players",defaultvalue="2/3",f
 local cvHurryTimeLimit = CV_RegisterVar({name="hurry_timelimit",defaultvalue=0,flags=CV_NETVAR | CV_SHOWMODIF,PossibleValue=CV_Unsigned})
 
 local function hurrychangestart()
+	local hurrymusic = gd.overtime_musics[P_RandomRange(1, #gd.overtime_musics)]
 	S_ChangeGlobalMusic(hurrymusic, settings.overtime_weather, settings.overtime_sky)
 	S_StartSound(nil,43)
 	P_StartQuake(3*FRACUNIT, -1)
@@ -60,7 +61,6 @@ end
 
 GoodiesHook.MapChange.countdownreset = function()
 	countdownstart = 0
-	hurrymusic = "HURRY"..P_RandomRange(1,5)
 	victorysoundplayed = 0
 end
 

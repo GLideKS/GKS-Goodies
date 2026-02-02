@@ -1,6 +1,7 @@
 local LowTime_Trigger = 30*TICRATE
 local GoodiesHook = GoodiesHook
 local gd = GKSGoodies
+local settings = GKSGoodies.serversettings
 
 local function getRemainingTics()
     local totalTics = timelimit * 60 * TICRATE
@@ -8,15 +9,6 @@ local function getRemainingTics()
     local remainingTics = totalTics - elapsedTics
     return remainingTics
 end
-
-local lowtime_musics = {
-	"_PINCH", "LWTM1", "LWTM2", "LWTM3", "LWTM4", "LWTM5"
-}
-local overtime_musics = {
-	"_OVRTM", "OVTM1", "OVTM2"
-}
-
-local settings = GKSGoodies.serversettings
 
 GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
@@ -27,7 +19,7 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if ((timelimit and (getRemainingTics() > 0 and (getRemainingTics() <= LowTime_Trigger)))
 	or (((redscore == pointlimit-1) or (bluescore == pointlimit-1)) and (gametyperules & GTR_TEAMFLAGS)))
 	and not gd.lowtime then
-		local lowtmmus = lowtime_musics[P_RandomRange(1, #lowtime_musics)]
+		local lowtmmus = gd.lowtime_musics[P_RandomRange(1, #gd.lowtime_musics)]
 		S_ChangeGlobalMusic(lowtmmus)
 		gd.lowtime = true
 	end
@@ -36,7 +28,7 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 	or ((redscore == pointlimit-1 and bluescore == pointlimit-1) and (gametyperules & GTR_TEAMFLAGS)))
 	and not gd.overtime then
 		if not ptsr_chance then
-			local ovtmmus = overtime_musics[P_RandomRange(1, #overtime_musics)]
+			local ovtmmus = gd.overtime_musics[P_RandomRange(1, #gd.overtime_musics)]
 			S_ChangeGlobalMusic(ovtmmus, settings.overtime_weather, settings.overtime_sky)
 		else --hehe
 			S_StartSound(nil, sfx_litng2)

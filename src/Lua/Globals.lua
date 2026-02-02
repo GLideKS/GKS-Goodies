@@ -2,6 +2,8 @@ rawset(_G, "GKSGoodies", {
     overtime = false,
     lowtime = false,
     currentmusicplaying = mapmusname,
+	overtime_musics = {"_OVRTM", "OVTM1", "OVTM2", "HURRY1", "HURRY2", "HURRY3"},
+	lowtime_musics = {"_PINCH", "LWTM1", "LWTM2", "LWTM3", "LWTM4", "LWTM5"},
 	serversettings = {
 		ctf_config = {
 			timelimit,
