@@ -140,3 +140,11 @@ CV_RegisterVar({
 	flags = CV_CALL|CV_NETVAR,
 	func = update_overtime
 })
+
+--Command to set overtime's sky number and weather
+
+CV_RegisterVar({
+	name = "race_charactervoices",
+	defaultvalue = "On",
+	PossibleValue = CV_OnOff
+})

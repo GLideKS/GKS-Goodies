@@ -42,27 +42,25 @@ local function PlayCharacterVoice(origin, charname, voiceType, playeronly)
     end
 end
 
-GoodiesHook.PlayerThink.VoicesSys = function(player)
-	local p = player
+GoodiesHook.PlayerThink.VoicesSys = function(p)
 	local check_lapcount = (CV_FindVar("numlaps").value) or (mapheaderinfo[gamemap].numlaps) or 4
 	if not p.victorysoundplayed then
 		p.victorysoundplayed = false
 	end
 	if p.mo and p.mo.valid and (gametyperules & GTR_RACE) then --previous checks
-		if GKSR_Voices[p.mo.skin] then
+		local voices_toggle = CV_FindVar("race_charactervoices") and CV_FindVar("race_charactervoices").value
+		if voices_toggle and GKSR_Voices[p.mo.skin] then
 /*--------------GOAL SOUNDS---------------*/
 			if p.laps >= check_lapcount or p.pflags & PF_FINISHED then
-				if GKSR_Voices[p.mo.skin].victory then
-					if not p.victorysoundplayed then
-						PlayCharacterVoice(p.mo, p.mo.skin, "victory")
-						p.victorysoundplayed = true
-					end
+				if GKSR_Voices[p.mo.skin].victory
+				and not p.victorysoundplayed then
+					PlayCharacterVoice(p.mo, p.mo.skin, "victory")
+					p.victorysoundplayed = true
 				end
-			else
+			elseif p.victorysoundplayed then
 				p.victorysoundplayed = false
 			end
 /*--------------HURRY SOUNDS---------------*/
-
 			if p.hurry_voice and not p.hurryplayedsound then
 				if GKSR_Voices[p.mo.skin].hurry then
 					PlayCharacterVoice(p.mo, p.mo.skin, "hurry")
