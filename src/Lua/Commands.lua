@@ -110,16 +110,6 @@ CV_RegisterVar({
 --Command to set overtime's sky number and weather
 
 local function update_overtime()
-	local precip_strings = {
-		[0] = "None",
-		[1] = "Storm",
-		[2] = "Snow",
-		[3] = "Rain",
-		[4] = "Blank (Preloaded Precipitation)",
-		[5] = "Storm (no rain)",
-		[6] = "Storm (nolightning)"
-	}
-
     local sky = CV_FindVar("overtime_sky") and CV_FindVar("overtime_sky").value
     local weather = CV_FindVar("overtime_weather") and CV_FindVar("overtime_weather").value
     settings.overtime_sky = sky
