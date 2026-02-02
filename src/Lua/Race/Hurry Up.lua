@@ -22,14 +22,7 @@ local cvCountdown = CV_FindVar("countdowntime")
 local cvHurryPlayers = CV_RegisterVar({name="hurry_players",defaultvalue="2/3",flags=CV_NETVAR | CV_SHOWMODIF,PossibleValue=CV_Fractions})
 local cvHurryTimeLimit = CV_RegisterVar({name="hurry_timelimit",defaultvalue=0,flags=CV_NETVAR | CV_SHOWMODIF,PossibleValue=CV_Unsigned})
 
-local comStartCountdown = COM_AddCommand("hurry_startcountdown",function(player,time)
-	time = tonumber(time)
-	if time == nil then
-		countdownstart = leveltime
-	else
-		time = max(min(time,9999999),0)
-		countdownstart = leveltime+time*TICRATE-cvCountdown.value*TICRATE
-	end
+local function hurrychangestart()
 	S_ChangeGlobalMusic(hurrymusic, settings.overtime_weather, settings.overtime_sky)
 	S_StartSound(nil,43)
 	P_StartQuake(3*FRACUNIT, -1)
@@ -39,6 +32,17 @@ local comStartCountdown = COM_AddCommand("hurry_startcountdown",function(player,
 		end
 		player.hurry_voice = true
 	end
+end
+
+local comStartCountdown = COM_AddCommand("hurry_startcountdown",function(player,time)
+	time = tonumber(time)
+	if time == nil then
+		countdownstart = leveltime
+	else
+		time = max(min(time,9999999),0)
+		countdownstart = leveltime+time*TICRATE-cvCountdown.value*TICRATE
+	end
+	hurrychangestart()
 end,COM_ADMIN)
 
 local function IsValid(a)
@@ -68,6 +72,7 @@ GoodiesHook.MapChange.ResetVoices = function()
 end
 
 GoodiesHook.ThinkFrame.HurryUp = function()
+	if not (gametyperules & GTR_RACE) then return end
 	if ShouldHurry() then
 		if countdownstart == 0 then
 			if cvHurryTimeLimit.value ~= 0 and leveltime+cvCountdown.value*TICRATE >= cvHurryTimeLimit.value*TICRATE*60 then
@@ -99,16 +104,8 @@ GoodiesHook.ThinkFrame.HurryUp = function()
 				end
 
 				if finishedCount >= requiredForFinish and finishedCount ~= totalCount then
-					S_ChangeGlobalMusic(hurrymusic, settings.overtime_weather, settings.overtime_sky)
 					countdownstart = leveltime
-					S_StartSound(nil,43)
-					P_StartQuake(3*FRACUNIT, -1)
-					for player in players.iterate do
-						if not player.hurryplayedsound then
-							player.hurryplayedsound = false
-						end
-						player.hurry_voice = true
-					end
+					hurrychangestart()
 			    end
 			end
 		end
