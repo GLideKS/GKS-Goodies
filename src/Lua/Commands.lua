@@ -1,12 +1,13 @@
 --CTF
+local settings = GKSGoodies.serversettings
 
 local function update_ctf_values()
-    local settings = GKSGoodies.serversettings.ctf_config
+    local setting = settings.ctf_config
 
     local tlimit = CV_FindVar("ctf_timelimit") and CV_FindVar("ctf_timelimit").value
     local plimit = CV_FindVar("ctf_pointlimit") and CV_FindVar("ctf_pointlimit").value
-    settings.timelimit = tlimit
-    settings.pointlimit = plimit
+    setting.timelimit = tlimit
+    setting.pointlimit = plimit
 end
 
 CV_RegisterVar({
@@ -28,12 +29,12 @@ CV_RegisterVar({
 --Match
 
 local function update_match_values()
-    local settings = GKSGoodies.serversettings.match_config
+    local setting = settings.match_config
 
     local tlimit = CV_FindVar("match_timelimit") and CV_FindVar("match_timelimit").value
     local plimit = CV_FindVar("match_pointlimit") and CV_FindVar("match_pointlimit").value
-    settings.timelimit = tlimit
-    settings.pointlimit = plimit
+    setting.timelimit = tlimit
+    setting.pointlimit = plimit
 end
 
 CV_RegisterVar({
@@ -55,12 +56,12 @@ CV_RegisterVar({
 --Tag
 
 local function update_tag_values()
-    local settings = GKSGoodies.serversettings.tag_config
+    local setting = settings.tag_config
 
     local tlimit = CV_FindVar("tag_timelimit") and CV_FindVar("tag_timelimit").value
     local plimit = CV_FindVar("tag_pointlimit") and CV_FindVar("tag_pointlimit").value
-    settings.timelimit = tlimit
-    settings.pointlimit = plimit
+    setting.timelimit = tlimit
+    setting.pointlimit = plimit
 end
 
 CV_RegisterVar({
@@ -82,12 +83,12 @@ CV_RegisterVar({
 --H&S
 
 local function update_hs_values()
-    local settings = GKSGoodies.serversettings.hs_config
+    local setting = settings.hs_config
 
     local tlimit = CV_FindVar("hs_timelimit") and CV_FindVar("hs_timelimit").value
     local plimit = CV_FindVar("hs_pointlimit") and CV_FindVar("hs_pointlimit").value
-    settings.timelimit = tlimit
-    settings.pointlimit = plimit
+    setting.timelimit = tlimit
+    setting.pointlimit = plimit
 end
 
 CV_RegisterVar({
