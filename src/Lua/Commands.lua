@@ -124,9 +124,6 @@ local function update_overtime()
     local weather = CV_FindVar("overtime_weather") and CV_FindVar("overtime_weather").value
     settings.overtime_sky = sky
     settings.overtime_weather = weather
-
-	print("Overtime's weather has been changed to "..precip_strings[weather])
-	print("Overtime's sky has been changed to "..sky)
 end
 CV_RegisterVar({
 	name = "overtime_sky",
