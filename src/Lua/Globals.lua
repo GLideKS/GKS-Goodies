@@ -4,20 +4,20 @@ rawset(_G, "GKSGoodies", {
     currentmusicplaying = mapmusname,
 	serversettings = {
 		ctf_config = {
-			timelimit = 0,
-			pointlimit = 0
+			timelimit,
+			pointlimit
 		},
 		match_config = {
-			timelimit = 0,
-			pointlimit = 0
+			timelimit,
+			pointlimit
 		},
 		tag_config = {
-			timelimit = 0,
-			pointlimit = 0
+			timelimit,
+			pointlimit
 		},
 		hs_config = {
-			timelimit = 0,
-			pointlimit = 0
+			timelimit,
+			pointlimit
 		},
 		overtime_sky,
 		overtime_weather
