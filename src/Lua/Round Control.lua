@@ -1,16 +1,22 @@
-local GoodiesHook = GoodiesHook
-local g_timelimit = 6
-local g_pointlimit = 5
-
 GoodiesHook.MapLoad.RoundControl = function()
-	if (isdedicatedserver or isserver)
-	and (gametyperules & GTR_RINGSLINGER) then
-		if (gametyperules & GTR_TEAMFLAGS) then
-			COM_BufInsertText(server,"pointlimit "..g_pointlimit)
-			COM_BufInsertText(server,"timelimit "..g_timelimit+1)
-		else
-			COM_BufInsertText(server,"pointlimit 0")
-			COM_BufInsertText(server,"timelimit "..g_timelimit)
+	local setting = GKSGoodies.serversettings
+
+	if (isdedicatedserver or isserver) then
+		if (gametyperules & GTR_TEAMFLAGS) then --CTF commonly
+			COM_BufInsertText(server,"pointlimit "..setting.ctf_config.pointlimit or CV_FindVar("pointlimit").value)
+			COM_BufInsertText(server,"timelimit "..setting.ctf_config.timelimit or CV_FindVar("timelimit").value)
+		--Match and any other ringslinger mode.
+		elseif (gametyperules & GTR_RINGSLINGER) and not ((gametyperules & GTR_TAG) or (gametyperules & GTR_HIDEFROZEN)) then
+			COM_BufInsertText(server,"pointlimit "..setting.match_config.pointlimit or CV_FindVar("pointlimit").value)
+			COM_BufInsertText(server,"timelimit "..setting.match_config.timelimit or CV_FindVar("timelimit").value)
+		elseif (gametyperules & GTR_TAG) then
+			if (gametyperules & GTR_HIDEFROZEN) then --is hide and seek
+				COM_BufInsertText(server,"pointlimit "..setting.hs_config.pointlimit or CV_FindVar("pointlimit").value)
+				COM_BufInsertText(server,"timelimit "..setting.hs_config.timelimit or CV_FindVar("timelimit").value)
+			else --Otherwise, is normal tag
+				COM_BufInsertText(server,"pointlimit "..setting.tag_config.pointlimit or CV_FindVar("pointlimit").value)
+				COM_BufInsertText(server,"timelimit "..setting.tag_config.timelimit or CV_FindVar("timelimit").value)
+			end
 		end
 	end
 end

@@ -20,6 +20,7 @@ dofile(rsdir.."Team Color Variants")
 dofile(rsdir.."TimeLimit stuff")
 dofile(rsdir.."Visual Flag Hold")
 
+dofile("Commands")
 dofile("Round Control") --Round Control
 --dofile("tips.lua") --wip
 
