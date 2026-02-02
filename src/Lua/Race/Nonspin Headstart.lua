@@ -12,12 +12,12 @@ GoodiesHook.PreThinkFrame.TapToCharge = function()
         local cmd = p.cmd
         if p.race_charge == nil then p.race_charge = 0 end
 
-        if not (cmd.buttons & BT_ATTACK) and p.attackhold then
+        if not (cmd.buttons & BT_JUMP) and p.attackhold then
             p.attackhold = false
         end
 
         if (leveltime < 4*TICRATE) then --do it only during the countdown
-            if (cmd.buttons & BT_ATTACK) and not p.attackhold and p.race_charge ~= maxcharge then
+            if (cmd.buttons & BT_JUMP) and not p.attackhold and p.race_charge ~= maxcharge then
                 p.race_charge = $+1
                 S_StartSound(p.mo, sfx_thok)
                 if p.race_charge == maxcharge then
