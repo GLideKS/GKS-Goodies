@@ -4,6 +4,7 @@
 --TODO: Refactor music
 
 local GoodiesHook = GoodiesHook
+local settings = GKSGoodies.serversettings
 local victorysoundplayed = 0
 local countdownstart = 0
 local hurrymusic = "HURRY"..P_RandomRange(1,5)
@@ -29,10 +30,8 @@ local comStartCountdown = COM_AddCommand("hurry_startcountdown",function(player,
 		time = max(min(time,9999999),0)
 		countdownstart = leveltime+time*TICRATE-cvCountdown.value*TICRATE
 	end
-	S_ChangeMusic(hurrymusic, true, player)
-	mapmusname = hurrymusic
+	S_ChangeGlobalMusic(hurrymusic, settings.overtime_weather, settings.overtime_sky)
 	S_StartSound(nil,43)
-	P_SetupLevelSky(33)
 	P_StartQuake(3*FRACUNIT, -1)
 	for player in players.iterate do
 		if not player.hurryplayedsound then
@@ -100,11 +99,9 @@ GoodiesHook.ThinkFrame.HurryUp = function()
 				end
 
 				if finishedCount >= requiredForFinish and finishedCount ~= totalCount then
-					S_ChangeMusic(hurrymusic, true, player)
-					mapmusname = hurrymusic
+					S_ChangeGlobalMusic(hurrymusic, settings.overtime_weather, settings.overtime_sky)
 					countdownstart = leveltime
 					S_StartSound(nil,43)
-					P_SetupLevelSky(33)
 					P_StartQuake(3*FRACUNIT, -1)
 					for player in players.iterate do
 						if not player.hurryplayedsound then
@@ -130,7 +127,6 @@ hud.add(function(v,stplyr)
 			local videoFlags = V_SNAPTOBOTTOM | V_PERPLAYER
 			if time%2 then videoFlags = videoFlags | V_YELLOWMAP end
 				v.drawString(160, HUD_TEXT_Y, "HURRY UP!", videoFlags, "center")
-
 			end
 		end
 end,"game")
