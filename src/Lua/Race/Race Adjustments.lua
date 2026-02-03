@@ -2,7 +2,7 @@ local GoodiesHook = GoodiesHook
 
 --Prevent damage from other players on countdown
 GoodiesHook.PlayerThink.RaceCountdownNoDMG = function(p)
-	if not (gametype == GT_RACE) then return end
+	if not (gametyperules & GTR_RACE) then return end
 	if not (p and p.mo and p.mo.valid) then return end
 	if (leveltime < 4*TICRATE) or (p.realtime == 0) then
 		if not (p.mo.flags & MF_NOCLIPTHING) then

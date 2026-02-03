@@ -4,9 +4,9 @@ local maxcharge = 20
 --Tap to charge mechanic
 GoodiesHook.PreThinkFrame.TapToCharge = function()
     if gamestate != GS_LEVEL then return end
+    if not (gametyperules & GTR_RACE) then return end
     for p in players.iterate do
         if not (p.mo and p.mo.valid) then continue end
-        if gametype != GT_RACE then continue end
         if p.charability2 == CA2_SPINDASH then continue end
 
         local cmd = p.cmd
@@ -55,7 +55,7 @@ end
 --HUD
 local function DrawChargeHUD(v, p)
     if p.charability2 == CA2_SPINDASH then return end
-    if gametype != GT_RACE then return end
+    if not (gametyperules & GTR_RACE) then return end
     if leveltime >= 4*TICRATE then return end
 
     local chargehudx, chargehudy = 276,31
