@@ -19,8 +19,8 @@ local CV_Fractions = {
 }
 
 local cvCountdown = CV_FindVar("countdowntime")
-local cvHurryPlayers = CV_RegisterVar({name="hurry_players",defaultvalue="2/3",flags=CV_NETVAR | CV_SHOWMODIF,PossibleValue=CV_Fractions})
-local cvHurryTimeLimit = CV_RegisterVar({name="hurry_timelimit",defaultvalue=0,flags=CV_NETVAR | CV_SHOWMODIF,PossibleValue=CV_Unsigned})
+local cvHurryPlayers = CV_RegisterVar({name="race_hurry_players",defaultvalue="2/3",flags=CV_NETVAR | CV_SHOWMODIF,PossibleValue=CV_Fractions})
+local cvHurryTimeLimit = CV_RegisterVar({name="race_hurry_timelimit",defaultvalue=0,flags=CV_NETVAR | CV_SHOWMODIF,PossibleValue=CV_Unsigned})
 
 local function hurrychangestart()
 	local hurrymusic = gd.overtime_musics[P_RandomRange(1, #gd.overtime_musics)]
@@ -35,7 +35,9 @@ local function hurrychangestart()
 	end
 end
 
-local comStartCountdown = COM_AddCommand("hurry_startcountdown",function(player,time)
+local comStartCountdown = COM_AddCommand("race_hurry_startcountdown",function(player,time)
+	if not (gametyperules & GTR_RACE) then return end
+	if not (gamestate & GS_LEVEL) then return end
 	time = tonumber(time)
 	if time == nil then
 		countdownstart = leveltime
@@ -73,6 +75,7 @@ end
 
 GoodiesHook.ThinkFrame.HurryUp = function()
 	if not (gametyperules & GTR_RACE) then return end
+	if not (gamestate & GS_LEVEL) then return end
 	if ShouldHurry() then
 		if countdownstart == 0 then
 			if cvHurryTimeLimit.value ~= 0 and leveltime+cvCountdown.value*TICRATE >= cvHurryTimeLimit.value*TICRATE*60 then
@@ -116,7 +119,9 @@ local HUD_TEXT_Y = 168
 local HUD_NUMBER_Y = HUD_TEXT_Y+10
 local HUD_FLASH_TIME = TICRATE/2
 
-hud.add(function(v,stplyr)
+addHook("HUD", function(v,stplyr)
+	if not (gametyperules & GTR_RACE) then return end
+	if not (gamestate & GS_LEVEL) then return end
 	local countdownEnd = countdownstart+cvCountdown.value*TICRATE
 	if ShouldHurry() then
 		if countdownstart ~= 0 and countdownEnd > leveltime and stplyr.exiting == 0 then
@@ -127,5 +132,3 @@ hud.add(function(v,stplyr)
 			end
 		end
 end,"game")
-
--- j2b2's Hurry Up!
