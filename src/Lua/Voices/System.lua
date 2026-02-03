@@ -64,7 +64,7 @@ GoodiesHook.PlayerThink.VoicesSys = function(p)
 			if p.hurry_voice and not p.hurryplayedsound then
 				if GKSR_Voices[p.mo.skin].hurry then
 					PlayCharacterVoice(p.mo, p.mo.skin, "hurry")
-					player.hurryplayedsound = true
+					p.hurryplayedsound = true
 				end
 			end
 /*--------------READY SOUNDS---------------*/
