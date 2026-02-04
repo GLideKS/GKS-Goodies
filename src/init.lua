@@ -22,7 +22,7 @@ dofile(rsdir.."Visual Flag Hold")
 
 dofile("Commands")
 dofile("Round Control") --Round Control
---dofile("tips.lua") --wip
+dofile("tips.lua") --wip
 
 --Hook Everything
 local addHook = addHook

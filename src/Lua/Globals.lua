@@ -23,6 +23,18 @@ rawset(_G, "GKSGoodies", {
 		},
 		overtime_sky,
 		overtime_weather
+	},
+	serverprefix = { --For Tips
+		text = "Server",
+		color = "red"
+	},
+	tips = {
+		sound = sfx_radio,
+		messages = {}
+	},
+	welcome = {
+		sound = sfx_strpst,
+		message = "Welcome to the server!"
 	}
 })
 

@@ -138,3 +138,57 @@ CV_RegisterVar({
 	defaultvalue = "On",
 	PossibleValue = CV_OnOff
 })
+
+--Commands to handle tips
+
+COM_AddCommand("gd_tips_add", function(p, message)
+	if message then
+		table.insert(GKSGoodies.tips.messages, message)
+		CONS_Printf(p, "Message inserted sucessfully to the tips list")
+	else
+		CONS_Printf(p, "Adds a message for the tips list")
+	end
+end, COM_ADMIN)
+
+COM_AddCommand("gd_tips_remove", function(p, arg)
+	local index = tonumber(arg)
+
+	if (index and GKSGoodies.tips.messages[index]) then
+		table.remove(GKSGoodies.tips.messages, index)
+		CONS_Printf(p, "Message removed sucessfully from the tips list")
+	else
+		CONS_Printf(p, "Message index not valid or not found.")
+	end
+end, COM_ADMIN)
+
+COM_AddCommand("gd_tips_list", function(p)
+	if #GKSGoodies.tips.messages then
+		CONS_Printf(p, "----List of tips messages stored----")
+		CONS_Printf(p, "")
+		for i = 1, #GKSGoodies.tips.messages do
+			CONS_Printf(p, i..": "..GKSGoodies.tips.messages[i])
+		end
+	else
+		CONS_Printf(p, "No tips messages found.")
+	end
+end, COM_ADMIN)
+
+COM_AddCommand("gd_tips_clear", function(p)
+	if #GKSGoodies.tips.messages then
+		GKSGoodies.tips.messages = {}
+		CONS_Printf(p, "Tips list has been cleared sucessfully")
+	else
+		CONS_Printf(p, "No tips messages found. no need to clear.")
+	end
+end, COM_ADMIN)
+
+--Commands to handle welcome messages
+
+COM_AddCommand("gd_welcome_message", function(p, message)
+	if message then
+		GKSGoodies.welcome.message = message
+		CONS_Printf(p, "Welcome message has been set")
+	else
+		CONS_Printf(p, "Sets a welcome message for the joining player")
+	end
+end, COM_ADMIN)
