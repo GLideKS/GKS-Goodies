@@ -17,80 +17,49 @@ local sfx_defset = sfx_defset
 local sfx_defgo = sfx_defgo
 local sfx_defred = sfx_defred
 
---Play character voice function
-local function PlayCharacterVoice(origin, charname, voiceType, playeronly)
-    local charVoiceTable = GKSR_Voices[charname]
-    if not charVoiceTable then
-        return
-    end
-
-    local soundEntry = charVoiceTable[voiceType]
-
-    if soundEntry then
-        if type(soundEntry) == "table" then
-            local numSounds = #soundEntry
-            if numSounds > 0 then
-                local randomIndex = P_RandomRange(1, numSounds)
-                local soundToPlay = soundEntry[randomIndex]
-                if soundToPlay then
-                    S_StartSound(origin, soundToPlay, playeronly)
-                end
-            end
-        else
-            S_StartSound(origin, soundEntry, playeronly)
-        end
-    end
-end
-
 GoodiesHook.PlayerThink.VoicesSys = function(p)
 	local check_lapcount = (CV_FindVar("numlaps").value) or (mapheaderinfo[gamemap].numlaps) or 4
-	if not p.victorysoundplayed then
-		p.victorysoundplayed = false
-	end
-	if p.mo and p.mo.valid and (gametyperules & GTR_RACE) then --previous checks
-		local voices_toggle = CV_FindVar("race_charactervoices") and CV_FindVar("race_charactervoices").value
-		if voices_toggle and GKSR_Voices[p.mo.skin] then
+	local voices_toggle = CV_FindVar("race_charactervoices") and CV_FindVar("race_charactervoices").value
+
+	if not (p.mo and p.mo.valid and (gametyperules & GTR_RACE)) then return end --previous checks
+	if voices_toggle and GKSR_Voices[p.mo.skin] then
 /*--------------GOAL SOUNDS---------------*/
-			if p.laps >= check_lapcount or p.pflags & PF_FINISHED then
-				if GKSR_Voices[p.mo.skin].victory
-				and not p.victorysoundplayed then
-					PlayCharacterVoice(p.mo, p.mo.skin, "victory")
-					p.victorysoundplayed = true
-				end
-			elseif p.victorysoundplayed then
-				p.victorysoundplayed = false
+		if p.laps >= check_lapcount or p.pflags & PF_FINISHED then
+			if GKSR_Voices[p.mo.skin].victory
+			and not p.mo.victorysoundplayed then
+				S_PlayCharVoice(p.mo, p.mo.skin, "victory")
+				p.mo.victorysoundplayed = true
 			end
+		elseif p.mo.victorysoundplayed then
+			p.mo.victorysoundplayed = false
+		end
 /*--------------HURRY SOUNDS---------------*/
-			if p.hurry_voice and not p.hurryplayedsound then
-				if GKSR_Voices[p.mo.skin].hurry then
-					PlayCharacterVoice(p.mo, p.mo.skin, "hurry")
-					p.hurryplayedsound = true
-				end
-			end
+		if p.mo.hurry_voice and not p.mo.hurryplayedsound
+		and GKSR_Voices[p.mo.skin].hurry
+		and not (p.laps >= check_lapcount or p.pflags & PF_FINISHED) then
+			S_PlayCharVoice(p.mo, p.mo.skin, "hurry")
+			p.mo.hurryplayedsound = true
+		end
 /*--------------READY SOUNDS---------------*/
-			if leveltime == 25 then --Ready Sound
-				if GKSR_Voices[p.mo.skin].ready then
-					PlayCharacterVoice(p.mo, p.mo.skin, "ready", p)
-				end
-			end
+		if leveltime == 25
+		and GKSR_Voices[p.mo.skin].ready then
+			S_PlayCharVoice(p.mo, p.mo.skin, "ready", p)
+		end
 /*--------------GO SOUNDS---------------*/
-			if leveltime == 140 then
-				if GKSR_Voices[p.mo.skin].go then
-					PlayCharacterVoice(p.mo, p.mo.skin, "go", p)
-				end
-			end
+		if leveltime == 140
+		and GKSR_Voices[p.mo.skin].go then
+			S_PlayCharVoice(p.mo, p.mo.skin, "go", p)
+		end
 /*--------------DEFAULT VOICE---------------*/
-		else
-			if leveltime == 35 then --READY
-				S_StartSound(p.mo, sfx_defred, p)
-			end
-			if leveltime == 105 then --SET
-				S_StartSound(p.mo, sfx_defset, p)
-			end
-			if leveltime == 140 then --GO
-				S_StartSound(p.mo, sfx_defgo, p)
-			end
+	else
+		if leveltime == 35 then --READY
+			S_StartSound(p.mo, sfx_defred, p)
+		end
+		if leveltime == 105 then --SET
+			S_StartSound(p.mo, sfx_defset, p)
+		end
+		if leveltime == 140 then --GO
+			S_StartSound(p.mo, sfx_defgo, p)
 		end
 	end
 end
-
