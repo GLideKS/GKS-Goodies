@@ -1,4 +1,4 @@
-local colors = {
+GKSGoodies.prefixcolors = {
 	["white"] = "\x80",
 	["magenta"] = "\x81",
 	["yellow"] = "\x82",
@@ -22,6 +22,7 @@ GoodiesHook.ThinkFrame.Messages = function()
 
 	local prefix = GKSGoodies.serverprefix.text
 	local prefix_color = GKSGoodies.serverprefix.color
+	local colors = GKSGoodies.prefixcolors
 
 	--Tips
 	if #GKSGoodies.tips.messages

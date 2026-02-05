@@ -112,6 +112,37 @@ CV_RegisterVar({
 	PossibleValue = CV_OnOff
 })
 
+--Commands to handle server's name on chat
+
+COM_AddCommand("prefix_name", function(p, name)
+	if name then
+		GKSGoodies.serverprefix.text = name
+	else
+		CONS_Printf(p, "Sets the server's name in the chat")
+	end
+end, COM_ADMIN)
+
+COM_AddCommand("prefix_color", function(p, color)
+	if color then
+		if GKSGoodies.prefixcolors[color] then
+			GKSGoodies.serverprefix.color = color
+			CONS_Printf(p, "Server's color name in chat has been set to "..color)
+		else
+			CONS_Printf(p, "Invalid color. see prefix_colorlist to see a list of available colors for it.")
+		end
+	else
+		CONS_Printf(p, "Sets the server's name color in the chat")
+	end
+end, COM_ADMIN)
+
+COM_AddCommand("prefix_colorlist", function(p, name)
+	CONS_Printf(p, "----List of text colors available for prefix_color----")
+	CONS_Printf(p, "")
+	for colorname, hex in pairs(GKSGoodies.prefixcolors) do
+		CONS_Printf(p, hex..colorname)
+	end
+end, COM_ADMIN)
+
 --Commands to handle tips
 
 COM_AddCommand("tips_add", function(p, message)
