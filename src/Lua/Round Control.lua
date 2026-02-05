@@ -1,21 +1,53 @@
 local setting = GKSGoodies.serversettings
 
+local function SetValueOrDefault(cvar)
+	local default = {
+		timelimit = CV_FindVar("default_timelimit") and CV_FindVar("default_timelimit").value,
+		pointlimit = CV_FindVar("default_pointlimit") and CV_FindVar("default_pointlimit").value,
+	}
+	return ((CV_FindVar(cvar) and CV_FindVar(cvar).value) or default.timelimit)
+end
+
 GoodiesHook.MapLoad.RoundControl = function()
 	if not (isdedicatedserver or isserver) then return end
+
+	local ctf = {
+		timelimit = SetValueOrDefault("ctf_timelimit"),
+		pointlimit = SetValueOrDefault("ctf_pointlimit"),
+	}
+
+	local match = {
+		timelimit = SetValueOrDefault("match_timelimit"),
+		pointlimit = SetValueOrDefault("match_pointlimit"),
+	}
+
+	local tag = {
+		timelimit = SetValueOrDefault("tag_timelimit"),
+		pointlimit = SetValueOrDefault("tag_pointlimit"),
+	}
+
+	local hs = {
+		timelimit = SetValueOrDefault("hs_timelimit"),
+		pointlimit = SetValueOrDefault("hs_pointlimit"),
+	}
+
 	if (gametyperules & GTR_TEAMFLAGS) then --CTF commonly
-		COM_BufInsertText(server,"pointlimit "..setting.ctf_config.pointlimit or CV_FindVar("pointlimit").value)
-		COM_BufInsertText(server,"timelimit "..setting.ctf_config.timelimit or CV_FindVar("timelimit").value)
+		COM_BufInsertText(server,"pointlimit "..ctf.pointlimit)
+		COM_BufInsertText(server,"timelimit "..ctf.timelimit)
 	--Match and any other ringslinger mode.
 	elseif (gametyperules & GTR_RINGSLINGER) and not ((gametyperules & GTR_TAG) or (gametyperules & GTR_HIDEFROZEN)) then
-		COM_BufInsertText(server,"pointlimit "..setting.match_config.pointlimit or CV_FindVar("pointlimit").value)
-		COM_BufInsertText(server,"timelimit "..setting.match_config.timelimit or CV_FindVar("timelimit").value)
+		COM_BufInsertText(server,"pointlimit "..match.pointlimit)
+		COM_BufInsertText(server,"timelimit "..match.timelimit)
 	elseif (gametyperules & GTR_TAG) then
 		if (gametyperules & GTR_HIDEFROZEN) then --is hide and seek
-			COM_BufInsertText(server,"pointlimit "..setting.hs_config.pointlimit or CV_FindVar("pointlimit").value)
-			COM_BufInsertText(server,"timelimit "..setting.hs_config.timelimit or CV_FindVar("timelimit").value)
+			COM_BufInsertText(server,"pointlimit "..hs.pointlimit)
+			COM_BufInsertText(server,"timelimit "..hs.timelimit)
 		else --Otherwise, is normal tag
-			COM_BufInsertText(server,"pointlimit "..setting.tag_config.pointlimit or CV_FindVar("pointlimit").value)
-			COM_BufInsertText(server,"timelimit "..setting.tag_config.timelimit or CV_FindVar("timelimit").value)
+			COM_BufInsertText(server,"pointlimit "..tag.pointlimit)
+			COM_BufInsertText(server,"timelimit "..tag.timelimit)
 		end
+	else
+		COM_BufInsertText(server,"pointlimit "..SetValueOrDefault("default_pointlimit"))
+		COM_BufInsertText(server,"timelimit "..SetValueOrDefault("default_timelimit"))
 	end
 end

@@ -6,22 +6,6 @@ rawset(_G, "GKSGoodies", {
 	overtime_musics = {"_OVRTM", "OVTM1", "OVTM2", "HURRY1", "HURRY2", "HURRY3"},
 	lowtime_musics = {"_PINCH", "LWTM1", "LWTM2", "LWTM3", "LWTM4", "LWTM5"},
 	serversettings = {
-		ctf_config = {
-			timelimit,
-			pointlimit
-		},
-		match_config = {
-			timelimit,
-			pointlimit
-		},
-		tag_config = {
-			timelimit,
-			pointlimit
-		},
-		hs_config = {
-			timelimit,
-			pointlimit
-		},
 		overtime_sky,
 		overtime_weather
 	},
