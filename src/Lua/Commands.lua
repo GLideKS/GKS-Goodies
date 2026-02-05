@@ -141,7 +141,7 @@ CV_RegisterVar({
 
 --Commands to handle tips
 
-COM_AddCommand("gd_tips_add", function(p, message)
+COM_AddCommand("tips_add", function(p, message)
 	if message then
 		table.insert(GKSGoodies.tips.messages, message)
 		CONS_Printf(p, "Message inserted sucessfully to the tips list")
@@ -150,7 +150,7 @@ COM_AddCommand("gd_tips_add", function(p, message)
 	end
 end, COM_ADMIN)
 
-COM_AddCommand("gd_tips_remove", function(p, arg)
+COM_AddCommand("tips_remove", function(p, arg)
 	local index = tonumber(arg)
 
 	if (index and GKSGoodies.tips.messages[index]) then
@@ -161,7 +161,7 @@ COM_AddCommand("gd_tips_remove", function(p, arg)
 	end
 end, COM_ADMIN)
 
-COM_AddCommand("gd_tips_list", function(p)
+COM_AddCommand("tips_list", function(p)
 	if #GKSGoodies.tips.messages then
 		CONS_Printf(p, "----List of tips messages stored----")
 		CONS_Printf(p, "")
@@ -173,7 +173,7 @@ COM_AddCommand("gd_tips_list", function(p)
 	end
 end, COM_ADMIN)
 
-COM_AddCommand("gd_tips_clear", function(p)
+COM_AddCommand("tips_clear", function(p)
 	if #GKSGoodies.tips.messages then
 		GKSGoodies.tips.messages = {}
 		CONS_Printf(p, "Tips list has been cleared sucessfully")
@@ -184,7 +184,7 @@ end, COM_ADMIN)
 
 --Commands to handle welcome messages
 
-COM_AddCommand("gd_welcome_message", function(p, message)
+COM_AddCommand("welcome_message", function(p, message)
 	if message then
 		GKSGoodies.welcome.message = message
 		CONS_Printf(p, "Welcome message has been set")
