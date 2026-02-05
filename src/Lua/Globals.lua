@@ -37,5 +37,11 @@ rawset(_G, "GoodiesHook", GoodiesHook)
 
 --Sync for everyone
 GoodiesHook.NetVars.SyncValues = function(network)
-	GKSGoodies = network($)
+	GKSGoodies.currentmusicplaying = network($)
+	GKSGoodies.serversettings = network($)
+	GKSGoodies.overtime = network($)
+	GKSGoodies.lowtime = network($)
+	GKSGoodies.serverprefix = network($)
+	GKSGoodies.tips = network($)
+	GKSGoodies.welcome = network($)
 end
