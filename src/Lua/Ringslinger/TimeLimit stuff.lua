@@ -1,3 +1,4 @@
+local gd = GKSGoodies
 local LowTime_Trigger = 30*TICRATE --which seconds remaining will the music trigger
 local settings = GKSGoodies.serversettings --settings of the server
 
