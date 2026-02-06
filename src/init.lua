@@ -23,6 +23,7 @@ dofile(rsdir.."Visual Flag Hold")
 dofile("Commands")
 dofile("Round Control") --Round Control
 dofile("tips.lua") --wip
+--dofile("Menu.lua") eh, I'll later do the menu
 
 --Hook Everything
 local addHook = addHook
