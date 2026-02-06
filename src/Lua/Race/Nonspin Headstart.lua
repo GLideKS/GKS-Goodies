@@ -7,12 +7,12 @@ GoodiesHook.PreThinkFrame.TapToCharge = function()
     if not (gametyperules & GTR_RACE) then return end
     for p in players.iterate do
         if not (p.mo and p.mo.valid) then continue end
-        if p.charability2 == CA2_SPINDASH then continue end
+        if p.charability2 == CA2_SPINDASH then continue end --Not for spindash characters
 
         local cmd = p.cmd
         if p.race_charge == nil then p.race_charge = 0 end
 
-        if not (cmd.buttons & BT_JUMP) and p.attackhold then
+        if not (cmd.buttons & BT_JUMP) and p.attackhold then --p.lastbuttons is not reilable on a PreThink
             p.attackhold = false
         end
 
@@ -30,12 +30,14 @@ GoodiesHook.PreThinkFrame.TapToCharge = function()
     end
 end
 
+--Reset charge on map load
 GoodiesHook.MapLoad.ResetCharge = function()
     for p in players.iterate do
         p.race_charge = 0
     end
 end
 
+--Thrust forwards the player if has any charge loaded
 GoodiesHook.PlayerThink.GOThrustCharge = function(p)
     if not (p.mo and p.mo.valid) then return end
     if not p.race_charge then return end
@@ -53,6 +55,7 @@ GoodiesHook.PlayerThink.GOThrustCharge = function(p)
 end
 
 --HUD
+--TO-DO: Optimize and use a good looking graphic instead
 local function DrawChargeHUD(v, p)
     if p.charability2 == CA2_SPINDASH then return end
     if not (gametyperules & GTR_RACE) then return end

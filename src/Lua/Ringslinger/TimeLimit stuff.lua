@@ -1,8 +1,7 @@
-local LowTime_Trigger = 30*TICRATE
-local GoodiesHook = GoodiesHook
-local gd = GKSGoodies
-local settings = GKSGoodies.serversettings
+local LowTime_Trigger = 30*TICRATE --which seconds remaining will the music trigger
+local settings = GKSGoodies.serversettings --settings of the server
 
+--Get how many time is left
 local function getRemainingTics()
     local totalTics = timelimit * 60 * TICRATE
     local elapsedTics = leveltime
@@ -10,6 +9,7 @@ local function getRemainingTics()
     return remainingTics
 end
 
+--Main Overtime and lowtime trigger
 GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff

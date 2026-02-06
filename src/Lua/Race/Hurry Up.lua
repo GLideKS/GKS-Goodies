@@ -34,7 +34,7 @@ addHook("HUD", function(v,p)
 
 	if drawString == nil then drawString = v.drawString end
 
-	drawString(160, 170, "HURRY UP!", videoFlags, "center")
+	drawString(160, 170, "HURRY UP!", videoFlags, "center") --TO-DO: Replace for a better looking hurry up graphic
 end,"game")
 
 --Reset voices on Map Load/Change

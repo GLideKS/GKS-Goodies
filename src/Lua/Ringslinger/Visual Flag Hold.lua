@@ -1,5 +1,6 @@
 local GoodiesHook = GoodiesHook
 
+--Main visual flag hold object
 freeslot(
 "MT_GKS_FLAGHOLD",
 "S_GKS_FLAGHOLD"
@@ -16,6 +17,7 @@ mobjinfo[MT_GKS_FLAGHOLD] = {
 
 local MT_GKS_FLAGHOLD = MT_GKS_FLAGHOLD
 
+--Chase always the player
 local function flaghold_behavior(mo)
     local target = mo.target
     local p = target.player
@@ -43,6 +45,7 @@ local function flaghold_behavior(mo)
 	end
 end
 
+--Spawn the flag if the player got the flag
 GoodiesHook.PlayerThink.FlagHold = function (p)
     if not (p and p.mo and p.mo.valid) then return end
     if not p.gotflag then return end

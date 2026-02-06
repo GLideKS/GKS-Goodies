@@ -1,5 +1,6 @@
 local GoodiesHook = GoodiesHook
 
+--List of blue color variants for the Blue Team
 local blue_variants = {
 	SKINCOLOR_WAVE,
 	SKINCOLOR_COBALT,
@@ -14,6 +15,7 @@ local blue_variants = {
 	SKINCOLOR_OCEAN
 }
 
+--List of red color variants for the Red Team
 local red_variants = {
 	SKINCOLOR_RUBY,
 	SKINCOLOR_CHERRY,
@@ -25,6 +27,9 @@ local red_variants = {
 	SKINCOLOR_KETCHUP
 }
 
+--Change the colors on player spawn
+--TODO: Do not reset colors after death.
+--maybe use MapLoad instead and store colors in a player variable?
 GoodiesHook.PlayerSpawn.TeamColorVariant = function(p)
 	if not (p and p.mo and p.mo.valid) then return end
 	if not (gametyperules & GTR_TEAMS) then return end

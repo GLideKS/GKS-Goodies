@@ -1,3 +1,4 @@
+--List of prefix colors
 GKSGoodies.prefixcolors = {
 	["white"] = "\x80",
 	["magenta"] = "\x81",
@@ -24,8 +25,7 @@ GoodiesHook.ThinkFrame.Messages = function()
 	local prefix_color = GKSGoodies.serverprefix.color
 	local colors = GKSGoodies.prefixcolors
 
-	--Tips
-	if #GKSGoodies.tips.messages
+	if #GKSGoodies.tips.messages --Tips
 	and ((leveltime % 6300) == 700) then
 		local tip_message = GKSGoodies.tips.messages[P_RandomRange(1, #GKSGoodies.tips.messages)]
 		local tip_sound = GKSGoodies.tips.sound
@@ -33,8 +33,7 @@ GoodiesHook.ThinkFrame.Messages = function()
 		S_StartSound(nil, tip_sound)
 	end
 
-	--Welcome
-	for p in players.iterate do
+	for p in players.iterate do --Welcome
 		if not (p.jointime == TICRATE) then continue end
 		local welcome_message = GKSGoodies.welcome.message
 		local welcome_sound = GKSGoodies.welcome.sound
