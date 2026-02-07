@@ -1,16 +1,16 @@
 local settings = GKSGoodies.serversettings
 
---Open Menu (Not available at the moment)
-/*COM_AddCommand("gd_menu", function()
+--Open Menu
+COM_AddCommand("gd_menu", function()
 	MenuLib.initMenu(MenuLib.findMenu("gd_menu"))
-end, COM_LOCAL)*/
+end, COM_LOCAL)
 
 --Defaults
 
 CV_RegisterVar({
 	name = "default_timelimit",
 	defaultvalue = 6,
-	PossibleValue = CV_Unsigned,
+	PossibleValue = {MIN=0, MAX=30},
 	flags = CV_NETVAR
 })
 
@@ -26,7 +26,7 @@ CV_RegisterVar({
 CV_RegisterVar({
 	name = "ctf_timelimit",
 	defaultvalue = 0,
-	PossibleValue = CV_Unsigned,
+	PossibleValue = {MIN=0, MAX=30},
 	flags = CV_NETVAR
 })
 
@@ -42,7 +42,7 @@ CV_RegisterVar({
 CV_RegisterVar({
 	name = "match_timelimit",
 	defaultvalue = 0,
-	PossibleValue = CV_Unsigned,
+	PossibleValue = {MIN=0, MAX=30},
 	flags = CV_NETVAR
 })
 
@@ -58,7 +58,7 @@ CV_RegisterVar({
 CV_RegisterVar({
 	name = "tag_timelimit",
 	defaultvalue = 0,
-	PossibleValue = CV_Unsigned,
+	PossibleValue = {MIN=0, MAX=30},
 	flags = CV_NETVAR
 })
 
@@ -74,7 +74,7 @@ CV_RegisterVar({
 CV_RegisterVar({
 	name = "hs_timelimit",
 	defaultvalue = 0,
-	PossibleValue = CV_Unsigned,
+	PossibleValue = {MIN=0, MAX=30},
 	flags = CV_NETVAR
 })
 

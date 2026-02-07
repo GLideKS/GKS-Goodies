@@ -66,14 +66,14 @@ ML.addMenu({
 ML.addMenu({
 	stringId = "server",
 	title = "Server Settings",
-    width = 230,
-    height = 190,
+    width = 210,
+    height = 70,
 
     drawer = function(v, ML, menu, props)
         local corner_x = props.corner_x + 18
 		local corner_y = props.corner_y + 18
 
-        local gametypesettings = ML.addButton(v, {
+        ML.addButton(v, {
             id = 1,
             x = corner_x,
             y = corner_y,
@@ -86,8 +86,231 @@ ML.addMenu({
             },
 
             pressFunc = function()
+                MenuLib.initMenu(MenuLib.findMenu("gametypesettings"))
+			end
+        })
+
+        ML.addButton(v, {
+            id = 2,
+            x = corner_x+button.width+5,
+            y = corner_y,
+            width = button.width,
+            height = button.height,
+            name = "Server Messages",
+            color = button.color,
+            selected = {
+                color = button.selected_color
+            },
+
+            pressFunc = function()
                 print("yes")
 			end
         })
+
+        ML.addButton(v, {
+            id = 3,
+            x = corner_x,
+            y = corner_y+button.height+button.spacing,
+            width = button.width,
+            height = button.height,
+            name = "Overtime Config.",
+            color = button.color,
+            selected = {
+                color = button.selected_color
+            },
+
+            pressFunc = function()
+                print("yes")
+			end
+        })
+
+        ML.addButton(v, {
+            id = 4,
+            x = corner_x+button.width+5,
+            y = corner_y+button.height+button.spacing,
+            width = button.width,
+            height = button.height,
+            name = "Toggle features",
+            color = button.color,
+            selected = {
+                color = button.selected_color
+            },
+
+            pressFunc = function()
+                print("yes")
+			end
+        })
+    end
+})
+
+local commands = {
+    [1] = {
+        text = "Match",
+        tlimitcommand = "match_timelimit",
+        plimitcommand = "match_pointlimit",
+        tlimit = CV_FindVar("match_timelimit"),
+        plimit = CV_FindVar("match_pointlimit")
+    },
+    [2] = {
+        text = "CTF",
+        tlimitcommand = "ctf_timelimit",
+        plimitcommand = "ctf_pointlimit",
+        tlimit = CV_FindVar("ctf_timelimit"),
+        plimit = CV_FindVar("ctf_pointlimit")
+    },
+    [3] = {
+        text = "TAG",
+        tlimitcommand = "tag_timelimit",
+        plimitcommand = "tag_pointlimit",
+        tlimit = CV_FindVar("tag_timelimit"),
+        plimit = CV_FindVar("tag_pointlimit")
+    },
+    [4] = {
+        text = "Hide & Seek",
+        tlimitcommand = "hs_timelimit",
+        plimitcommand = "hs_pointlimit",
+        tlimit = CV_FindVar("hs_timelimit"),
+        plimit = CV_FindVar("hs_pointlimit")
+    },
+}
+local copied_value = 0
+ML.addMenu({
+	stringId = "gametypesettings",
+	title = "Gametype Settings",
+    width = 250,
+    height = 125,
+
+    drawer = function(v, ML, menu, props)
+        local corner_x = props.corner_x + 10
+		local corner_y = props.corner_y + 18
+        local btnsize = 10
+        local btnpos = 68
+        local tlimitpos = 15
+        local plimitpos = 28
+        local copypatch = v.cachePatch("GDCOPY")
+        local pastepatch = v.cachePatch("GDPASTE")
+        for i in pairs(commands) do
+            local col = (i - 1) % 2
+            local row = (i - 1) / 2
+            local x = corner_x + (col * 115)
+            local y = corner_y + (row * 40)
+
+            v.drawString(x, y, commands[i].text, V_YELLOWMAP)
+            v.drawFill(x, y+11, 110, 1, 0)
+            v.drawString(x,y+tlimitpos, "timelimit: ".. commands[i].tlimit.value, nil, "thin")
+            v.drawString(x,y+28, "pointlimit: ".. commands[i].plimit.value, nil, "thin")
+
+            local set_timelimit = ML.addButton(v, {
+                id = 1,
+                x = x+btnpos,
+                y = y+tlimitpos-(btnsize/5),
+                width = btnsize+8,
+                height = btnsize,
+                name = "Set",
+                color = 153,
+                selected = {
+                    color = 149
+                },
+
+                pressFunc = function()
+                    ML.startTextInput(com_buffer, com_bufferid, {
+                        onenter = function()
+                            ML.client.commandbuffer = commands[i].tlimitcommand.." "..ML.client.textbuffer
+                        end,
+                        tooltip = {"Set a number"}
+                    })
+                end
+            })
+            local copy_timelimit = ML.addButton(v, {
+                id = 2,
+                x = set_timelimit.x+set_timelimit.width+3,
+                y = y+tlimitpos-(btnsize/5),
+                width = btnsize,
+                height = btnsize,
+                color = 153,
+                selected = {
+                    color = 149
+                },
+
+                pressFunc = function()
+                    copied_value = commands[i].tlimit.value
+                    print(copied_value)
+                end
+            })
+            local paste_timelimit = ML.addButton(v, {
+                id = 3,
+                x = copy_timelimit.x+copy_timelimit.width+3,
+                y = y+tlimitpos-(btnsize/5),
+                width = btnsize,
+                height = btnsize,
+                color = 153,
+                selected = {
+                    color = 149
+                },
+
+                pressFunc = function()
+                    ML.client.commandbuffer = commands[i].tlimitcommand.." "..copied_value
+                end
+            })
+
+            local set_pointlimit = ML.addButton(v, {
+                id = 4,
+                x = x+btnpos,
+                y = y+plimitpos-(btnsize/5),
+                width = btnsize+8,
+                height = btnsize,
+                name = "Set",
+                color = 153,
+                selected = {
+                    color = 149
+                },
+
+                pressFunc = function()
+                    ML.startTextInput(com_buffer, com_bufferid, {
+                        onenter = function()
+                            ML.client.commandbuffer = commands[i].plimitcommand.." "..ML.client.textbuffer
+                        end,
+                        tooltip = {"Set a number"}
+                    })
+                end
+            })
+            local copy_pointlimit = ML.addButton(v, {
+                id = 5,
+                x = set_pointlimit.x+set_pointlimit.width+3,
+                y = y+plimitpos-(btnsize/5),
+                width = btnsize,
+                height = btnsize,
+                color = 153,
+                selected = {
+                    color = 149
+                },
+
+                pressFunc = function()
+                    copied_value = commands[i].plimit.value
+                    print(copied_value)
+                end
+            })
+            local paste_pointlimit = ML.addButton(v, {
+                id = 3,
+                x = copy_pointlimit.x+copy_pointlimit.width+3,
+                y = y+plimitpos-(btnsize/5),
+                width = btnsize,
+                height = btnsize,
+                color = 153,
+                selected = {
+                    color = 149
+                },
+
+                pressFunc = function()
+                    ML.client.commandbuffer = commands[i].plimitcommand.." "..copied_value
+                end
+            })
+            v.draw(copy_timelimit.x, copy_timelimit.y, copypatch)
+            v.draw(paste_timelimit.x, paste_timelimit.y, pastepatch)
+            v.draw(copy_pointlimit.x, copy_pointlimit.y, copypatch)
+            v.draw(paste_pointlimit.x, paste_pointlimit.y, pastepatch)
+        end
+
+        v.drawString(corner_x, corner_y+90, "\x82\NOTE: \x80\Changes will apply on the next map", nil, "thin")
     end
 })
