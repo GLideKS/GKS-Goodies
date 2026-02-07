@@ -102,5 +102,73 @@ GoodiesHook.PlayerThink.FlagHold = function (p)
     P_SpawnVisualFlag(p)
 end
 
+--Firework to the player who captured the flag
+--Borrowed from BattleMod, all credits to it.
+
+local old = {
+	bluescore = 0,
+	redscore = 0
+}
+
+GoodiesHook.NetVars.CTFScore = function(net)
+	old = net($)
+end
+GoodiesHook.MapLoad.CTFScore = function()
+	old.bluescore = bluescore
+	old.redscore = redscore
+end
+
+local DoFirework = function(mo)
+	local spark = P_SpawnMobj(mo.x,mo.y,mo.z,MT_SUPERSPARK)
+	if spark and spark.valid then
+		spark.momz = mo.scale*4
+	end
+	local fw = P_SpawnMobj(mo.x,mo.y,mo.z+(mo.scale*96),MT_EFIREWORK)
+	if fw and fw.valid then
+		fw.speed = mo.scale
+		fw.state = S_EFIREWORK0
+		fw.skin = mo.skin
+		fw.color = mo.color
+		fw.scale = mo.scale
+		fw.destscale = mo.scale*2
+	end
+end
+
+GoodiesHook.PlayerThink.CapturedFlag = function(p)
+	local pmo = p.mo
+	local pstate = p.playerstate
+	local fteam = p.ctfteam
+
+	if CBW_Battle then return end --BattleMod already has this
+	if not (gametyperules & GTR_TEAMFLAGS) then return end
+	if not (p and pmo and pmo.valid) then return end
+	if (pstate & PST_DEAD) then return end
+	if not P_IsObjectOnGround(pmo) then return end
+
+	--secondary gotflag check since p.gotflag turns 0 before the playerthink
+	if p.gotflag
+	and not pmo.isholdingflag then
+		pmo.isholdingflag = true
+	end
+
+	if not pmo.isholdingflag then return end
+
+	local sec = (pmo.floorrover and pmo.floorrover.sector) or pmo.subsector.sector
+
+	--Make sure is touching the base
+	local redcaptured = (fteam == 1 and (sec.specialflags & SSF_REDTEAMBASE))
+	local bluecaptured = (fteam == 2 and (sec.specialflags & SSF_BLUETEAMBASE))
+
+	--Do BattleMod's firework
+	if (redcaptured or bluecaptured)
+	and pmo.isholdingflag
+	and ((redscore > old.redscore) or (bluescore > old.bluescore)) then
+		DoFirework(pmo)
+		old.redscore = redscore
+		old.bluescore = bluescore
+		if not p.gotflag then pmo.isholdingflag = false end
+	end
+end
+
 addHook("MobjThinker", flaghold_behavior, MT_GKS_FLAGHOLD)
 addHook("MobjThinker", AssignColor, MT_PLAYER)

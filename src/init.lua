@@ -5,6 +5,7 @@ dofile("Functions.lua")
 --dofile("Commands.lua")
 rawset(_G,"MENULIB_ROOT",libs.."MenuLib/")
 dofile(MENULIB_ROOT .. "exec.lua")
+dofile(libs.."Info_Fireworks.lua")
 
 local voicesdir = "Voices/" --Character voices
 dofile(voicesdir.."System")
