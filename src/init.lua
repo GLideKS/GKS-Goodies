@@ -24,6 +24,7 @@ dofile("Commands")
 dofile("Round Control") --Round Control
 dofile("tips.lua") --wip
 dofile("Menu.lua")
+dofile("Status Bubbles.lua")
 
 --Hook Everything
 local addHook = addHook
