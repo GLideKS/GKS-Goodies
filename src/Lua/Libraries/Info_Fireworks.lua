@@ -1,6 +1,6 @@
 --From BattleMod
 
-freeslot("MT_EFIREWORK","S_EFIREWORK0","S_EFIREWORK1","S_EFIREWORK2","S_EFIREWORK3")
+SafeFreeslot("MT_EFIREWORK","S_EFIREWORK0","S_EFIREWORK1","S_EFIREWORK2","S_EFIREWORK3")
 
 function A_SetSkinFirework(fw, var1, var2)
 	S_StartSound(fw, sfx_s227)

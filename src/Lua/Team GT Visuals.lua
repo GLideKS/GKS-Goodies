@@ -51,7 +51,7 @@ local function AssignColor(mo)
 end
 
 --Main visual flag hold object
-freeslot(
+SafeFreeslot(
 "MT_GKS_FLAGHOLD",
 "S_GKS_FLAGHOLD"
 )
