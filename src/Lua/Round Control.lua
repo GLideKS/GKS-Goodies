@@ -1,11 +1,16 @@
 local setting = GKSGoodies.serversettings
 
-local function SetValueOrDefault(cvar)
+local function SetValueOrDefault(cvar, type)
 	local default = {
 		timelimit = CV_FindVar("default_timelimit") and CV_FindVar("default_timelimit").value,
 		pointlimit = CV_FindVar("default_pointlimit") and CV_FindVar("default_pointlimit").value,
 	}
-	return ((CV_FindVar(cvar) and CV_FindVar(cvar).value) or default.timelimit)
+	--Num defines if it's either a timelimit or a pointlimit
+	if not num then --set to default timelimit
+		return ((CV_FindVar(cvar) and CV_FindVar(cvar).value) or default.timelimit)
+	else --set to default pointlimit
+		return ((CV_FindVar(cvar) and CV_FindVar(cvar).value) or default.pointlimit)
+	end
 end
 
 GoodiesHook.MapLoad.RoundControl = function()
@@ -13,22 +18,22 @@ GoodiesHook.MapLoad.RoundControl = function()
 
 	local ctf = {
 		timelimit = SetValueOrDefault("ctf_timelimit"),
-		pointlimit = SetValueOrDefault("ctf_pointlimit"),
+		pointlimit = SetValueOrDefault("ctf_pointlimit", 1),
 	}
 
 	local match = {
 		timelimit = SetValueOrDefault("match_timelimit"),
-		pointlimit = SetValueOrDefault("match_pointlimit"),
+		pointlimit = SetValueOrDefault("match_pointlimit", 1),
 	}
 
 	local tag = {
 		timelimit = SetValueOrDefault("tag_timelimit"),
-		pointlimit = SetValueOrDefault("tag_pointlimit"),
+		pointlimit = SetValueOrDefault("tag_pointlimit", 1),
 	}
 
 	local hs = {
 		timelimit = SetValueOrDefault("hs_timelimit"),
-		pointlimit = SetValueOrDefault("hs_pointlimit"),
+		pointlimit = SetValueOrDefault("hs_pointlimit", 1),
 	}
 
 	if (gametyperules & GTR_TEAMFLAGS) then --CTF commonly
@@ -47,7 +52,7 @@ GoodiesHook.MapLoad.RoundControl = function()
 			COM_BufInsertText(server,"timelimit "..tag.timelimit)
 		end
 	else
-		COM_BufInsertText(server,"pointlimit "..SetValueOrDefault("default_pointlimit"))
+		COM_BufInsertText(server,"pointlimit "..SetValueOrDefault("default_pointlimit", 1))
 		COM_BufInsertText(server,"timelimit "..SetValueOrDefault("default_timelimit"))
 	end
 end
