@@ -37,7 +37,7 @@ end)
 freeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS",
 "MT_GD_BUBBLE", "S_GD_BUBBLE")
 
-states[S_GD_BUBBLE] = {SPR_NULL, FF_ANIMATE|A, -1, nil, 2, TICRATE/2, S_GD_BUBBLE}
+states[S_GD_BUBBLE] = {SPR_NULL, FF_ANIMATE|FF_FULLBRIGHT|A, -1, nil, 2, TICRATE/2, S_GD_BUBBLE}
 mobjinfo[MT_GD_BUBBLE] = {
     doomednum = -1,
     spawnstate = S_GD_BUBBLE,
