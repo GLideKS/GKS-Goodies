@@ -28,14 +28,26 @@ local red_variants = {
 }
 
 --Change the colors on player spawn
---TODO: Do not reset colors after death.
---maybe use MapLoad instead and store colors in a player variable?
 GoodiesHook.PlayerSpawn.TeamColorVariant = function(p)
 	if not (p and p.mo and p.mo.valid) then return end
 	if not (gametyperules & GTR_TEAMS) then return end
 	if p.ctfteam == 1 then
-		p.mo.color = red_variants[P_RandomRange(1, #red_variants)]
+		p.gd_redvariant = red_variants[P_RandomRange(1, #red_variants)]
 	elseif p.ctfteam == 2 then
-		p.mo.color = blue_variants[P_RandomRange(1, #blue_variants)]
+		p.gd_bluevariant = blue_variants[P_RandomRange(1, #blue_variants)]
 	end
 end
+
+local function AssignColor(mo)
+	local p = mo.player
+	if not (p and mo and mo.valid) then return end
+	if not (gametyperules & GTR_TEAMS) then return end
+
+	if p.ctfteam == 1 then
+		if mo.color != p.gd_redvariant then mo.color = p.gd_redvariant end
+	elseif p.ctfteam == 2 then
+		if mo.color != p.gd_bluevariant then mo.color = p.gd_bluevariant end
+	end
+end
+
+addHook("MobjThinker", AssignColor, MT_PLAYER)
