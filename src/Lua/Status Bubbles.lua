@@ -54,7 +54,6 @@ local function bubblefollow(mo)
     if not (p and target and (
         p.menuactive
         or p.chatactive
-        or p.consoleactive
     )) then
         P_RemoveMobj(mo)
         return
@@ -80,7 +79,7 @@ end
 GoodiesHook.PlayerThink.Bubble = function (p)
     if not (p and p.mo and p.mo.valid) then return end
 
-    if (p.menuactive or p.chatactive or p.consoleactive) then
+    if (p.menuactive or p.chatactive) then
         if p.mo.bubblespawn then return end
         local f = P_MobjFlip(p.mo)
         local bubble = P_SpawnMobj(p.mo.x, p.mo.y, p.mo.z+(f*(p.mo.height+(7*p.mo.scale))), MT_GD_BUBBLE)
