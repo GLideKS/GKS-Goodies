@@ -1,6 +1,6 @@
 local setting = GKSGoodies.serversettings
 
-local function SetValueOrDefault(cvar, type)
+local function SetValueOrDefault(cvar, num)
 	local default = {
 		timelimit = CV_FindVar("default_timelimit") and CV_FindVar("default_timelimit").value,
 		pointlimit = CV_FindVar("default_pointlimit") and CV_FindVar("default_pointlimit").value,
