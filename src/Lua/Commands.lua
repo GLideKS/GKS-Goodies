@@ -170,7 +170,7 @@ COM_AddCommand("tips_list", function(p)
 		CONS_Printf(p, "----List of tips messages stored----")
 		CONS_Printf(p, "")
 		for i = 1, #GKSGoodies.tips.messages do
-			CONS_Printf(p, i..": "..GKSGoodies.tips.messages[i])
+			CONS_Printf(p, "\x82"..i..":\x80 "..GKSGoodies.tips.messages[i])
 		end
 	else
 		CONS_Printf(p, "No tips messages found.")
