@@ -3,6 +3,8 @@
 
 local old_menuactive = false
 local old_chatactive = false
+local consoleactive = false
+local old_consoleactive = false
 local luasig = "iAmLua"..P_RandomFixed()
 addHook("NetVars",function(n) luasig = n($); end)
 
@@ -18,6 +20,12 @@ COM_AddCommand("_chatcheck", function(p, signature, status)
     p.chatactive = (status == "true") and true or false
 end)
 
+COM_AddCommand("_consolecheck", function(p, signature, status)
+    if signature ~= luasig then return end
+    if p.consoleactive == nil then p.consoleactive = false; end
+    p.consoleactive = (status == "true") and true or false
+end)
+
 addHook("PostThinkFrame", function()
     local p = consoleplayer
     if not (p and p.valid) then return end
@@ -28,13 +36,36 @@ addHook("PostThinkFrame", function()
     if chatactive ~= old_chatactive then
         COM_BufInsertText(p, "_chatcheck "..luasig.." "..tostring(chatactive))
     end
+    if consoleactive ~= old_consoleactive then
+        COM_BufInsertText(p, "_consolecheck "..luasig.." "..tostring(consoleactive))
+    end
     old_menuactive = menuactive
     old_chatactive = chatactive
+    old_consoleactive = consoleactive
 end)
+
+local function openconsole(key)
+    local con_key = (key.num == input.gameControlToKeyNum(GC_CONSOLE)) --We are pressing the console key again?
+                    and true or false
+    if not con_key then return end
+    if chatactive then return end --do not run on chat
+    if not consoleactive then consoleactive = true end
+end
+
+local function closeconsole(key)
+    local con_key = (key.num == input.gameControlToKeyNum(GC_CONSOLE) --We are pressing the console key again?
+                    or key.name == "escape") --Or we are pressing the escape key to exit the console
+                    and true or false
+    if not con_key then return end
+    if chatactive then return end --do not run on chat
+    if consoleactive then consoleactive = false end
+end
+addHook("KeyDown", openconsole)
+addHook("KeyUp", closeconsole)
 
 --Main Bubble Thinker
 
-SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS",
+SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS", "SPR_GD_TERMINAL",
 "MT_GD_BUBBLE", "S_GD_BUBBLE")
 
 states[S_GD_BUBBLE] = {SPR_NULL, FF_ANIMATE|FF_FULLBRIGHT|A, -1, nil, 2, TICRATE/2, S_GD_BUBBLE}
@@ -54,6 +85,7 @@ local function bubblefollow(mo)
     if not (p and target and (
         p.menuactive
         or p.chatactive
+        or p.consoleactive
     )) then
         P_RemoveMobj(mo)
         return
@@ -79,12 +111,12 @@ end
 GoodiesHook.PlayerThink.Bubble = function (p)
     if not (p and p.mo and p.mo.valid) then return end
 
-    if (p.menuactive or p.chatactive) then
+    if (p.consoleactive or p.menuactive or p.chatactive) then
         if p.mo.bubblespawn then return end
         local f = P_MobjFlip(p.mo)
         local bubble = P_SpawnMobj(p.mo.x, p.mo.y, p.mo.z+(f*(p.mo.height+(7*p.mo.scale))), MT_GD_BUBBLE)
         bubble.target = p.mo
-        bubble.sprite = (p.chatactive and SPR_GD_CHATBUBBLE) or (p.menuactive and SPR_GD_OPTIONS)
+        bubble.sprite = (p.consoleactive and SPR_GD_TERMINAL) or (p.menuactive and SPR_GD_OPTIONS) or (p.chatactive and SPR_GD_CHATBUBBLE)
         p.mo.bubblespawn = true
     else
         p.mo.bubblespawn = false
