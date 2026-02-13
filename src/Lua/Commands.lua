@@ -1,10 +1,5 @@
 local settings = GKSGoodies.serversettings
 
---Open Menu
-COM_AddCommand("gd_menu", function()
-	MenuLib.initMenu(MenuLib.findMenu("gd_menu"))
-end, COM_LOCAL)
-
 --Defaults
 
 CV_RegisterVar({
