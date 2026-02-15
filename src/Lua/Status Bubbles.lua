@@ -93,10 +93,14 @@ local function bubblefollow(mo)
     end
 
     local f = P_MobjFlip(target)
+    local sprite = (p.consoleactive and SPR_GD_TERMINAL)
+                or (p.menuactive and SPR_GD_OPTIONS)
+                or (p.chatactive and SPR_GD_CHATBUBBLE)
 
     P_MoveOrigin(mo, target.x, target.y, target.z+(f*(target.height+(5*target.scale))))
     mo.dontdrawforviewmobj = target --Don't draw in first person
     mo.scale = target.scale*3/2
+    if mo.sprite != sprite then mo.sprite = sprite end
 
 	--Flip Checks
 	if P_MobjFlip(target) == -1 then
@@ -117,7 +121,6 @@ GoodiesHook.PlayerThink.Bubble = function (p)
         local f = P_MobjFlip(p.mo)
         local bubble = P_SpawnMobj(p.mo.x, p.mo.y, p.mo.z+(f*(p.mo.height+(5*p.mo.scale))), MT_GD_BUBBLE)
         bubble.target = p.mo
-        bubble.sprite = (p.consoleactive and SPR_GD_TERMINAL) or (p.menuactive and SPR_GD_OPTIONS) or (p.chatactive and SPR_GD_CHATBUBBLE)
         p.mo.bubblespawn = true
     else
         p.mo.bubblespawn = false
