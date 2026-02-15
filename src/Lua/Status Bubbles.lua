@@ -81,8 +81,9 @@ mobjinfo[MT_GD_BUBBLE] = {
 --Chase always the player
 local function bubblefollow(mo)
     local target = mo.target
-    local p = target.player
-    if not (p and target and (
+    local p = mo.target.player
+
+    if not ((target and target.valid and p) and (
         p.menuactive
         or p.chatactive
         or p.consoleactive
