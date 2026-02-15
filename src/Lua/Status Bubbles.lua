@@ -96,11 +96,12 @@ local function bubblefollow(mo)
     local sprite = (p.consoleactive and SPR_GD_TERMINAL)
                 or (p.menuactive and SPR_GD_OPTIONS)
                 or (p.chatactive and SPR_GD_CHATBUBBLE)
+    local scale = target.scale*3/2
 
     P_MoveOrigin(mo, target.x, target.y, target.z+(f*(target.height+(5*target.scale))))
-    mo.dontdrawforviewmobj = target --Don't draw in first person
-    mo.scale = target.scale*3/2
     if mo.sprite != sprite then mo.sprite = sprite end
+    if mo.scale != scale then mo.scale = scale end
+    if mo.dontdrawforviewmobj != target then mo.dontdrawforviewmobj = target end --Don't draw in first person
 
 	--Flip Checks
 	if P_MobjFlip(target) == -1 then
