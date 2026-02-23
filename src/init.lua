@@ -31,7 +31,6 @@ dofile(voicesdir.."System")
 local racedir = "Race/" -- Race stuff
 dofile(racedir.."Race Adjustments")
 dofile(racedir.."Hurry Up.lua")
-dofile(racedir.."Nonspin Headstart")
 dofile(racedir.."Race Start")
 
 dofile("Team GT Visuals")
