@@ -80,17 +80,17 @@ mobjinfo[MT_GD_BUBBLE] = {
 
 --Chase always the player
 local function bubblefollow(mo)
-    local target = mo.target
-    local p = mo.target.player
-
-    if not ((target and target.valid and p) and (
-        p.menuactive
-        or p.chatactive
-        or p.consoleactive
+    if not ((mo.target and mo.target.valid and mo.target.player) and (
+        mo.target.player.menuactive
+        or mo.target.player.chatactive
+        or mo.target.player.consoleactive
     )) then
         P_RemoveMobj(mo)
         return
     end
+
+    local target = mo.target
+    local p = mo.target.player
 
     local f = P_MobjFlip(target)
     local sprite = (p.consoleactive and SPR_GD_TERMINAL)
