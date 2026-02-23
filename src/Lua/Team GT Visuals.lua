@@ -29,7 +29,6 @@ local red_variants = {
 
 --Change the colors on player spawn
 GoodiesHook.PlayerSpawn.TeamColorVariant = function(p)
-	if not (p and p.mo and p.mo.valid) then return end
 	if not (gametyperules & GTR_TEAMS) then return end
 	if p.ctfteam == 1 then
 		p.gd_redvariant = red_variants[P_RandomRange(1, #red_variants)]
