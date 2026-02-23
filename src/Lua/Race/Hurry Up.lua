@@ -3,6 +3,10 @@ local GoodiesHook = GoodiesHook
 local settings = GKSGoodies.serversettings
 local finished = false
 
+GoodiesHook.NetVars.Finished = function(net)
+	finished = net($)
+end
+
 --Main hurry up trigger
 GoodiesHook.ThinkFrame.HurryUp = function()
 	if not (gametyperules & GTR_RACE) then return end
