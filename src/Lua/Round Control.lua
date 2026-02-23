@@ -51,8 +51,5 @@ GoodiesHook.MapLoad.RoundControl = function()
 			COM_BufInsertText(server,"pointlimit "..tag.pointlimit)
 			COM_BufInsertText(server,"timelimit "..tag.timelimit)
 		end
-	else
-		COM_BufInsertText(server,"pointlimit "..SetValueOrDefault("default_pointlimit", 1))
-		COM_BufInsertText(server,"timelimit "..SetValueOrDefault("default_timelimit"))
 	end
 end
