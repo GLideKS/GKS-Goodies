@@ -9,7 +9,7 @@
 
 COMMIT=$(git rev-parse --short HEAD)
 MAIN_NAME=L_GKSGoodies
-MAIN_VERSION=1-alpha-$COMMIT
+MAIN_VERSION=$COMMIT
 
 # Create the "build" directory if it doesn't exist
 # This directory is ignored by the git repo, so don't worry about making changes here
@@ -17,5 +17,5 @@ rm -rf "./build"
 mkdir build
 
 # Main PK3
-7za u -mx5 -tzip -x@./exclude-main.txt ./build/$MAIN_NAME-v$MAIN_VERSION.pk3 ./src/*
-# - 7za rn ./build/$MAIN_NAME-v$MAIN_VERSION.pk3 @./rename-main.txt
+7za u -mx5 -tzip -x@./exclude-main.txt ./build/$MAIN_NAME-Demo-$MAIN_VERSION.pk3 ./src/*
+# - 7za rn ./build/$MAIN_NAME-Demo-$MAIN_VERSION.pk3 @./rename-main.txt
