@@ -37,6 +37,9 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 		S_ChangeGlobalMusic(lowtmmus)
 		gd.lowtime = true
 	end
+	
+	if not (gametyperules & GTR_OVERTIME) then return end
+	
 	--Overtime
 	if ((timelimit and getRemainingTics() == 0)
 	or ((redscore == pointlimit-1 and bluescore == pointlimit-1) and (gametyperules & GTR_TEAMFLAGS)))
