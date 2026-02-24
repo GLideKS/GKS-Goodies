@@ -15,6 +15,19 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
 	if not gamemap then return end
+	
+	--Did the player joined mid game? play the current music and weather going on
+	for p in players.iterate do
+		if gd.lowtime and S_MusicName(p) != gd.currentmusicplaying then
+			S_ChangeGlobalMusic(gd.currentmusicplaying)
+		end
+		if gd.overtime and S_MusicName(p) != gd.currentmusicplaying then
+			S_ChangeGlobalMusic(gd.currentmusicplaying, globalweather, globallevelskynum)
+		end
+	end
+	
+	if not (gametyperules & GTR_TIMELIMIT) then return end
+	
 	local ptsr_chance = P_RandomChance(FU/7) --around 14% chance. very low
 	--Low Time
 	if ((timelimit and (getRemainingTics() > 0 and (getRemainingTics() <= LowTime_Trigger)))
@@ -36,15 +49,6 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 			S_ChangeGlobalMusic("OTPTSR", nil, 34)
 		end
 		gd.overtime = true
-	end
-	--Did the player joined mid game? play the current music and weather going on
-	for p in players.iterate do
-		if gd.lowtime and S_MusicName(p) != gd.currentmusicplaying then
-			S_ChangeGlobalMusic(gd.currentmusicplaying)
-		end
-		if gd.overtime and S_MusicName(p) != gd.currentmusicplaying then
-			S_ChangeGlobalMusic(gd.currentmusicplaying, globalweather, globallevelskynum)
-		end
 	end
 end
 
