@@ -3,6 +3,15 @@ local GoodiesHook = GoodiesHook
 local settings = GKSGoodies.serversettings
 local finished = false
 
+--Localize to optimize
+local PF_FINISHED = PF_FINISHED
+local GTR_RACE = GTR_RACE
+local GS_LEVEL = GS_LEVEL
+local S_StartSound = S_StartSound
+local CV_FindVar = CV_FindVar
+local P_RandomRange = P_RandomRange
+local P_StartQuake = P_StartQuake
+
 GoodiesHook.NetVars.Finished = function(net)
 	finished = net($)
 end
@@ -15,6 +24,7 @@ GoodiesHook.ThinkFrame.HurryUp = function()
 	local lapcount = (CV_FindVar("numlaps").value) or (mapheaderinfo[gamemap].numlaps) or 4
 
 	for p in players.iterate do
+		local mo = p.mo
 		if (p.laps >= lapcount or p.pflags & PF_FINISHED)
 		and not finished then
 			local hurrymusic = gd.overtime_musics[P_RandomRange(1, #gd.overtime_musics)]
@@ -23,7 +33,7 @@ GoodiesHook.ThinkFrame.HurryUp = function()
 			S_StartSound(nil,43)
 			P_StartQuake(3*FRACUNIT, -1)
 			if not p.hurryplayedsound then p.hurryplayedsound = false end
-			p.mo.hurry_voice = true
+			mo.hurry_voice = true
 			finished = true
 		end
 	end

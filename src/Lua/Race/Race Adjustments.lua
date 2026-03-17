@@ -1,3 +1,19 @@
+--Localize to optimize
+local GTR_RACE = GTR_RACE
+local TICRATE = TICRATE
+local R_PointToAngle2 = R_PointToAngle2
+local P_InstaThrust = P_InstaThrust
+local P_DamageMobj = P_DamageMobj
+local P_PlayerCanDamage = P_PlayerCanDamage
+local P_SetObjectMomZ = P_SetObjectMomZ
+local S_StartSound = S_StartSound
+local SH_FORCE = SH_FORCE
+local SH_FORCEHP = SH_FORCEHP
+local SH_ELEMENTAL = SH_ELEMENTAL
+local MT_SPINFIRE = MT_SPINFIRE
+local MT_PLAYER = MT_PLAYER
+local FU = FU
+
 --Prevent damage on countdown
 local function RaceCountdownNoDMG(mo, mo2)
 	if not (gametyperules & GTR_RACE) then return end

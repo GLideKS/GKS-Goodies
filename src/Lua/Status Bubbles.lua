@@ -1,6 +1,20 @@
 --All these stuff to sync chatactive and menu active per player.
 --Ty Epix
 
+SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS", "SPR_GD_TERMINAL",
+"MT_GD_BUBBLE", "S_GD_BUBBLE")
+
+--Localize to optimize
+local COM_AddCommand = COM_AddCommand
+local COM_BufInsertText = COM_BufInsertText
+local SPR_GD_CHATBUBBLE = SPR_GD_CHATBUBBLE
+local SPR_GD_OPTIONS = SPR_GD_OPTIONS
+local SPR_GD_TERMINAL = SPR_GD_TERMINAL
+local MT_GD_BUBBLE = MT_GD_BUBBLE
+local S_GD_BUBBLE = S_GD_BUBBLE
+local FU = FU
+local TICRATE = TICRATE
+
 local old_menuactive = false
 local old_chatactive = false
 local consoleactive = false
@@ -65,9 +79,6 @@ addHook("KeyUp", closeconsole)
 
 --Main Bubble Thinker
 
-SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS", "SPR_GD_TERMINAL",
-"MT_GD_BUBBLE", "S_GD_BUBBLE")
-
 states[S_GD_BUBBLE] = {SPR_NULL, FF_ANIMATE|FF_FULLBRIGHT|A, -1, nil, 2, TICRATE/2, S_GD_BUBBLE}
 mobjinfo[MT_GD_BUBBLE] = {
     doomednum = -1,
@@ -80,51 +91,55 @@ mobjinfo[MT_GD_BUBBLE] = {
 
 --Chase always the player
 local function bubblefollow(mo)
-    if not ((mo.target and mo.target.valid and mo.target.player) and (
-        mo.target.player.menuactive
-        or mo.target.player.chatactive
-        or mo.target.player.consoleactive
+    local t = mo.target
+    local p = t.player
+    if not ((t and t.valid and p) and (
+        p.menuactive
+        or p.chatactive
+        or p.consoleactive
     )) then
         P_RemoveMobj(mo)
         return
     end
 
-    local target = mo.target
-    local p = mo.target.player
+    if mo.dontdrawforviewmobj != t then mo.dontdrawforviewmobj = t end --Don't draw in first person
 
-    local f = P_MobjFlip(target)
+    --Cache target's stuff
+    local f = P_MobjFlip(t) --flip
+	local tx, ty, tz = t.x, t.y, t.z+(f*(t.height+(5*t.scale))) --position
     local sprite = (p.consoleactive and SPR_GD_TERMINAL)
                 or (p.menuactive and SPR_GD_OPTIONS)
                 or (p.chatactive and SPR_GD_CHATBUBBLE)
-    local scale = target.scale*3/2
+    local tscale = t.scale*3/2
 
-    P_MoveOrigin(mo, target.x, target.y, target.z+(f*(target.height+(5*target.scale))))
-    if mo.sprite != sprite then mo.sprite = sprite end
-    if mo.scale != scale then mo.scale = scale end
-    if mo.dontdrawforviewmobj != target then mo.dontdrawforviewmobj = target end --Don't draw in first person
-
-	--Flip Checks
-	if P_MobjFlip(target) == -1 then
+    --Flip Checks
+	if P_MobjFlip(t) == -1 then
 		if not (mo.eflags & MFE_VERTICALFLIP) then
 			mo.eflags = $|MFE_VERTICALFLIP
 		end
 	elseif (mo.eflags & MFE_VERTICALFLIP) then
 		mo.eflags = $ & ~MFE_VERTICALFLIP
 	end
+
+    --Only match to target's if a position, angle and scale difference is found
+	if (mo.x - tx) or (mo.y - ty) or (mo.z - tz) then P_MoveOrigin(mo, tx, ty, tz) end
+    if mo.sprite != sprite then mo.sprite = sprite end
+	if mo.scale - tscale then mo.scale = tscale end
 end
 
 --Spawn the bubble if the player is doing one of these actions
 GoodiesHook.PlayerThink.Bubble = function (p)
-    if not (p and p.mo and p.mo.valid) then return end
+    local mo = p.mo
+    if not (mo and mo.valid) then return end
 
     if (p.consoleactive or p.menuactive or p.chatactive) then
-        if p.mo.bubblespawn then return end
-        local f = P_MobjFlip(p.mo)
-        local bubble = P_SpawnMobj(p.mo.x, p.mo.y, p.mo.z+(f*(p.mo.height+(5*p.mo.scale))), MT_GD_BUBBLE)
-        bubble.target = p.mo
-        p.mo.bubblespawn = true
+        if mo.bubblespawn then return end
+        local f = P_MobjFlip(mo)
+        local bubble = P_SpawnMobj(mo.x, mo.y, mo.z+(f*(mo.height+(5*mo.scale))), MT_GD_BUBBLE)
+        bubble.target = mo
+        mo.bubblespawn = true
     else
-        p.mo.bubblespawn = false
+        mo.bubblespawn = false
     end
 end
 

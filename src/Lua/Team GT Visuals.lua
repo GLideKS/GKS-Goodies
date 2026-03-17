@@ -1,5 +1,50 @@
 local GoodiesHook = GoodiesHook
 
+SafeFreeslot(
+"MT_GKS_FLAGHOLD",
+"S_GKS_FLAGHOLD"
+)
+
+--Localize for optimization
+local P_RandomRange = P_RandomRange
+local P_RemoveMobj = P_RemoveMobj
+local P_MobjFlip = P_MobjFlip
+local P_MoveOrigin = P_MoveOrigin
+local P_SpawnVisualFlag = P_SpawnVisualFlag
+local P_SpawnMobj = P_SpawnMobj
+local P_IsObjectOnGround = P_IsObjectOnGround
+local GTR_TEAMS = GTR_TEAMS
+local GTR_TEAMFLAGS = GTR_TEAMFLAGS
+local MT_GKS_FLAGHOLD = MT_GKS_FLAGHOLD
+local MT_SUPERSPARK = MT_SUPERSPARK
+local MT_EFIREWORK = MT_EFIREWORK
+local MT_PLAYER = MT_PLAYER
+local S_GKS_FLAGHOLD = S_GKS_FLAGHOLD
+local S_EFIREWORK0 = S_EFIREWORK0
+local MFE_VERTICALFLIP = MFE_VERTICALFLIP
+local FU = FU
+
+local SKINCOLOR_WAVE = SKINCOLOR_WAVE
+local SKINCOLOR_COBALT = SKINCOLOR_COBALT
+local SKINCOLOR_SAPPHIRE = SKINCOLOR_SAPPHIRE
+local SKINCOLOR_CORNFLOWER = SKINCOLOR_CORNFLOWER
+local SKINCOLOR_BLUE = SKINCOLOR_BLUE
+local SKINCOLOR_GALAXY = SKINCOLOR_GALAXY
+local SKINCOLOR_DAYBREAK = SKINCOLOR_DAYBREAK
+local SKINCOLOR_CERULEAN = SKINCOLOR_CERULEAN
+local SKINCOLOR_MARINE = SKINCOLOR_MARINE
+local SKINCOLOR_SKY = SKINCOLOR_SKY
+local SKINCOLOR_OCEAN = SKINCOLOR_OCEAN
+
+local SKINCOLOR_RUBY = SKINCOLOR_RUBY
+local SKINCOLOR_CHERRY = SKINCOLOR_CHERRY
+local SKINCOLOR_SALMON = SKINCOLOR_SALMON
+local SKINCOLOR_PEPPER = SKINCOLOR_PEPPER
+local SKINCOLOR_RED = SKINCOLOR_RED
+local SKINCOLOR_CRIMSON = SKINCOLOR_CRIMSON
+local SKINCOLOR_GARNET = SKINCOLOR_GARNET
+local SKINCOLOR_KETCHUP = SKINCOLOR_KETCHUP
+
 GKSGoodies.TeamColors = {
 	--List of blue color variants for the Blue Team
 	blue = {
@@ -52,10 +97,6 @@ local function AssignColor(mo)
 end
 
 --Main visual flag hold object
-SafeFreeslot(
-"MT_GKS_FLAGHOLD",
-"S_GKS_FLAGHOLD"
-)
 
 states[S_GKS_FLAGHOLD] = {SPR_NULL, FF_PAPERSPRITE|A, -1, nil, nil, nil, S_GKS_FLAGHOLD}
 mobjinfo[MT_GKS_FLAGHOLD] = {
@@ -66,40 +107,45 @@ mobjinfo[MT_GKS_FLAGHOLD] = {
     flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP
 }
 
-local MT_GKS_FLAGHOLD = MT_GKS_FLAGHOLD
-
 --Chase always the player
 local function flaghold_behavior(mo)
-    local target = mo.target
-    local p = target.player
-    if not (target and p and p.gotflag) then
+    local t = mo.target
+    local p = t.player
+    if not (t and p and p.gotflag) then
         P_RemoveMobj(mo)
         return
     end
 
-    local f = P_MobjFlip(target)
-    local x, y = cos(p.drawangle),sin(p.drawangle)
+	if mo.dontdrawforviewmobj != t then mo.dontdrawforviewmobj = t end --Don't draw in first person
 
-    mo.dontdrawforviewmobj = target --Don't draw in first person
-	P_MoveOrigin(mo, target.x+(25*-x), target.y+(25*-y), target.z+(f*(target.height/3)))
-	mo.angle = target.player.drawangle
-	mo.spriteroll = target.spriteroll
-	mo.scale = target.scale
+	--Cache target's stuff
+    local f = P_MobjFlip(t) --flip
+    local x, y = cos(p.drawangle),sin(p.drawangle) --position relative to angle
+	local tx, ty, tz = t.x+(25*-x), t.y+(25*-y), t.z+(f*(t.height/3)) --position
+	local tscale = t.scale --scale
+	local tangle = t.angle --scale
 
 	--Flip Checks
-	if P_MobjFlip(target) == -1 then
+	if f == -1 then
 		if not (mo.eflags & MFE_VERTICALFLIP) then
 			mo.eflags = $|MFE_VERTICALFLIP
 		end
 	elseif (mo.eflags & MFE_VERTICALFLIP) then
 		mo.eflags = $ & ~MFE_VERTICALFLIP
 	end
+
+	--Only match to target's if a position, angle and scale difference is found
+	if (mo.x - tx) or (mo.y - ty) or (mo.z - tz) then P_MoveOrigin(mo, tx, ty, tz) end
+	if mo.angle - tangle then mo.angle = tangle end
+	if mo.scale - tscale then mo.scale = tscale end
 end
 
 --Spawn the flag if the player got the flag
 GoodiesHook.PlayerThink.FlagHold = function (p)
-    if not (p and p.mo and p.mo.valid) then return end
+	local mo = p.mo
+    if not (p and mo and mo.valid) then return end
     if not p.gotflag then return end
+	if mo.flagmobj then return end
     P_SpawnVisualFlag(p)
 end
 

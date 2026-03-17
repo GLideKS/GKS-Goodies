@@ -2,12 +2,17 @@
 
 SafeFreeslot("MT_EFIREWORK","S_EFIREWORK0","S_EFIREWORK1","S_EFIREWORK2","S_EFIREWORK3")
 
-function A_SetSkinFirework(fw, var1, var2)
+local MT_EFIREWORK = MT_EFIREWORK
+local S_EFIREWORK0 = S_EFIREWORK0
+local S_EFIREWORK1 = S_EFIREWORK1
+local S_EFIREWORK2 = S_EFIREWORK2
+
+function A_SetSkinFirework(fw)
 	S_StartSound(fw, sfx_s227)
 	fw.skin = "sonic"
 end
 
-function A_AdvFireworkFrame1(fw, var1, var)
+function A_AdvFireworkFrame1(fw)
 	S_StartSound(fw, sfx_s3kb3)
 	-- Without the below, the object is an MT_NULL (and the object errors)
 	fw.sprite = SPR_PLAY
@@ -16,14 +21,14 @@ function A_AdvFireworkFrame1(fw, var1, var)
 	fw.momz = fw.speed*2
 end
 
-function A_AdvFireworkFrame2(fw, var1, var)
+function A_AdvFireworkFrame2(fw)
 	fw.sprite = SPR_PLAY
     fw.sprite2 = SPR2_XTRA
 	fw.frame = E|FF_FULLBRIGHT
 	fw.momz = 1+fw.speed/2
 end
 
-function A_AdvFireworkFrame3(fw, var1, var)
+function A_AdvFireworkFrame3(fw)
 	fw.sprite = SPR_PLAY
     fw.sprite2 = SPR2_XTRA
 	fw.frame = E|FF_FULLBRIGHT

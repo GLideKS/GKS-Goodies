@@ -18,6 +18,12 @@ GKSGoodies.prefixcolors = {
 	["inverted"] = "\x8F"
 }
 
+--Localize to optimize
+local S_StartSound = S_StartSound
+local P_RandomRange = P_RandomRange
+local chatprintf = chatprintf
+local TICRATE = TICRATE
+
 GoodiesHook.ThinkFrame.Messages = function()
 	if not (netgame and multiplayer) then return end
 

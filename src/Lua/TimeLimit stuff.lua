@@ -2,6 +2,19 @@ local gd = GKSGoodies
 local LowTime_Trigger = 30*TICRATE --which seconds remaining will the music trigger
 local settings = GKSGoodies.serversettings --settings of the server
 
+--Localize to optimize
+local S_MusicName = S_MusicName
+local S_ChangeGlobalMusic = S_ChangeGlobalMusic
+local S_StartSound = S_StartSound
+local P_RandomChance = P_RandomChance
+local P_RandomRange = P_RandomRange
+local GS_LEVEL = GS_LEVEL
+local GTR_TIMELIMIT = GTR_TIMELIMIT
+local GTR_TEAMFLAGS = GTR_TEAMFLAGS
+local GTR_OVERTIME = GTR_OVERTIME
+local FU = FU
+local TICRATE = TICRATE
+
 --Get how many time is left
 local function getRemainingTics()
     local totalTics = timelimit * 60 * TICRATE
@@ -15,7 +28,7 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
 	if not gamemap then return end
-	
+
 	--Did the player joined mid game? play the current music and weather going on
 	for p in players.iterate do
 		if gd.lowtime and S_MusicName(p) != gd.currentmusicplaying then
@@ -25,9 +38,9 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 			S_ChangeGlobalMusic(gd.currentmusicplaying, globalweather, globallevelskynum)
 		end
 	end
-	
+
 	if not (gametyperules & GTR_TIMELIMIT) then return end
-	
+
 	local ptsr_chance = P_RandomChance(FU/7) --around 14% chance. very low
 	--Low Time
 	if ((timelimit and (getRemainingTics() > 0 and (getRemainingTics() <= LowTime_Trigger)))
@@ -37,9 +50,9 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 		S_ChangeGlobalMusic(lowtmmus)
 		gd.lowtime = true
 	end
-	
+
 	if not (gametyperules & GTR_OVERTIME) then return end
-	
+
 	--Overtime
 	if ((timelimit and getRemainingTics() == 0)
 	or ((redscore == pointlimit-1 and bluescore == pointlimit-1) and (gametyperules & GTR_TEAMFLAGS)))

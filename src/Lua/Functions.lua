@@ -1,18 +1,34 @@
 local gd = GKSGoodies
 
+--Localize for optimization
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_SwitchWeather = P_SwitchWeather
+local P_SetSkyboxMobj = P_SetSkyboxMobj
+local P_SetupLevelSky = P_SetupLevelSky
+local P_RandomRange = P_RandomRange
+local P_PlayerInPain = P_PlayerInPain
+local S_ChangeMusic = S_ChangeMusic
+local S_StartSound = S_StartSound
+local FF_PAPERSPRITE = FF_PAPERSPRITE
+
 ---Spawns a flag for the player
 ---@param p player_t
 local function P_SpawnVisualFlag(p)
-if (p.flagmobj and p.flagmobj.valid) then return end
-	p.flagmobj = P_SpawnMobjFromMobj(p.mo, 0,0,0, MT_GKS_FLAGHOLD)
-	p.flagmobj.target = p.mo
-	p.flagmobj.angle = p.mo.angle
+	local mo = p.mo
+
+	if (mo.flagmobj and mo.flagmobj.valid) then return end
+
+	mo.flagmobj = P_SpawnMobjFromMobj(mo, 0,0,0, MT_GKS_FLAGHOLD)
+	mo.flagmobj.target = mo
+	mo.flagmobj.angle = mo.angle
+
 	if p.ctfteam == 1 then --Red Team
-		p.flagmobj.sprite = SPR_BFLG
+		mo.flagmobj.sprite = SPR_BFLG
 	elseif p.ctfteam == 2 then --Blue Team
-		p.flagmobj.sprite = SPR_RFLG
+		mo.flagmobj.sprite = SPR_RFLG
 	end
-    p.flagmobj.frame = FF_PAPERSPRITE|B
+
+    mo.flagmobj.frame = FF_PAPERSPRITE|B
 end
 
 --Changes the music for everyone. also you can set weather and sky for everyone if desired
