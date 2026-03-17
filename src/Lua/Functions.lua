@@ -6,6 +6,7 @@ local function P_SpawnVisualFlag(p)
 if (p.flagmobj and p.flagmobj.valid) then return end
 	p.flagmobj = P_SpawnMobjFromMobj(p.mo, 0,0,0, MT_GKS_FLAGHOLD)
 	p.flagmobj.target = p.mo
+	p.flagmobj.angle = p.mo.angle
 	if p.ctfteam == 1 then --Red Team
 		p.flagmobj.sprite = SPR_BFLG
 	elseif p.ctfteam == 2 then --Blue Team
