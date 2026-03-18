@@ -85,9 +85,9 @@ GoodiesHook.PlayerSpawn.TeamColorVariant = function(p)
 end
 
 local function AssignColor(mo)
+	if not (gametyperules & GTR_TEAMS) then return end
 	local p = mo.player
 	if not (p and mo and mo.valid) then return end
-	if not (gametyperules & GTR_TEAMS) then return end
 
 	if p.ctfteam == 1 then
 		if p.gd_redvariant and mo.color != p.gd_redvariant then mo.color = p.gd_redvariant end
@@ -142,6 +142,7 @@ end
 
 --Spawn the flag if the player got the flag
 GoodiesHook.PlayerThink.FlagHold = function (p)
+	if not (gametyperules & GTR_TEAMFLAGS) then return end
 	local mo = p.mo
     if not (p and mo and mo.valid) then return end
     if not p.gotflag then return end
@@ -182,14 +183,13 @@ local DoFirework = function(mo)
 end
 
 GoodiesHook.PlayerThink.CapturedFlag = function(p)
+	if not (gametyperules & GTR_TEAMFLAGS) then return end
+	if CBW_Battle then return end --BattleMod already has this
+
 	local pmo = p.mo
-	local pstate = p.playerstate
 	local fteam = p.ctfteam
 
-	if CBW_Battle then return end --BattleMod already has this
-	if not (gametyperules & GTR_TEAMFLAGS) then return end
-	if not (p and pmo and pmo.valid) then return end
-	if (pstate & PST_DEAD) then return end
+	if not (p and pmo and pmo.valid and pmo.health) then return end
 	if not P_IsObjectOnGround(pmo) then return end
 
 	--secondary gotflag check since p.gotflag turns 0 before the playerthink

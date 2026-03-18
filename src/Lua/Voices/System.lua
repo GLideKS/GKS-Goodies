@@ -22,11 +22,13 @@ local GTR_RACE = GTR_RACE
 local PF_FINISHED = PF_FINISHED
 
 GoodiesHook.PlayerThink.VoicesSys = function(p)
+	if not (gametyperules & GTR_RACE) then return end
+	if not (p.mo and p.mo.valid) then return end --previous checks
+
 	local check_lapcount = (CV_FindVar("numlaps").value) or (mapheaderinfo[gamemap].numlaps) or 4
 	local voices_toggle = CV_FindVar("race_charactervoices") and CV_FindVar("race_charactervoices").value
 	local mo = p.mo
 
-	if not (mo and mo.valid and (gametyperules & GTR_RACE)) then return end --previous checks
 	if voices_toggle and GKSR_Voices[mo.skin] then
 /*--------------GOAL SOUNDS---------------*/
 		if p.laps >= check_lapcount or p.pflags & PF_FINISHED then

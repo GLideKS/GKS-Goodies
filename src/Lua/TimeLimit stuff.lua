@@ -26,6 +26,7 @@ end
 --Main Overtime and lowtime trigger
 GoodiesHook.ThinkFrame.timelimitchanges = function()
 	if gamestate != GS_LEVEL then return end
+	if not (gametyperules & GTR_TIMELIMIT) then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
 	if not gamemap then return end
 
@@ -38,8 +39,6 @@ GoodiesHook.ThinkFrame.timelimitchanges = function()
 			S_ChangeGlobalMusic(gd.currentmusicplaying, globalweather, globallevelskynum)
 		end
 	end
-
-	if not (gametyperules & GTR_TIMELIMIT) then return end
 
 	local ptsr_chance = P_RandomChance(FU/7) --around 14% chance. very low
 	--Low Time

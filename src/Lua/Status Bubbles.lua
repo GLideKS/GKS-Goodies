@@ -129,9 +129,9 @@ end
 
 --Spawn the bubble if the player is doing one of these actions
 GoodiesHook.PlayerThink.Bubble = function (p)
-    local mo = p.mo
-    if not (mo and mo.valid) then return end
+    if not (p.mo and p.mo.valid) then return end
 
+    local mo = p.mo
     if (p.consoleactive or p.menuactive or p.chatactive) then
         if mo.bubblespawn then return end
         local f = P_MobjFlip(mo)
