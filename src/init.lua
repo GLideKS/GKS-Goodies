@@ -25,9 +25,6 @@ dofile("Globals.lua")
 dofile("Functions.lua")
 dofile(libs.."Info_Fireworks.lua")
 
-local voicesdir = "Voices/" --Character voices
-dofile(voicesdir.."System")
-
 local racedir = "Race/" -- Race stuff
 dofile(racedir.."Race Adjustments")
 dofile(racedir.."Hurry Up.lua")

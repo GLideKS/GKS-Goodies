@@ -13,7 +13,6 @@ The point of this Sonic Robo Blast 2 addon is to overall make the gamemodes and 
 - **Overtime and low time music.** on time limit or point limit gamemodes, the music will change according to the situation such as match point, 30 seconds left or overtime. Also applies on Race gametypes when a player finishes the race and the countdown shows up, makes an earthquake and changes the music. This is not available on BattleMod since already counts one.
 - **Visual features** like flag carrying, score visuals on captured flag (from BattleMod), etc.
 - **[Race] Non-spin headstart**. Kinda annoying when spin characters are the only ones who can do a headstart with spindash. let's give non-spin characters a chance! You can disable this feature if desired.
-- **[Race] Character voices** for all vanilla characters, also supports custom characters via external script. you can turn on or off with `race_charactervoices` command.
 - **[Race] start music** like in Mario Kart, a racing start music will be played on each map load.
 - **[Race] Damage prevention on countdown.** If you don't like this feature, you can disable it with `race_countdowndamage`
 

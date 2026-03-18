@@ -48,17 +48,6 @@ local S_ChangeGlobalMusic = function(music, weather, sky)
 	end
 end
 
---Plays a selected character voice
-local function S_PlayCharVoice(origin, charname, voiceType, playeronly)
-	if not GKSR_Voices[charname] then
-		error("The skin: "..charname.. " doesn't have any defined voices", 1)
-	end
-
-	local voice = GKSR_Voices[charname][voiceType]
-	local randomvoice = type(voice) != "table" and voice or voice[P_RandomRange(1, #voice)]
-	S_StartSound(origin, randomvoice, playeronly)
-end
-
 --Thanks luigi budd for this function
 --can @p1 damage @p2?
 --P_TagDamage, P_PlayerHitsPlayer
@@ -172,4 +161,3 @@ end
 rawset(_G, "GD_CanHurtPlayer", GD_CanHurtPlayer)
 rawset(_G, "P_SpawnVisualFlag", P_SpawnVisualFlag)
 rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)
-rawset(_G, "S_PlayCharVoice", S_PlayCharVoice)

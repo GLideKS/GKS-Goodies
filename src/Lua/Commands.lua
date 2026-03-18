@@ -104,14 +104,6 @@ CV_RegisterVar({
 	func = update_overtime
 })
 
---Command to set overtime's sky number and weather
-
-CV_RegisterVar({
-	name = "race_charactervoices",
-	defaultvalue = "On",
-	PossibleValue = CV_OnOff
-})
-
 --Commands to handle server's name on chat
 
 COM_AddCommand("prefix_name", function(p, name)
