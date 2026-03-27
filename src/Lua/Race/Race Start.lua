@@ -1,7 +1,3 @@
---Localize to optimize
-local GTR_RACE = GTR_RACE
-local S_ChangeMusic = S_ChangeMusic
-
 --Race Start music
 GoodiesHook.MapLoad.RaceStartMus = function()
 	if leveltime <= 139 and (gametyperules & GTR_RACE)

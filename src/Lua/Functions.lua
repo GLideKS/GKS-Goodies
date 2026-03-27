@@ -1,16 +1,5 @@
 local gd = GKSGoodies
 
---Localize for optimization
-local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
-local P_SwitchWeather = P_SwitchWeather
-local P_SetSkyboxMobj = P_SetSkyboxMobj
-local P_SetupLevelSky = P_SetupLevelSky
-local P_RandomRange = P_RandomRange
-local P_PlayerInPain = P_PlayerInPain
-local S_ChangeMusic = S_ChangeMusic
-local S_StartSound = S_StartSound
-local FF_PAPERSPRITE = FF_PAPERSPRITE
-
 ---Spawns a flag for the player
 ---@param p player_t
 local function P_SpawnVisualFlag(p)

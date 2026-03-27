@@ -1,13 +1,5 @@
 local setting = GKSGoodies.serversettings
 
---Localize to optimize
-local CV_FindVar = CV_FindVar
-local COM_BufInsertText = COM_BufInsertText
-local GTR_TEAMFLAGS = GTR_TEAMFLAGS
-local GTR_RINGSLINGER = GTR_RINGSLINGER
-local GTR_TAG = GTR_TAG
-local GTR_HIDEFROZEN = GTR_HIDEFROZEN
-
 local function SetValueOrDefault(cvar, num)
 	local default = {
 		timelimit = CV_FindVar("default_timelimit") and CV_FindVar("default_timelimit").value,

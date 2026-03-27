@@ -2,19 +2,6 @@ local gd = GKSGoodies
 local LowTime_Trigger = 30*TICRATE --which seconds remaining will the music trigger
 local settings = GKSGoodies.serversettings --settings of the server
 
---Localize to optimize
-local S_MusicName = S_MusicName
-local S_ChangeGlobalMusic = S_ChangeGlobalMusic
-local S_StartSound = S_StartSound
-local P_RandomChance = P_RandomChance
-local P_RandomRange = P_RandomRange
-local GS_LEVEL = GS_LEVEL
-local GTR_TIMELIMIT = GTR_TIMELIMIT
-local GTR_TEAMFLAGS = GTR_TEAMFLAGS
-local GTR_OVERTIME = GTR_OVERTIME
-local FU = FU
-local TICRATE = TICRATE
-
 --Get how many time is left
 local function getRemainingTics()
     local totalTics = timelimit * 60 * TICRATE

@@ -3,15 +3,6 @@ local GoodiesHook = GoodiesHook
 local settings = GKSGoodies.serversettings
 local finished = false
 
---Localize to optimize
-local PF_FINISHED = PF_FINISHED
-local GTR_RACE = GTR_RACE
-local GS_LEVEL = GS_LEVEL
-local S_StartSound = S_StartSound
-local CV_FindVar = CV_FindVar
-local P_RandomRange = P_RandomRange
-local P_StartQuake = P_StartQuake
-
 GoodiesHook.NetVars.Finished = function(net)
 	finished = net($)
 end

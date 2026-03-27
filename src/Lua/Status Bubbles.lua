@@ -3,17 +3,11 @@
 
 SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS", "SPR_GD_TERMINAL",
 "MT_GD_BUBBLE", "S_GD_BUBBLE")
-
---Localize to optimize
-local COM_AddCommand = COM_AddCommand
-local COM_BufInsertText = COM_BufInsertText
 local SPR_GD_CHATBUBBLE = SPR_GD_CHATBUBBLE
 local SPR_GD_OPTIONS = SPR_GD_OPTIONS
 local SPR_GD_TERMINAL = SPR_GD_TERMINAL
 local MT_GD_BUBBLE = MT_GD_BUBBLE
 local S_GD_BUBBLE = S_GD_BUBBLE
-local FU = FU
-local TICRATE = TICRATE
 
 local old_menuactive = false
 local old_chatactive = false
