@@ -102,29 +102,15 @@ local function bubblefollow(mo)
         return
     end
 
-    if mo.dontdrawforviewmobj != t then mo.dontdrawforviewmobj = t end --Don't draw in first person
-
     --Cache target's stuff
-    local f = P_MobjFlip(t) --flip
-	local tx, ty, tz = t.x, t.y, t.z+(f*(t.height+(5*t.scale))) --position
+	local z = t.height+(5*t.scale) --position
     local sprite = (p.consoleactive and SPR_GD_TERMINAL)
                 or (p.menuactive and SPR_GD_OPTIONS)
                 or (p.chatactive and SPR_GD_CHATBUBBLE)
-    local tscale = t.scale*3/2
 
-    --Flip Checks
-	if P_MobjFlip(t) == -1 then
-		if not (mo.eflags & MFE_VERTICALFLIP) then
-			mo.eflags = $|MFE_VERTICALFLIP
-		end
-	elseif (mo.eflags & MFE_VERTICALFLIP) then
-		mo.eflags = $ & ~MFE_VERTICALFLIP
-	end
-
-    --Only match to target's if a position, angle and scale difference is found
-	if (mo.x - tx) or (mo.y - ty) or (mo.z - tz) then P_MoveOrigin(mo, tx, ty, tz) end
+    --Follow the object
+	GD_FollowMobj(mo, 0, 0, z, t.scale*3/2)
     if mo.sprite != sprite then mo.sprite = sprite end
-	if mo.scale - tscale then mo.scale = tscale end
 end
 
 --Spawn the bubble if the player is doing one of these actions
@@ -135,8 +121,10 @@ GoodiesHook.PlayerThink.Bubble = function (p)
     if (p.consoleactive or p.menuactive or p.chatactive) then
         if mo.bubblespawn then return end
         local f = P_MobjFlip(mo)
-        local bubble = P_SpawnMobj(mo.x, mo.y, mo.z+(f*(mo.height+(5*mo.scale))), MT_GD_BUBBLE)
+        local bubble = P_SpawnMobjFromMobj(mo, 0 , 0, f*(mo.height+(5*mo.scale)), MT_GD_BUBBLE)
         bubble.target = mo
+        bubble.height = mo.height
+        bubble.eflags = mo.eflags
         mo.bubblespawn = true
     else
         mo.bubblespawn = false

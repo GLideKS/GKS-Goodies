@@ -116,37 +116,20 @@ local function flaghold_behavior(mo)
         return
     end
 
-	if mo.dontdrawforviewmobj != t then mo.dontdrawforviewmobj = t end --Don't draw in first person
-
 	--Cache target's stuff
-    local f = P_MobjFlip(t) --flip
     local x, y = cos(p.drawangle),sin(p.drawangle) --position relative to angle
-	local tx, ty, tz = t.x+(25*-x), t.y+(25*-y), t.z+(f*(t.height/3)) --position
-	local tscale = t.scale --scale
-	local tangle = t.angle --scale
+	local tx, ty, tz = (25*-x), (25*-y), t.height/3 --position
 
-	--Flip Checks
-	if f == -1 then
-		if not (mo.eflags & MFE_VERTICALFLIP) then
-			mo.eflags = $|MFE_VERTICALFLIP
-		end
-	elseif (mo.eflags & MFE_VERTICALFLIP) then
-		mo.eflags = $ & ~MFE_VERTICALFLIP
-	end
-
-	--Only match to target's if a position, angle and scale difference is found
-	if (mo.x - tx) or (mo.y - ty) or (mo.z - tz) then P_MoveOrigin(mo, tx, ty, tz) end
-	if mo.angle - tangle then mo.angle = tangle end
-	if mo.scale - tscale then mo.scale = tscale end
+	--Follow the player
+	GD_FollowMobj(mo, tx, ty, tz, t.scale, true)
 end
 
 --Spawn the flag if the player got the flag
 GoodiesHook.PlayerThink.FlagHold = function (p)
 	if not (gametyperules & GTR_TEAMFLAGS) then return end
-	local mo = p.mo
-    if not (p and mo and mo.valid) then return end
+    if not (p and p.mo and p.mo.valid) then return end
     if not p.gotflag then return end
-	if mo.flagmobj then return end
+	if p.mo.flagmobj then return end
     P_SpawnVisualFlag(p)
 end
 

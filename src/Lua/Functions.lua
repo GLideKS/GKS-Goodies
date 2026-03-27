@@ -18,9 +18,12 @@ local function P_SpawnVisualFlag(p)
 
 	if (mo.flagmobj and mo.flagmobj.valid) then return end
 
-	mo.flagmobj = P_SpawnMobjFromMobj(mo, 0,0,0, MT_GKS_FLAGHOLD)
+	local x, y = cos(p.drawangle),sin(p.drawangle) --position relative to angle
+	local tx, ty, tz = (25*-x), (25*-y), mo.height/3 --position
+	mo.flagmobj = P_SpawnMobjFromMobj(mo, tx, ty, tz, MT_GKS_FLAGHOLD)
 	mo.flagmobj.target = mo
 	mo.flagmobj.angle = mo.angle
+	mo.flagmobj.eflags = mo.eflags
 
 	if p.ctfteam == 1 then --Red Team
 		mo.flagmobj.sprite = SPR_BFLG
@@ -158,6 +161,43 @@ local function GD_CanHurtPlayer(p1,p2,nobs)
 	return allowhurt
 end
 
+---Follows a mobj's target position, scale and angle if desired
+---@param mo mobj_t
+---@param xadjust fixed_t
+---@param yadjust fixed_t
+---@param zadjust fixed_t
+---@param scale any
+---@param follow_angle any
+local function GD_FollowMobj(mo, xadjust, yadjust, zadjust, scale, follow_angle)
+	if not mo.target then return end
+	local f = P_MobjFlip(mo.target)
+	local pmo = mo.target
+
+	--Move the object to the target's position
+	local x,y,z = pmo.x+(xadjust or 0), pmo.y+(yadjust or 0), pmo.z + (f*zadjust)
+	if (mo.x - x) or (mo.y - y) or (mo.z - z) then
+		P_MoveOrigin(mo, x, y, z)
+	end
+
+	--Copy the angle if desired
+	if follow_angle then
+		if mo.angle != pmo.player.drawangle then mo.angle = pmo.player.drawangle end
+	end
+
+	--Copy other visual properties
+	if mo.spriteroll != pmo.spriteroll then mo.spriteroll = pmo.spriteroll end --Follow sprite roll
+	if mo.eflags != pmo.eflags then mo.eflags = pmo.eflags end --follow eflags, mostly for flipped gravity
+	if pmo.player and mo.dontdrawforviewmobj != pmo then mo.dontdrawforviewmobj = pmo end --Don't draw in first person
+	if mo.height != pmo.height then mo.height = pmo.height end --Adjust height, mostly for flipped gravity
+
+	--Adjust Scale
+	if scale then
+		if mo.scale != scale then mo.scale = scale end
+	elseif mo.scale != pmo.scale then mo.scale = pmo.scale
+	end
+end
+
 rawset(_G, "GD_CanHurtPlayer", GD_CanHurtPlayer)
 rawset(_G, "P_SpawnVisualFlag", P_SpawnVisualFlag)
 rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)
+rawset(_G, "GD_FollowMobj", GD_FollowMobj)
