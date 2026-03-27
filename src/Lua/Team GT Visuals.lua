@@ -72,7 +72,7 @@ mobjinfo[MT_GKS_FLAGHOLD] = {
     spawnstate = S_GKS_FLAGHOLD,
     radius = 10*FU,
     height = 40*FU,
-    flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP
+    flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP|MF_SCENERY
 }
 
 --Chase always the player
