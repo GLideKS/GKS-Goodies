@@ -26,6 +26,7 @@ rawset(_G, "GKSGoodies", {
 --Hook functions to pack everything in a single addHook for each
 local GoodiesHook = {
     PreThinkFrame = {},
+	PostThinkFrame = {},
 	ThinkFrame = {},
 	PlayerSpawn = {},
     PlayerThink = {},
