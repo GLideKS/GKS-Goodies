@@ -114,24 +114,21 @@ local function bubblefollow(mo)
 end
 
 --Spawn the bubble if the player is doing one of these actions
-GoodiesHook.PostThinkFrame.Bubble = function()
-    for p in players.iterate do
-        if not (p.mo and p.mo.valid) then continue end
+GoodiesHook.PlayerThink.Bubble = function (p)
+    if not (p.mo and p.mo.valid) then return end
 
-        local mo = p.mo
-        if (p.consoleactive or p.menuactive or p.chatactive) then
-            if not mo.bubble then
-                local f = P_MobjFlip(mo)
-                mo.bubble = P_SpawnMobjFromMobj(mo, 0 , 0, f*(mo.height+(5*mo.scale)), MT_GD_BUBBLE)
-                mo.bubble.target = mo
-                mo.bubble.height = mo.height
-                mo.bubble.eflags = mo.eflags
-            elseif mo.bubble.valid then
-                bubblefollow(mo.bubble)
-            end
-        elseif mo.bubble and mo.bubble.valid then
-            P_RemoveMobj(mo.bubble)
-            mo.bubble = nil
-        end
+    local mo = p.mo
+    if (p.consoleactive or p.menuactive or p.chatactive) then
+        if mo.bubblespawn then return end
+        local f = P_MobjFlip(mo)
+        local bubble = P_SpawnMobjFromMobj(mo, 0 , 0, f*(mo.height+(5*mo.scale)), MT_GD_BUBBLE)
+        bubble.target = mo
+        bubble.height = mo.height
+        bubble.eflags = mo.eflags
+        mo.bubblespawn = true
+    else
+        mo.bubblespawn = false
     end
 end
+
+addHook("MobjThinker", bubblefollow, MT_GD_BUBBLE)
