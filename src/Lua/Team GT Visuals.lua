@@ -81,6 +81,7 @@ local function flaghold_behavior(mo)
     local p = t.player
     if not (t and p and p.gotflag) then
         P_RemoveMobj(mo)
+		t.flagmobj = nil
         return
     end
 
