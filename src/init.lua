@@ -30,8 +30,9 @@ dofile(racedir.."Race Adjustments")
 dofile(racedir.."Hurry Up.lua")
 dofile(racedir.."Race Start")
 
-dofile("Team GT Visuals")
-dofile("TimeLimit stuff")
+dofile("Color Variants")
+dofile("Flag Capture Firework")
+dofile("Flag Hold")
 dofile("Commands")
 dofile("Round Control") --Round Control
 dofile("tips.lua") --wip
