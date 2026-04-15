@@ -27,26 +27,14 @@ GKSGoodies.TeamColors = {
 }
 
 --Change the colors on player spawn
+
+local t = GKSGoodies.TeamColors
+
 GoodiesHook.PlayerSpawn.TeamColorVariant = function(p)
 	if not (gametyperules & GTR_TEAMS) then return end
-	local t = GKSGoodies.TeamColors
-	if p.ctfteam == 1 then
-		p.gd_redvariant = t.red[P_RandomRange(1, #t.red)]
-	elseif p.ctfteam == 2 then
-		p.gd_bluevariant = t.blue[P_RandomRange(1, #t.blue)]
-	end
+
+	if p.ctfteam == 1 then p.mo.color = t.red[P_RandomRange(1, #t.red)] --Red team
+	elseif p.ctfteam == 2 then p.mo.color = t.blue[P_RandomRange(1, #t.blue)] end --Blue team
 end
 
-local function AssignColor(mo)
-	if not (gametyperules & GTR_TEAMS) then return end
-	local p = mo.player
-	if not (p and mo and mo.valid) then return end
-
-	if p.ctfteam == 1 then
-		if p.gd_redvariant and mo.color != p.gd_redvariant then mo.color = p.gd_redvariant end
-	elseif p.ctfteam == 2 then
-		if p.gd_bluevariant and mo.color != p.gd_bluevariant then mo.color = p.gd_bluevariant end
-	end
-end
-
-addHook("MobjThinker", AssignColor, MT_PLAYER)
+addHook("PlayerSpawn", AssignColor)
