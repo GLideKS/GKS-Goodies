@@ -45,7 +45,7 @@ end
 --P_TagDamage, P_PlayerHitsPlayer
 ---@param p1 player_t
 ---@param p2 player_t
----@param nobs boolean
+---@param nobs any
 local function GD_CanHurtPlayer(p1,p2,nobs)
 	if not (p1 and p1.valid)
 	or not (p2 and p2.valid) then
