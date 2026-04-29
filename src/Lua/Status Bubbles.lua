@@ -83,6 +83,15 @@ mobjinfo[MT_GD_BUBBLE] = {
     flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP|MF_SCENERY
 }
 
+--Returns a bubble sprite depending of the player's status
+---@param p player_t
+local function StatusToSprite(p)
+    if p.consoleactive then return SPR_GD_TERMINAL
+    elseif p.menuactive then return SPR_GD_OPTIONS
+    elseif p.chatactive then return SPR_GD_CHATBUBBLE
+    end
+end
+
 --Chase always the player
 local function bubblefollow(mo)
     local t = mo.target
@@ -98,9 +107,7 @@ local function bubblefollow(mo)
 
     --Cache target's stuff
 	local z = t.height+(5*t.scale) --position
-    local sprite = (p.consoleactive and SPR_GD_TERMINAL)
-                or (p.menuactive and SPR_GD_OPTIONS)
-                or (p.chatactive and SPR_GD_CHATBUBBLE)
+    local sprite = StatusToSprite(p)
 
     --Follow the object
 	GD_FollowMobj(mo, 0, 0, z, t.scale*3/2)

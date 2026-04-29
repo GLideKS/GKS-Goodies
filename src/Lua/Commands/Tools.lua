@@ -1,3 +1,4 @@
+--Spawn an object
 COM_AddCommand("gd_spawnobject", function(p, object) --Spawn object
 	if not object then
 		CONS_Printf(p, "Spawns an object in front of the player")
