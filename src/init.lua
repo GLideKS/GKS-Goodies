@@ -1,24 +1,3 @@
-/*
-SafeFreeslot, generally good practice to avoid wasting freeslots
-regardless of how specific the freeslot name is. Also modder friendly
-from chrispy chars!!! by Lach!!!!
-*/
-rawset(_G,"SafeFreeslot",function(...)
-	local to_freeslot = {...}
-	local returning = nil
-	local single = (#to_freeslot == 1)
-	for _, item in ipairs(to_freeslot) do
-		if rawget(_G, item) == nil then
-			if single then
-				returning = freeslot(item)
-			else
-				freeslot(item)
-			end
-		end
-	end
-	return returning
-end)
-
 --Must load first
 local libs = "Libraries/"
 dofile("Globals.lua")
@@ -33,10 +12,16 @@ dofile(racedir.."Race Start")
 dofile("Team Visuals/Color Variants")
 dofile("Team Visuals/Flag Capture Firework")
 dofile("Team Visuals/Flag Hold")
-dofile("Commands")
 dofile("Round Control") --Round Control
 dofile("tips.lua") --wip
 dofile("Status Bubbles.lua")
+
+local cmd = "Commands/"
+
+dofile(cmd.."Gamemode Control")
+dofile(cmd.."Overtime Properties")
+dofile(cmd.."Server Settings")
+dofile(cmd.."Tools")
 
 --Hook Everything
 local addHook = addHook

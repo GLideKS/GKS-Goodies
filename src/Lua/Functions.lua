@@ -1,5 +1,26 @@
 local gd = GKSGoodies
 
+/*
+SafeFreeslot, generally good practice to avoid wasting freeslots
+regardless of how specific the freeslot name is. Also modder friendly
+from chrispy chars!!! by Lach!!!!
+*/
+rawset(_G,"SafeFreeslot",function(...)
+	local to_freeslot = {...}
+	local returning = nil
+	local single = (#to_freeslot == 1)
+	for _, item in ipairs(to_freeslot) do
+		if rawget(_G, item) == nil then
+			if single then
+				returning = freeslot(item)
+			else
+				freeslot(item)
+			end
+		end
+	end
+	return returning
+end)
+
 ---Spawns a flag for the player
 ---@param p player_t
 local function P_SpawnVisualFlag(p)

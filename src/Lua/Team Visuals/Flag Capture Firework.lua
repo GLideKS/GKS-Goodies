@@ -41,7 +41,7 @@ GoodiesHook.PlayerThink.CapturedFlag = function(p)
 	local pmo = p.mo
 	local fteam = p.ctfteam
 
-	if not (p and pmo and pmo.valid and pmo.health) then return end
+	if not (pmo and pmo.valid and pmo.health) then return end
 	if not P_IsObjectOnGround(pmo) then return end
 
 	--secondary gotflag check since p.gotflag turns 0 before the playerthink
