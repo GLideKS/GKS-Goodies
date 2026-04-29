@@ -23,20 +23,8 @@ rawset(_G, "GKSGoodies", {
 	}
 })
 
---Hook functions to pack everything in a single addHook for each
-local GoodiesHook = {
-    PreThinkFrame = {},
-	ThinkFrame = {},
-	PlayerSpawn = {},
-    PlayerThink = {},
-	MapLoad = {},
-	MapChange = {},
-	NetVars = {},
-}
-rawset(_G, "GoodiesHook", GoodiesHook)
-
 --Sync for everyone
-GoodiesHook.NetVars.SyncValues = function(network)
+BundleHook("NetVars", "SyncGKSGoodies", function(network)
 	GKSGoodies.currentmusicplaying = network($)
 	GKSGoodies.serversettings = network($)
 	GKSGoodies.overtime = network($)
@@ -44,4 +32,4 @@ GoodiesHook.NetVars.SyncValues = function(network)
 	GKSGoodies.serverprefix = network($)
 	GKSGoodies.tips = network($)
 	GKSGoodies.welcome = network($)
-end
+end)

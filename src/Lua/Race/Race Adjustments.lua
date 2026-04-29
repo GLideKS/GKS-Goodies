@@ -66,5 +66,5 @@ local function RacePVP(mo, mo2)
 	end
 end
 
-addHook("ShouldDamage", RaceCountdownNoDMG, MT_PLAYER)
-addHook("MobjMoveCollide", RacePVP, MT_PLAYER)
+BundleHook("ShouldDamage", "No Countdown Damage", RaceCountdownNoDMG, MT_PLAYER)
+BundleHook("MobjMoveCollide", "Race PVP", RacePVP, MT_PLAYER)

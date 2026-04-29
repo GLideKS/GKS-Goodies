@@ -10,13 +10,13 @@ local old = {
 	redscore = 0
 }
 
-GoodiesHook.NetVars.CTFScore = function(net)
+BundleHook("NetVars", "Old Score", function(net)
 	old = net($)
-end
-GoodiesHook.MapLoad.CTFScore = function()
+end)
+BundleHook("MapLoad", "Set Old Score", function()
 	old.bluescore = bluescore
 	old.redscore = redscore
-end
+end)
 
 local DoFirework = function(mo)
 	local spark = P_SpawnMobj(mo.x,mo.y,mo.z,MT_SUPERSPARK)
@@ -34,7 +34,7 @@ local DoFirework = function(mo)
 	end
 end
 
-GoodiesHook.PlayerThink.CapturedFlag = function(p)
+BundleHook("PlayerThink", "Captured Flag FireWork", function(p)
 	if not (gametyperules & GTR_TEAMFLAGS) then return end
 	if CBW_Battle then return end --BattleMod already has this
 
@@ -67,4 +67,4 @@ GoodiesHook.PlayerThink.CapturedFlag = function(p)
 		old.bluescore = bluescore
 		if not p.gotflag then pmo.isholdingflag = false end
 	end
-end
+end)

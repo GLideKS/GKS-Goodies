@@ -18,7 +18,7 @@ GKSGoodies.prefixcolors = {
 	["inverted"] = "\x8F"
 }
 
-GoodiesHook.ThinkFrame.Messages = function()
+BundleHook("ThinkFrame", "Tips", function()
 	if not (netgame and multiplayer) then return end
 
 	local prefix = GKSGoodies.serverprefix.text
@@ -40,4 +40,4 @@ GoodiesHook.ThinkFrame.Messages = function()
 		chatprintf(p, colors[prefix_color].."<"..prefix.."> "..colors["white"]..welcome_message)
 		S_StartSound(nil, welcome_sound, p)
 	end
-end
+end)

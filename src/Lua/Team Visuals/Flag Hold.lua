@@ -38,12 +38,12 @@ local function flaghold_behavior(mo)
 end
 
 --Spawn the flag if the player got the flag
-GoodiesHook.PlayerThink.FlagHold = function (p)
+BundleHook("PlayerThink", "Spawn Player Team Flag", function(p)
 	if not (gametyperules & GTR_TEAMFLAGS) then return end
     if not (p and p.mo and p.mo.valid) then return end
     if not p.gotflag then return end
 	if p.mo.flagmobj then return end
     P_SpawnVisualFlag(p)
-end
+end)
 
-addHook("MobjThinker", flaghold_behavior, MT_GKS_FLAGHOLD)
+BundleHook("MobjThinker", "Flag Hold Behavior", flaghold_behavior, MT_GKS_FLAGHOLD)

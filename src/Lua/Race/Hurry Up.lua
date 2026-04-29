@@ -1,14 +1,13 @@
 local gd = GKSGoodies
-local GoodiesHook = GoodiesHook
 local settings = GKSGoodies.serversettings
 local finished = false
 
-GoodiesHook.NetVars.Finished = function(net)
+BundleHook("NetVars", "PlayerFinished on race", function(net)
 	finished = net($)
-end
+end)
 
 --Main hurry up trigger
-GoodiesHook.ThinkFrame.HurryUp = function()
+BundleHook("ThinkFrame", "HurryUp", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if not (gamestate & GS_LEVEL) then return end
 
@@ -24,11 +23,11 @@ GoodiesHook.ThinkFrame.HurryUp = function()
 			P_StartQuake(3*FRACUNIT, -1)
 		end
 	end
-end
+end)
 
 --Show up "Hurry up!"
 local drawString
-addHook("HUD", function(v,p)
+BundleHook("HUD", "HurryUp HUD", function(v)
 	if not (gametyperules & GTR_RACE) then return end
 	if not (gamestate & GS_LEVEL) then return end
 	if not finished then return end

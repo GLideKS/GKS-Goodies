@@ -13,7 +13,7 @@ local function SetValueOrDefault(cvar, num)
 	end
 end
 
-GoodiesHook.MapLoad.RoundControl = function()
+BundleHook("MapLoad", "Round Control", function()
 	if not (isdedicatedserver or isserver) then return end
 
 	local ctf = {
@@ -52,4 +52,4 @@ GoodiesHook.MapLoad.RoundControl = function()
 			COM_BufInsertText(server,"timelimit "..tag.timelimit)
 		end
 	end
-end
+end)
