@@ -94,11 +94,11 @@ end
 
 --Chase always the player
 local function bubblefollow(mo)
-    if not ((mo.target and mo.target.valid and mo.target.player) and (
-        mo.target.player.menuactive
-        or mo.target.player.chatactive
-        or mo.target.player.consoleactive
-    )) then
+    if not (
+        (mo.target and mo.target.valid and mo.target.player)
+        and (mo.target.player.menuactive or mo.target.player.chatactive or mo.target.player.consoleactive)
+        and not mo.target.player.quittime
+    ) then
         P_RemoveMobj(mo)
         return
     end
