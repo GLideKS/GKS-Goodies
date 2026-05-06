@@ -128,12 +128,10 @@ BundleHook("PlayerThink", "Spawn Bubble", function (p)
             bubble.target = mo
             bubble.height = mo.height
             bubble.eflags = mo.eflags
-            print("bubblespawned")
             mo.bubble = true
         end
     elseif mo.bubble then
         mo.bubble = false
-        print("bubbleremoved")
     end
 end)
 
