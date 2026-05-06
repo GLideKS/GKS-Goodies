@@ -92,13 +92,14 @@ local function StatusToSprite(p)
     end
 end
 
+local function StatusCheck(p)
+    if ((p.consoleactive or p.menuactive or p.chatactive) and not p.quittime) then return true end
+    return false
+end
+
 --Chase always the player
 local function bubblefollow(mo)
-    if not (
-        (mo.target and mo.target.valid and mo.target.player)
-        and (mo.target.player.menuactive or mo.target.player.chatactive or mo.target.player.consoleactive)
-        and not mo.target.player.quittime
-    ) then
+    if not ((mo.target and mo.target.valid) and StatusCheck(mo.target.player)) then
         P_RemoveMobj(mo)
         return
     end
@@ -120,16 +121,19 @@ BundleHook("PlayerThink", "Spawn Bubble", function (p)
     if not (p.mo and p.mo.valid) then return end
 
     local mo = p.mo
-    if (p.consoleactive or p.menuactive or p.chatactive) then
-        if mo.bubblespawn then return end
-        local f = P_MobjFlip(mo)
-        local bubble = P_SpawnMobjFromMobj(mo, 0 , 0, f*(mo.height+(5*mo.scale)), MT_GD_BUBBLE)
-        bubble.target = mo
-        bubble.height = mo.height
-        bubble.eflags = mo.eflags
-        mo.bubblespawn = true
-    else
-        mo.bubblespawn = false
+    if StatusCheck(p) then
+        if not mo.bubble then
+            local f = P_MobjFlip(mo)
+            local bubble = P_SpawnMobjFromMobj(mo, 0 , 0, f*(mo.height+(5*mo.scale)), MT_GD_BUBBLE)
+            bubble.target = mo
+            bubble.height = mo.height
+            bubble.eflags = mo.eflags
+            print("bubblespawned")
+            mo.bubble = true
+        end
+    elseif mo.bubble then
+        mo.bubble = false
+        print("bubbleremoved")
     end
 end)
 
