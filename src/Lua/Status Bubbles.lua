@@ -94,16 +94,17 @@ end
 
 --Chase always the player
 local function bubblefollow(mo)
-    local t = mo.target
-    local p = t.player
-    if not ((t and t.valid and p) and (
-        p.menuactive
-        or p.chatactive
-        or p.consoleactive
+    if not ((mo.target and mo.target.valid and mo.target.player) and (
+        mo.target.player.menuactive
+        or mo.target.player.chatactive
+        or mo.target.player.consoleactive
     )) then
         P_RemoveMobj(mo)
         return
     end
+
+    local t = mo.target
+    local p = t.player
 
     --Cache target's stuff
 	local z = t.height+(5*t.scale) --position
