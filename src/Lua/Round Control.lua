@@ -13,7 +13,7 @@ local function SetValueOrDefault(cvar, num)
 	end
 end
 
-BundleHook("MapLoad", "Round Control", function()
+gBundleHook("MapLoad", "Round Control", function()
 	if not (isdedicatedserver or isserver) then return end
 
 	local ctf = {

@@ -14,7 +14,7 @@ local old_chatactive = false
 local consoleactive = false
 local old_consoleactive = false
 local luasig = "iAmLua"..P_RandomFixed()
-BundleHook("NetVars", "Random Fixed", function(n) luasig = n($); end)
+gBundleHook("NetVars", "Random Fixed", function(n) luasig = n($); end)
 
 COM_AddCommand("_menucheck", function(p, signature, status)
     if signature ~= luasig then return end
@@ -34,7 +34,7 @@ COM_AddCommand("_consolecheck", function(p, signature, status)
     p.consoleactive = (status == "true") and true or false
 end)
 
-BundleHook("PostThinkFrame", "Synced status check", function()
+gBundleHook("PostThinkFrame", "Synced status check", function()
     local p = consoleplayer
     if not (p and p.valid) then return end
 
@@ -68,8 +68,8 @@ local function closeconsole(key)
     if chatactive then return end --do not run on chat
     if consoleactive then consoleactive = false end
 end
-BundleHook("KeyDown", "Opened Console", openconsole)
-BundleHook("KeyUp", "Closed Console", closeconsole)
+gBundleHook("KeyDown", "Opened Console", openconsole)
+gBundleHook("KeyUp", "Closed Console", closeconsole)
 
 --Main Bubble Thinker
 
@@ -117,7 +117,7 @@ local function bubblefollow(mo)
 end
 
 --Spawn the bubble if the player is doing one of these actions
-BundleHook("PlayerThink", "Spawn Bubble", function (p)
+gBundleHook("PlayerThink", "Spawn Bubble", function (p)
     if not (p.mo and p.mo.valid) then return end
 
     local mo = p.mo
@@ -135,4 +135,4 @@ BundleHook("PlayerThink", "Spawn Bubble", function (p)
     end
 end)
 
-BundleHook("MobjThinker", "Bubble Follow", bubblefollow, MT_GD_BUBBLE)
+gBundleHook("MobjThinker", "Bubble Follow", bubblefollow, MT_GD_BUBBLE)

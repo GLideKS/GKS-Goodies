@@ -30,7 +30,7 @@ GKSGoodies.TeamColors = {
 
 local t = GKSGoodies.TeamColors
 
-BundleHook("PlayerSpawn", "Set Team Color", function(p)
+gBundleHook("PlayerSpawn", "Set Team Color", function(p)
 	if not (gametyperules & GTR_TEAMS) then return end
 
 	if p.ctfteam == 1 then p.mo.color = t.red[P_RandomRange(1, #t.red)] --Red team

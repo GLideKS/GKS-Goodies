@@ -24,7 +24,7 @@ rawset(_G, "GKSGoodies", {
 })
 
 --Sync for everyone
-BundleHook("NetVars", "SyncGKSGoodies", function(network)
+gBundleHook("NetVars", "SyncGKSGoodies", function(network)
 	GKSGoodies.currentmusicplaying = network($)
 	GKSGoodies.serversettings = network($)
 	GKSGoodies.overtime = network($)

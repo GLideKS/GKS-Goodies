@@ -2,12 +2,12 @@ local gd = GKSGoodies
 local settings = GKSGoodies.serversettings
 local finished = false
 
-BundleHook("NetVars", "PlayerFinished on race", function(net)
+gBundleHook("NetVars", "PlayerFinished on race", function(net)
 	finished = net($)
 end)
 
 --Main hurry up trigger
-BundleHook("ThinkFrame", "HurryUp", function()
+gBundleHook("ThinkFrame", "HurryUp", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if not (gamestate & GS_LEVEL) then return end
 
@@ -27,7 +27,7 @@ end)
 
 --Show up "Hurry up!"
 local drawString
-BundleHook("HUD", "HurryUp HUD", function(v)
+gBundleHook("HUD", "HurryUp HUD", function(v)
 	if not (gametyperules & GTR_RACE) then return end
 	if not (gamestate & GS_LEVEL) then return end
 	if not finished then return end

@@ -18,7 +18,7 @@ GKSGoodies.prefixcolors = {
 	["inverted"] = "\x8F"
 }
 
-BundleHook("ThinkFrame", "Tips", function()
+gBundleHook("ThinkFrame", "Tips", function()
 	if not (netgame and multiplayer) then return end
 
 	local prefix = GKSGoodies.serverprefix.text

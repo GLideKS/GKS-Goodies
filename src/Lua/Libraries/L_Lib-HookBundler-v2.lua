@@ -3,6 +3,8 @@
 --//// Works with any and all hook types, and *should* behave identically when multiple hooks return different things ////--
 --//// If you need to contact me, do it on the MB (do note, I don't check often at all.) ////--
 
+--Edited by GLide KS
+
 
 --> Enables the changing/removing of functions in hooks.
 --! Keep in mind they are NOT net synced.
@@ -11,15 +13,15 @@ rawset(_G, "MaliceHooksAllowChanges", false)
 --// Compat //--
 
 local MALICEHOOKVERSION = 2
-if MaliceHooksLoaded ~= nil then
-	if MaliceHooksLoaded < MALICEHOOKVERSION then
-		print("\x85\[!] Warning: The already loaded version of Hook Bundler is out of date, please update it or reach out to the mod's developer. [!]")
+if MaliceHooksLoaded_GKS ~= nil then
+	if MaliceHooksLoaded_GKS < MALICEHOOKVERSION then
+		print("\x85\[!] Warning: The already loaded version of Hook Bundler (GKS Edit) is out of date, please update it or reach out to the mod's developer. [!]")
 		print("\x85\[!] Alternatively, load this mod first. [!]")
 	end
 	return
 end
 
-rawset(_G, "MaliceHooksLoaded", MALICEHOOKVERSION)
+rawset(_G, "MaliceHooksLoaded_GKS", MALICEHOOKVERSION)
 
 
 --// Localize //--
@@ -134,6 +136,14 @@ local ExtraTypes = {
 	ShouldJingleContinue = "string"
 }
 
+local errored_funcs = {}
+local function PrintError(thisHookName, func_error) --func_error is v1 for example, as stated in the prints
+	local errormsg = "\x82\[HookBundle]\x85 Error in hook \""..thisHookName.."\":\x80 "..func_error --Hook Bundler error message
+	if errored_funcs[errormsg] then return end --Already printed? don't print it again.
+
+	print(errormsg)
+	errored_funcs[errormsg] = true
+end
 
 --// Functions //--
 
@@ -151,7 +161,7 @@ local function bundleHook(hook, hookName, hookFunction, extra)
 			addHook(hook, function(...)
 				for thisHookName, hookFunction in pairs(Hooks_NRT_NE[hook]) do
 					local success, v1 = pcall(hookFunction, ...)
-					if not success then print("\x82\[HookBundle]\x85 Error in hook \""..thisHookName.."\":\x80 "..v1) continue end
+					if not success then PrintError(thisHookName, v1) continue end
 				end
 			end)
 		end
@@ -182,8 +192,8 @@ local function bundleHook(hook, hookName, hookFunction, extra)
 
 				for thisHookName, hookFunction in pairs(Hooks_RT_NE[hook]) do
 					local success, v1, v2, v3, v4, v5, v6 = pcall(hookFunction, ...)
-					if not success then print("\x82\[HookBundle]\x85 Error in hook \""..thisHookName.."\":\x80 "..v1) continue end
 					
+					if not success then PrintError(thisHookName, v1) continue end
 					if v1 ~= nil then r1 = v1; r2 = v2; r3 = v3; r4 = v4; r5 = v5; r6 = v6 end
 				end
 
@@ -215,7 +225,7 @@ local function bundleHook(hook, hookName, hookFunction, extra)
 			addHook(hook, function(...)
 				for thisHookName, hookFunction in pairs(Hooks_NRT_E[hook][extra]) do
 					local success, v1 = pcall(hookFunction, ...)
-					if not success then print("\x82\[HookBundle]\x85 Error in hook \""..thisHookName.."\":\x80 "..v1) continue end
+					if not success then PrintError(thisHookName, v1) continue end
 				end
 			end, extra)
 		end
@@ -246,8 +256,8 @@ local function bundleHook(hook, hookName, hookFunction, extra)
 
 				for thisHookName, hookFunction in pairs(Hooks_RT_E[hook][extra]) do
 					local success, v1, v2, v3, v4, v5, v6, r7, r8 = pcall(hookFunction, ...)
-					if not success then print("\x82\[HookBundle]\x85 Error in hook \""..thisHookName.."\":\x80 "..v1) continue end
 					
+					if not success then PrintError(thisHookName, v1) continue end
 					if v1 ~= nil then r1 = v1; r2 = v2; r3 = v3; r4 = v4; r5 = v5; r6 = v6; r7 = v7; r8 = v8 end
 				end
 
@@ -279,7 +289,7 @@ local function bundleHook(hook, hookName, hookFunction, extra)
 				for p in players.iterate do
 					for thisHookName, hookFunction in pairs(Hooks_SPEC[hook]) do
 						local success, v1 = {pcall(hookFunction, p)}
-						if not success then print("\x82\[HookBundle]\x85 Error in hook \""..thisHookName.."\":\x80 "..v1) continue end
+						if not success then PrintError(thisHookName, v1) continue end
 					end
 				end
 			end)
@@ -308,7 +318,7 @@ local function bundleHook(hook, hookName, hookFunction, extra)
 				for p in players.iterate do
 					for thisHookName, hookFunction in pairs(Hooks_SPEC[hook]) do
 						local success, v1 = {pcall(hookFunction, p)}
-						if not success then print("\x82\[HookBundle]\x85 Error in hook \""..thisHookName.."\":\x80 "..v1) continue end
+						if not success then PrintError(thisHookName, v1) continue end
 					end
 				end
 			end)
@@ -333,7 +343,7 @@ local function bundleHook(hook, hookName, hookFunction, extra)
 	end
 end
 
-rawset(_G, "BundleHook", bundleHook)
+rawset(_G, "gBundleHook", bundleHook)
 
 
 --> Ideally: you do not use this, it's just here for the fun of the option, so it's not all too well thought out.
@@ -371,4 +381,4 @@ local function bundleUnhook(hook, hookName, extra)
 	end
 end
 
-rawset(_G, "BundleUnhook", bundleUnhook)
+rawset(_G, "gBundleUnhook", bundleUnhook)

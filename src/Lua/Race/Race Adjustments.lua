@@ -66,5 +66,5 @@ local function RacePVP(mo, mo2)
 	end
 end
 
-BundleHook("ShouldDamage", "No Countdown Damage", RaceCountdownNoDMG, MT_PLAYER)
-BundleHook("MobjMoveCollide", "Race PVP", RacePVP, MT_PLAYER)
+gBundleHook("ShouldDamage", "No Countdown Damage", RaceCountdownNoDMG, MT_PLAYER)
+gBundleHook("MobjMoveCollide", "Race PVP", RacePVP, MT_PLAYER)

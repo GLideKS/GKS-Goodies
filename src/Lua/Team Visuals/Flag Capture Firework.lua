@@ -10,10 +10,10 @@ local old = {
 	redscore = 0
 }
 
-BundleHook("NetVars", "Old Score", function(net)
+gBundleHook("NetVars", "Old Score", function(net)
 	old = net($)
 end)
-BundleHook("MapLoad", "Set Old Score", function()
+gBundleHook("MapLoad", "Set Old Score", function()
 	old.bluescore = bluescore
 	old.redscore = redscore
 end)
@@ -34,7 +34,7 @@ local DoFirework = function(mo)
 	end
 end
 
-BundleHook("PlayerThink", "Captured Flag FireWork", function(p)
+gBundleHook("PlayerThink", "Captured Flag FireWork", function(p)
 	if not (gametyperules & GTR_TEAMFLAGS) then return end
 	if CBW_Battle then return end --BattleMod already has this
 
