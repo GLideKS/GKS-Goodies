@@ -16,6 +16,7 @@ dofile("Team Visuals/Flag Hold")
 --dofile("Round Control")
 dofile("tips.lua") --wip
 dofile("Status Bubbles.lua")
+dofile("TimeLimit stuff.lua")
 
 local cmd = "Commands/"
 
