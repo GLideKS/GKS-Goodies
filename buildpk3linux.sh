@@ -17,5 +17,5 @@ rm -rf "./build"
 mkdir build
 
 # Main PK3
-7za u -mx5 -tzip -x@./exclude-main.txt ./build/$MAIN_NAME-Demo-$MAIN_VERSION.pk3 ./src/*
+7za u -mx5 -tzip -x@./exclude-main.txt ./build/$MAIN_NAME-Demo-$MAIN_VERSION-Server.pk3 ./src/*
 # - 7za rn ./build/$MAIN_NAME-Demo-$MAIN_VERSION.pk3 @./rename-main.txt
