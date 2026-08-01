@@ -13,13 +13,13 @@ dofile(racedir.."Race Start")
 dofile("Team Visuals/Color Variants")
 dofile("Team Visuals/Flag Capture Firework")
 dofile("Team Visuals/Flag Hold")
-dofile("Round Control") --Round Control
+--dofile("Round Control")
 dofile("tips.lua") --wip
 dofile("Status Bubbles.lua")
 
 local cmd = "Commands/"
 
-dofile(cmd.."Gamemode Control")
+--dofile(cmd.."Gamemode Control")
 dofile(cmd.."Overtime Properties")
 dofile(cmd.."Server Settings")
 dofile(cmd.."Tools")
