@@ -13,6 +13,8 @@ local old_chatactive = false
 local luasig = "iAmLua"..P_RandomFixed()
 gBundleHook("NetVars", "Random Fixed", function(n) luasig = n($); end)
 
+local bubble_scale = FU * 3 / 2
+
 COM_AddCommand("_menucheck", function(p, signature, status)
     if signature ~= luasig then return end
     if p.menuactive == nil then p.menuactive = false; end
@@ -51,6 +53,15 @@ mobjinfo[MT_GD_BUBBLE] = {
     flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP|MF_SCENERY
 }
 
+local function Set_Z(mo)
+    local capped_height = min(mo.height, FixedMul(skins[mo.skin].height, mo.scale)) -- There will be addon cases that mobj's height will be too far from the sprites so let's better cap this.
+    local yscale_offset = FixedDiv(mo.spriteyscale, mo.scale)
+
+    local height = FixedMul(capped_height, yscale_offset)
+
+    return height
+end
+
 --Returns a bubble sprite depending of the player's status
 ---@param p player_t
 local function StatusToSprite(p)
@@ -66,35 +77,28 @@ end
 
 --Chase always the player
 local function bubblefollow(mo)
-    if not ((mo.target and mo.target.valid) and StatusCheck(mo.target.player)) then
+    local t = mo.target
+    local p = t.player
+
+    if not ((t and t.valid) and StatusCheck(p)) then
         P_RemoveMobj(mo)
         return
     end
 
-    local t = mo.target
-    local p = t.player
-
-    --Cache target's stuff
-	local z = t.height+(5*t.scale) --position
-    local sprite = StatusToSprite(p)
-
-    --Follow the object
-	GD_FollowMobj(mo, 0, 0, z, t.scale*3/2)
-    if mo.sprite != sprite then mo.sprite = sprite end
+    mo.sprite = StatusToSprite(p)
+	GD_FollowMobj(mo, 0, 0, Set_Z(t))
 end
 
 --Spawn the bubble if the player is doing one of these actions
-gBundleHook("PlayerThink", "Spawn Bubble", function (p)
-    if not (p.mo and p.mo.valid) then return end
-
+gBundleHook("PlayerThink", "Spawn Bubble", function(p)
     local mo = p.mo
+    if not (mo and mo.valid) then return end
+
     if StatusCheck(p) then
         if not mo.bubble then
-            local f = P_MobjFlip(mo)
-            local bubble = P_SpawnMobjFromMobj(mo, 0 , 0, f*(mo.height+(5*mo.scale)), MT_GD_BUBBLE)
+            local bubble = P_SpawnMobjFromMobj(mo, 0, 0, Set_Z(mo), MT_GD_BUBBLE)
             bubble.target = mo
-            bubble.height = mo.height
-            bubble.eflags = mo.eflags
+            bubble.spritexscale, bubble.spriteyscale = bubble_scale, bubble_scale
             mo.bubble = true
         end
     elseif mo.bubble then
