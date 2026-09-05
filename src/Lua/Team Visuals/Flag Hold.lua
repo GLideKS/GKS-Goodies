@@ -1,14 +1,10 @@
 local pos_offset = 25 * FU -- How much will be far from the player.
 
-SafeFreeslot(
-"MT_GKS_FLAGHOLD",
-"S_GKS_FLAGHOLD"
-)
+SafeFreeslot("MT_GKS_FLAGHOLD")
 
 --Localize for optimization
 local MT_GKS_FLAGHOLD = MT_GKS_FLAGHOLD
-local S_GKS_FLAGHOLD = S_GKS_FLAGHOLD
-local FU = FU
+local S_THOK = S_THOK
 
 ---Spawns a flag for the player
 ---@param p player_t
@@ -21,24 +17,20 @@ local function P_SpawnVisualFlag(p)
     local ty = P_ReturnThrustY(mo, ang, FixedMul(- pos_offset, mo.scale))
     local tz = skins[mo.skin].height / 3
 	mo.flagmobj = P_SpawnMobjFromMobj(mo, tx, ty, tz, MT_GKS_FLAGHOLD)
-	mo.flagmobj.target = mo
-	mo.flagmobj.angle = mo.angle
 
-	if p.ctfteam == 1 then --Red Team
-		mo.flagmobj.sprite = SPR_BFLG
-	elseif p.ctfteam == 2 then --Blue Team
-		mo.flagmobj.sprite = SPR_RFLG
-	end
-
-    mo.flagmobj.frame = FF_PAPERSPRITE|B
+    local fmobj = mo.flagmobj
+	fmobj.target = mo
+	fmobj.angle = mo.angle
+    fmobj.tics = -1
+	fmobj.sprite = (p.ctfteam == 1 and SPR_BFLG) or SPR_RFLG
+    fmobj.frame = FF_PAPERSPRITE|B
 end
 
 --Main visual flag hold object
 
-states[S_GKS_FLAGHOLD] = {SPR_NULL, FF_PAPERSPRITE|A, -1, nil, nil, nil, S_GKS_FLAGHOLD}
 mobjinfo[MT_GKS_FLAGHOLD] = {
     doomednum = -1,
-    spawnstate = S_GKS_FLAGHOLD,
+    spawnstate = S_THOK,
     radius = 10*FU,
     height = 40*FU,
     flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP|MF_SCENERY
