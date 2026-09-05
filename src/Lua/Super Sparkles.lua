@@ -1,5 +1,15 @@
 local sparkle_scale = FU * 3 / 2
 
+COM_AddCommand("toggle_supersparkles", function(p)
+    if p.gd_supersparkles then
+        p.gd_supersparkles = false
+        CONS_Printf(p, "Super sparkles has been disabled for you")
+    else
+        p.gd_supersparkles = true
+        CONS_Printf(p, "Super sparkles has been enabled for you")
+    end
+end)
+
 local function SuperCheck(p)
     if p.powers[pw_super] then return true end --Vanilla Super Form
     if (p.solchar and p.solchar.istransformed) then return true end --Sol Forms
@@ -8,6 +18,11 @@ local function SuperCheck(p)
 end
 
 local function Sparkles_Func(p)
+    if p.gd_supersparkles == nil then
+        p.gd_supersparkles = true
+    end
+
+    if not p.gd_supersparkles then return end
     if (leveltime % 6) != 0 then return end
     if not SuperCheck(p) then return end
     local pmo = p.mo
