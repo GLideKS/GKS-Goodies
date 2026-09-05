@@ -17,8 +17,8 @@ local function P_SpawnVisualFlag(p)
 
 	--Cache target's stuff
     local ang = p.drawangle
-    local tx =  P_ReturnThrustX(mo, ang, FixedMul(- pos_offset, mo.scale))
-    local ty =  P_ReturnThrustY(mo, ang, FixedMul(- pos_offset, mo.scale))
+    local tx = P_ReturnThrustX(mo, ang, FixedMul(- pos_offset, mo.scale))
+    local ty = P_ReturnThrustY(mo, ang, FixedMul(- pos_offset, mo.scale))
     local tz = skins[mo.skin].height / 3
 	mo.flagmobj = P_SpawnMobjFromMobj(mo, tx, ty, tz, MT_GKS_FLAGHOLD)
 	mo.flagmobj.target = mo
@@ -57,8 +57,8 @@ local function flaghold_behavior(mo)
 
 	--Cache target's stuff
     local ang = p.drawangle
-    local tx =  P_ReturnThrustX(mo, ang, FixedMul(- pos_offset, mo.scale))
-    local ty =  P_ReturnThrustY(mo, ang, FixedMul(- pos_offset, mo.scale))
+    local tx = P_ReturnThrustX(mo, ang, FixedMul(- pos_offset, mo.scale))
+    local ty = P_ReturnThrustY(mo, ang, FixedMul(- pos_offset, mo.scale))
     local tz = skins[t.skin].height / 3
 
 	--Follow the player
