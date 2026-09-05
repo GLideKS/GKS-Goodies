@@ -21,29 +21,6 @@ rawset(_G,"SafeFreeslot",function(...)
 	return returning
 end)
 
----Spawns a flag for the player
----@param p player_t
-local function P_SpawnVisualFlag(p)
-	local mo = p.mo
-
-	if (mo.flagmobj and mo.flagmobj.valid) then return end
-
-	local x, y = cos(p.drawangle),sin(p.drawangle) --position relative to angle
-	local tx, ty, tz = (25*-x), (25*-y), mo.height/3 --position
-	mo.flagmobj = P_SpawnMobjFromMobj(mo, tx, ty, tz, MT_GKS_FLAGHOLD)
-	mo.flagmobj.target = mo
-	mo.flagmobj.angle = mo.angle
-	mo.flagmobj.eflags = mo.eflags
-
-	if p.ctfteam == 1 then --Red Team
-		mo.flagmobj.sprite = SPR_BFLG
-	elseif p.ctfteam == 2 then --Blue Team
-		mo.flagmobj.sprite = SPR_RFLG
-	end
-
-    mo.flagmobj.frame = FF_PAPERSPRITE|B
-end
-
 --Changes the music for everyone. also you can set weather and sky for everyone if desired
 ---@param music string
 ---@param weather any
@@ -200,6 +177,5 @@ local function GD_FollowMobj(mo, x, y, z)
 end
 
 rawset(_G, "GD_CanHurtPlayer", GD_CanHurtPlayer)
-rawset(_G, "P_SpawnVisualFlag", P_SpawnVisualFlag)
 rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)
 rawset(_G, "GD_FollowMobj", GD_FollowMobj)
