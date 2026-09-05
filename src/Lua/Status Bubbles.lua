@@ -5,16 +5,15 @@ SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS", "SPR_GD_TERMINAL",
 "MT_GD_BUBBLE", "S_GD_BUBBLE")
 local SPR_GD_CHATBUBBLE = SPR_GD_CHATBUBBLE
 local SPR_GD_OPTIONS = SPR_GD_OPTIONS
-local SPR_GD_TERMINAL = SPR_GD_TERMINAL
 local MT_GD_BUBBLE = MT_GD_BUBBLE
 local S_GD_BUBBLE = S_GD_BUBBLE
 
 local old_menuactive = false
 local old_chatactive = false
-local consoleactive = false
-local old_consoleactive = false
 local luasig = "iAmLua"..P_RandomFixed()
 gBundleHook("NetVars", "Random Fixed", function(n) luasig = n($); end)
+
+local bubble_scale = FU * 3 / 2
 
 COM_AddCommand("_menucheck", function(p, signature, status)
     if signature ~= luasig then return end
@@ -28,12 +27,6 @@ COM_AddCommand("_chatcheck", function(p, signature, status)
     p.chatactive = (status == "true") and true or false
 end)
 
-COM_AddCommand("_consolecheck", function(p, signature, status)
-    if signature ~= luasig then return end
-    if p.consoleactive == nil then p.consoleactive = false; end
-    p.consoleactive = (status == "true") and true or false
-end)
-
 gBundleHook("PostThinkFrame", "Synced status check", function()
     local p = consoleplayer
     if not (p and p.valid) then return end
@@ -44,32 +37,9 @@ gBundleHook("PostThinkFrame", "Synced status check", function()
     if chatactive ~= old_chatactive then
         COM_BufInsertText(p, "_chatcheck "..luasig.." "..tostring(chatactive))
     end
-    if consoleactive ~= old_consoleactive then
-        COM_BufInsertText(p, "_consolecheck "..luasig.." "..tostring(consoleactive))
-    end
     old_menuactive = menuactive
     old_chatactive = chatactive
-    old_consoleactive = consoleactive
 end)
-
-local function openconsole(key)
-    local con_key = (key.num == input.gameControlToKeyNum(GC_CONSOLE)) --We are pressing the console key again?
-                    and true or false
-    if not con_key then return end
-    if chatactive then return end --do not run on chat
-    if not consoleactive then consoleactive = true end
-end
-
-local function closeconsole(key)
-    local con_key = (key.num == input.gameControlToKeyNum(GC_CONSOLE) --We are pressing the console key again?
-                    or key.name == "escape") --Or we are pressing the escape key to exit the console
-                    and true or false
-    if not con_key then return end
-    if chatactive then return end --do not run on chat
-    if consoleactive then consoleactive = false end
-end
-gBundleHook("KeyDown", "Opened Console", openconsole)
-gBundleHook("KeyUp", "Closed Console", closeconsole)
 
 --Main Bubble Thinker
 
@@ -83,51 +53,52 @@ mobjinfo[MT_GD_BUBBLE] = {
     flags = MF_NOCLIPTHING|MF_NOCLIPHEIGHT|MF_NOGRAVITY|MF_NOBLOCKMAP|MF_SCENERY
 }
 
+local function Set_Z(mo)
+    local capped_height = min(mo.height, FixedMul(skins[mo.skin].height, mo.scale)) -- There will be addon cases that mobj's height will be too far from the sprites so let's better cap this.
+    local yscale_offset = FixedDiv(mo.spriteyscale, mo.scale)
+
+    local height = FixedMul(capped_height, yscale_offset)
+
+    return height
+end
+
 --Returns a bubble sprite depending of the player's status
 ---@param p player_t
 local function StatusToSprite(p)
-    if p.consoleactive then return SPR_GD_TERMINAL
-    elseif p.menuactive then return SPR_GD_OPTIONS
+    if p.menuactive then return SPR_GD_OPTIONS
     elseif p.chatactive then return SPR_GD_CHATBUBBLE
     end
 end
 
 local function StatusCheck(p)
-    if ((p.consoleactive or p.menuactive or p.chatactive) and not p.quittime) then return true end
+    if ((p.menuactive or p.chatactive) and not p.quittime) then return true end
     return false
 end
 
 --Chase always the player
 local function bubblefollow(mo)
-    if not ((mo.target and mo.target.valid) and StatusCheck(mo.target.player)) then
+    local t = mo.target
+    local p = t.player
+
+    if not ((t and t.valid) and StatusCheck(p)) then
         P_RemoveMobj(mo)
         return
     end
 
-    local t = mo.target
-    local p = t.player
-
-    --Cache target's stuff
-	local z = t.height+(5*t.scale) --position
-    local sprite = StatusToSprite(p)
-
-    --Follow the object
-	GD_FollowMobj(mo, 0, 0, z, t.scale*3/2)
-    if mo.sprite != sprite then mo.sprite = sprite end
+    mo.sprite = StatusToSprite(p)
+	GD_FollowMobj(mo, 0, 0, Set_Z(t))
 end
 
 --Spawn the bubble if the player is doing one of these actions
-gBundleHook("PlayerThink", "Spawn Bubble", function (p)
-    if not (p.mo and p.mo.valid) then return end
-
+gBundleHook("PlayerThink", "Spawn Bubble", function(p)
     local mo = p.mo
+    if not (mo and mo.valid) then return end
+
     if StatusCheck(p) then
         if not mo.bubble then
-            local f = P_MobjFlip(mo)
-            local bubble = P_SpawnMobjFromMobj(mo, 0 , 0, f*(mo.height+(5*mo.scale)), MT_GD_BUBBLE)
+            local bubble = P_SpawnMobjFromMobj(mo, 0, 0, Set_Z(mo), MT_GD_BUBBLE)
             bubble.target = mo
-            bubble.height = mo.height
-            bubble.eflags = mo.eflags
+            bubble.spritexscale, bubble.spriteyscale = bubble_scale, bubble_scale
             mo.bubble = true
         end
     elseif mo.bubble then
