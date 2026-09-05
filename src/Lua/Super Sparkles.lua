@@ -40,8 +40,10 @@ local function Sparkles_Func(p)
         MT_BOXSPARKLE
     )
 
-    sparkle.colorized = true
-    sparkle.color = pmo.color
+    if P_RandomChance(FU * 5 / 7) then
+        sparkle.colorized = true
+        sparkle.color = pmo.color
+    end
     sparkle.spritexscale = scale
     sparkle.spriteyscale = scale
     sparkle.renderflags = $|RF_FULLBRIGHT
