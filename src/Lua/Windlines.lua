@@ -81,6 +81,7 @@ local function Windlines_Func(p)
     end
 
     if not CV_FindVar("globalwindlines").value then return end
+    if (p.powers[pw_carry] == CR_NIGHTSMODE) then return end
 
     local mo = p.mo
     if not p.gd_windlines then return end
