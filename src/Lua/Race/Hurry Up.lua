@@ -6,7 +6,8 @@ gBundleHook("NetVars", "PlayerFinished on race", function(net)
 	finished = net($)
 end)
 
---Main hurry up trigger
+-- [[ Main Hurry Up trigger ]] --
+
 gBundleHook("ThinkFrame", "HurryUp", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if not (gamestate & GS_LEVEL) then return end
@@ -25,7 +26,8 @@ gBundleHook("ThinkFrame", "HurryUp", function()
 	end
 end)
 
---Show up "Hurry up!"
+-- [[ HUD ]] --
+
 local drawString
 gBundleHook("HUD", "HurryUp HUD", function(v)
 	if not (gametyperules & GTR_RACE) then return end
