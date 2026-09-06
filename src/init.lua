@@ -13,7 +13,7 @@ dofile(racedir.."Race Start")
 dofile("Team Visuals/Color Variants")
 dofile("Team Visuals/Flag Capture Firework")
 dofile("Team Visuals/Flag Hold")
---dofile("Round Control")
+dofile("Round Control")
 dofile("tips.lua") --wip
 dofile("Status Bubbles.lua")
 dofile("TimeLimit stuff.lua")
