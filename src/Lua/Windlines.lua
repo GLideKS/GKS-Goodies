@@ -3,6 +3,7 @@ local windfuse = TICRATE/3
 local windoffset = -16*FU
 local windflags = FF_PAPERSPRITE|FF_SEMIBRIGHT|FF_ADD
 local windsprite = SPR_RAIN
+local fall_speed = 30 * FU
 local MT_THOK = MT_THOK
 
 -- Command
@@ -94,7 +95,7 @@ local function Windlines_Func(p)
     if (leveltime % 2) == 0 then
         local speed = FixedHypot(p.rmomx, p.rmomy)
         local nm_speed = skins[mo.skin].normalspeed
-        local z_speed_requirement = (mo.momz > FixedMul(nm_speed / 3, mo.scale)) or (mo.momz < -FixedMul(nm_speed / 3, mo.scale))
+        local z_speed_requirement = (mo.momz > FixedMul(fall_speed, mo.scale)) or (mo.momz < -FixedMul(fall_speed, mo.scale))
         local speed_requirement = FixedMul((nm_speed + 5 * FU), mo.scale)
 
         if (speed > speed_requirement) or z_speed_requirement then
