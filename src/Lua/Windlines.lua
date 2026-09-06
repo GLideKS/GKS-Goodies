@@ -3,7 +3,7 @@ local windfuse = TICRATE/3
 local windoffset = -16*FU
 local windflags = FF_PAPERSPRITE|FF_SEMIBRIGHT|FF_ADD
 local windsprite = SPR_RAIN
-local fall_speed = 30 * FU
+local fall_speed = 20 * FU
 local MT_THOK = MT_THOK
 
 -- Command
