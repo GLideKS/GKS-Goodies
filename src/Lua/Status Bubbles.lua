@@ -78,12 +78,13 @@ end
 --Chase always the player
 local function bubblefollow(mo)
     local t = mo.target
-    local p = t.player
 
     if not ((t and t.valid) and StatusCheck(p)) then
         P_RemoveMobj(mo)
         return
     end
+
+    local p = t.player
 
     mo.sprite = StatusToSprite(p)
 	GD_FollowMobj(mo, 0, 0, Set_Z(t))
