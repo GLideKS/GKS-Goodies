@@ -79,12 +79,17 @@ end
 local function bubblefollow(mo)
     local t = mo.target
 
-    if not ((t and t.valid) and StatusCheck(p)) then
+    if not (t and t.valid) then
         P_RemoveMobj(mo)
         return
     end
 
     local p = t.player
+
+    if not (p and StatusCheck(p)) then
+        P_RemoveMobj(mo)
+        return
+    end
 
     mo.sprite = StatusToSprite(p)
 	GD_FollowMobj(mo, 0, 0, Set_Z(t))
