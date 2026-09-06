@@ -17,10 +17,5 @@ dofile("Team Visuals/Flag Hold")
 dofile("tips.lua") --wip
 dofile("Status Bubbles.lua")
 dofile("TimeLimit stuff.lua")
-
-local cmd = "Commands/"
-
---dofile(cmd.."Gamemode Control")
-dofile(cmd.."Overtime Properties")
-dofile(cmd.."Server Settings")
-dofile(cmd.."Tools")
+dofile("Windlines.lua")
+dofile("Super Sparkles.lua")

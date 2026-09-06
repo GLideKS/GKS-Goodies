@@ -78,9 +78,15 @@ end
 --Chase always the player
 local function bubblefollow(mo)
     local t = mo.target
+
+    if not (t and t.valid) then
+        P_RemoveMobj(mo)
+        return
+    end
+
     local p = t.player
 
-    if not ((t and t.valid) and StatusCheck(p)) then
+    if not (p and StatusCheck(p)) then
         P_RemoveMobj(mo)
         return
     end
