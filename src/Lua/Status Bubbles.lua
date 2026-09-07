@@ -71,7 +71,7 @@ local function StatusToSprite(p)
 end
 
 local function StatusCheck(p)
-    if ((p.menuactive or p.chatactive) and not p.quittime) then return true end
+    if (p.valid and (p.menuactive or p.chatactive) and not p.quittime) then return true end
     return false
 end
 
