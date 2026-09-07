@@ -86,7 +86,7 @@ local function Windlines_Func(p)
 
     local mo = p.mo
     if not p.gd_windlines then return end
-    if not (mo and mo.valid) then return end
+    if not (mo and mo.valid and mo.health) then return end
 
     if p.powers[pw_justsprung] then
         windeffect(p)
