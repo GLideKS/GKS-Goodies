@@ -98,7 +98,10 @@ local function RingHand(mo) -- Ring on hand for the player
         return
     end
 
-    if not t.giveringsmode or not rshare.value or not t.player.rings then
+    if not t.giveringsmode
+    or not rshare.value
+    or not t.player.rings
+    or G_RingSlingerGametype() then
         t.giveringsmode = false
         P_RemoveMobj(mo)
         return
