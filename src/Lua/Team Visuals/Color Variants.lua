@@ -1,3 +1,5 @@
+-- [[ Colors ]] --
+
 GKSGoodies.TeamColors = {
 	--List of blue color variants for the Blue Team
 	blue = {
@@ -26,7 +28,7 @@ GKSGoodies.TeamColors = {
 	}
 }
 
---Change the colors on player spawn
+-- [[ Main Behavior ]] --
 
 local t = GKSGoodies.TeamColors
 

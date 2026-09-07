@@ -1,4 +1,5 @@
---Race Start music
+-- [[ Race Start Music ]] --
+
 gBundleHook("MapLoad", "RaceStartMus", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if mapheaderinfo[gamemap].noracestartmusic then return end
@@ -7,7 +8,8 @@ gBundleHook("MapLoad", "RaceStartMus", function()
 	S_ChangeMusic(racestartmus, false, player)
 end)
 
---Restore the map's music if start countdown is over
+-- [[ Restore the map's music if start countdown is over ]] --
+
 gBundleHook("ThinkFrame", "RestoreMapMusic", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if mapheaderinfo[gamemap].noracestartmusic then return end

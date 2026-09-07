@@ -46,6 +46,8 @@ local function Sparkles_Func(p)
     end
     sparkle.spritexscale = scale
     sparkle.spriteyscale = scale
+    sparkle.momx = pmo.momx / 2
+    sparkle.momy = pmo.momy / 2
     sparkle.renderflags = $|RF_FULLBRIGHT
     P_SetObjectMomZ(sparkle, P_RandomRange(1, 2) * FU)
 end

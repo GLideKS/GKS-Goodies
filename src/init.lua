@@ -10,10 +10,13 @@ dofile(racedir.."Race Adjustments")
 dofile(racedir.."Hurry Up.lua")
 dofile(racedir.."Race Start")
 
+local coop = "Coop/" -- Coop stuff
+dofile(coop.."Ring sharing.lua")
+
 dofile("Team Visuals/Color Variants")
 dofile("Team Visuals/Flag Capture Firework")
 dofile("Team Visuals/Flag Hold")
---dofile("Round Control")
+dofile("Round Control")
 dofile("tips.lua") --wip
 dofile("Status Bubbles.lua")
 dofile("TimeLimit stuff.lua")

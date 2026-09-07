@@ -1,4 +1,5 @@
---Prevent damage on countdown
+-- [[ No damage on countdown ]] --
+
 local function RaceCountdownNoDMG(mo, mo2)
 	if not (gametyperules & GTR_RACE) then return end
 	if not (mo and mo.valid) then return end
@@ -14,7 +15,7 @@ local function RaceCountdownNoDMG(mo, mo2)
 	end
 end
 
---Friendlyfire support for Race
+-- [[ Friendly fire tweaks ]] --
 
 local function InflictDamage(mo, mo2, DMGType) --Damage handler
 	local p1, p2 = mo.player, mo2.player
