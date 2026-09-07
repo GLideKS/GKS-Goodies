@@ -26,17 +26,12 @@ mobjinfo[MT_RINGHOLD] = { -- Object when the player is holding the ring
 
 mobjinfo[MT_RINGSHARE] = { -- The Ring to share with players.
     doomednum = -1,
-    spawnstate = S_RRNG1, -- We will disable the effect of A_ThrownRing below.
+    spawnstate = S_TEAMRING,
     deathstate = S_SPRK1,
     flags = ringshare_mobj_flags,
     radius = 16*FU,
     height = 24*FU
 }
-
-function A_ThrownRing(actor, var1, var2) -- I don't want to make extra states just for the collectible ring.
-    if actor.type == MT_RINGSHARE then return end
-    super(actor, var1, var2)
-end
 
 -- [[ Main Function ]] --
 
