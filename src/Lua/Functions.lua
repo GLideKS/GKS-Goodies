@@ -176,6 +176,16 @@ local function GD_FollowMobj(mo, x, y, z)
     mo.angle = angle
 end
 
+--Performs a height check between two objects. For use in MobjCollide hooks
+---@param mo1 mobj_t first object
+---@param mo2 mobj_t second object
+local function L_ZCollide(mo1,mo2)
+	if mo1.z > mo2.height+mo2.z then return false end
+	if mo2.z > mo1.height+mo1.z then return false end
+	return true
+end
+
 rawset(_G, "GD_CanHurtPlayer", GD_CanHurtPlayer)
 rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)
 rawset(_G, "GD_FollowMobj", GD_FollowMobj)
+rawset(_G, "L_ZCollide", L_ZCollide)

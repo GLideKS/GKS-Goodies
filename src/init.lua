@@ -34,6 +34,7 @@ local directory = { "/",
     "TimeLimit stuff.lua",
     "Windlines.lua",
     "Super Sparkles.lua",
+    "Enhanced_FF.lua",
 }
 
 local function load(dir, path)
