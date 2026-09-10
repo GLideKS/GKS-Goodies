@@ -97,18 +97,14 @@ end
 
 --Spawn the bubble if the player is doing one of these actions
 gBundleHook("PlayerThink", "Spawn Bubble", function(p)
+    if not StatusCheck(p) then return end
     local mo = p.mo
     if not (mo and mo.valid) then return end
 
-    if StatusCheck(p) then
-        if not mo.bubble then
-            local bubble = P_SpawnMobjFromMobj(mo, 0, 0, Set_Z(mo), MT_GD_BUBBLE)
-            bubble.target = mo
-            bubble.spritexscale, bubble.spriteyscale = bubble_scale, bubble_scale
-            mo.bubble = true
-        end
-    elseif mo.bubble then
-        mo.bubble = false
+    if not (mo.bubble and mo.bubble.valid) then
+        mo.bubble = P_SpawnMobjFromMobj(mo, 0, 0, Set_Z(mo), MT_GD_BUBBLE)
+        mo.bubble.target = mo
+        mo.bubble.spritexscale, mo.bubble.spriteyscale = bubble_scale, bubble_scale
     end
 end)
 
