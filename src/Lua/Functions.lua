@@ -91,7 +91,7 @@ local function GD_CanHurtPlayer(p1,p2,nobs)
 			return false
 		end
 
-		if (leveltime <= CV_FindVar("hidetime").value*TR)
+		if (leveltime <= CV_FindVar("hidetime").value*TICRATE)
 		and (gametyperules & GTR_STARTCOUNTDOWN) then
 			return false
 		end
