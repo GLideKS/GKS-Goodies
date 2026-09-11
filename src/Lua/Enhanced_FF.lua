@@ -1,4 +1,11 @@
 CV_RegisterVar({
+	name = "friendlyfire_enhanced",
+	defaultvalue = 1,
+	PossibleValue = CV_TrueFalse,
+	flags = CV_NETVAR,
+})
+
+CV_RegisterVar({
 	name = "pvp_collision",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
@@ -92,6 +99,7 @@ local function PVP_Damage(toucher, mo, split)
 end
 
 local function PVP(toucher, mo)
+    if not CV_FindVar("friendlyfire_enhanced").value then return end
 	local p1, p2 = toucher.player, mo.player
 	if not (toucher and toucher.valid) then return end
     if not (mo and mo.valid) then return end
