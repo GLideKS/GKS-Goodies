@@ -6,28 +6,28 @@ CV_RegisterVar({
 })
 
 CV_RegisterVar({
-	name = "pvp_collision",
+	name = "ff_collision",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR,
 })
 
 CV_RegisterVar({
-	name = "pvp_momentum",
+	name = "ff_momentum",
 	defaultvalue = 0,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR,
 })
 
 CV_RegisterVar({
-	name = "pvp_onlyabilities",
+	name = "ff_onlyabilities",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR,
 })
 
 CV_RegisterVar({
-	name = "pvp_hittype",
+	name = "ff_hittype",
 	defaultvalue = 1,
 	PossibleValue = {bump = 0, damage = 1},
 	flags = CV_NETVAR,
@@ -70,9 +70,9 @@ local function PVP_Damage(toucher, mo, split)
     vfx.scale = mo.scale * 2
 
     if not split then
-        local hittype = CV_FindVar("pvp_hittype").value
-        local collide = CV_FindVar("pvp_collision").value
-        local momentum = CV_FindVar("pvp_momentum").value
+        local hittype = CV_FindVar("ff_hittype").value
+        local collide = CV_FindVar("ff_collision").value
+        local momentum = CV_FindVar("ff_momentum").value
 
         if hittype then
             P_DamageMobj(mo, toucher, toucher)
@@ -106,7 +106,7 @@ local function PVP(toucher, mo)
 	if not L_ZCollide(toucher, mo) then return end
     if not GD_CanHurtPlayer(p1, p2) then return end
     if not P_PlayerCanDamage(p1, mo) then return end
-    if (CV_FindVar("pvp_onlyabilities").value and not (p1.pflags & (PF_THOKKED|PF_GLIDING|PF_SPINNING))) then return end
+    if (CV_FindVar("ff_onlyabilities").value and not (p1.pflags & (PF_THOKKED|PF_GLIDING|PF_SPINNING))) then return end
 
     if P_PlayerCanDamage(p2, toucher) then
         PVP_Damage(toucher, mo, true)
