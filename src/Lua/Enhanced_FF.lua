@@ -28,7 +28,7 @@ CV_RegisterVar({
 
 CV_RegisterVar({
 	name = "ff_hittype",
-	defaultvalue = 1,
+	defaultvalue = 0,
 	PossibleValue = {bump = 0, damage = 1},
 	flags = CV_NETVAR,
 })
