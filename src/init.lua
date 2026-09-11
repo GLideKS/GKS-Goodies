@@ -12,6 +12,10 @@ local directory = { "/",
     -- [[ Anything else ]] --
 
     {"Race", -- Race gamemode stuff
+        {"Voices",
+            "definitions.lua",
+            "system.lua",
+        },
         "Race Adjustments.lua",
         "Hurry Up.lua",
         "Race Start.lua",
