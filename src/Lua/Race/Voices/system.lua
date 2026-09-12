@@ -34,7 +34,7 @@ gBundleHook("PlayerThink", "Race_Voices", function(p)
                 S_StartSound(nil, sfx_defset, p)
             end
         elseif leveltime == 140 then -- GO!
-            S_StartSound(nil, GetVoice(skin, 2) or sfx_defgo)
+            S_StartSound(nil, GetVoice(skin, 2) or sfx_defgo, p)
         end
     end
 
