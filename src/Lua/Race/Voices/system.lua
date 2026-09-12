@@ -44,4 +44,14 @@ gBundleHook("PlayerThink", "Race_Voices", function(p)
         S_StartSound(mo, GetVoice(skin, 3) or skins[skin].soundsid[SKSPLVCT1 + P_RandomKey(4)] or sfx_none)
         mo.racevictory = true
     end
+
+    -- Hurry Up voice
+
+    for otherp in players.iterate() do -- Not the optimal way, but this is for a single thing.
+        if not (otherp.pflags & PF_FINISHED) then continue end
+        if not (p.pflags & PF_FINISHED) and not mo.racehurry then
+            S_StartSound(nil, GetVoice(skin, 4) or sfx_none, p)
+            mo.racehurry = true
+        end
+    end
 end)
