@@ -107,6 +107,7 @@ local function PVP(toucher, mo)
     if not GD_CanHurtPlayer(p1, p2) then return end
     if not P_PlayerCanDamage(p1, mo) then return end
     if (CV_FindVar("ff_onlyabilities").value and not (p1.pflags & (PF_THOKKED|PF_GLIDING|PF_SPINNING))) then return end
+    if (gametyperules & GTR_RACE) and ((leveltime < 8*TICRATE) or (p1.realtime == 0)) then return end
 
     if P_PlayerCanDamage(p2, toucher) then
         PVP_Damage(toucher, mo, true)
