@@ -100,9 +100,7 @@ local function RingThinker(mo)
         mo.completed = true
     end
 
-    if ov and ov.valid then -- scales according to the ring's frame
-        ov.spritexscale = abs(FixedMul(sign_scale, cos(FixedAngle(frame * ((FU * 15) / 2)))))
-    end
+    ov.spritexscale = abs(FixedMul(sign_scale, cos(FixedAngle(frame * ((FU * 15) / 2)))))
 
     -- Spawn sparkles around the ring
     if (leveltime % 6) != 0 then return end
