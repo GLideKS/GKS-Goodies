@@ -19,8 +19,7 @@ CV_RegisterVar({
 	name = "goalring_clientsided",
 	defaultvalue = 0,
 	PossibleValue = CV_TrueFalse,
-	flags = CV_NETVAR|CV_CALL,
-    func = notice
+	flags = CV_NETVAR
 })
 
 -- [[ Main Object ]] --
