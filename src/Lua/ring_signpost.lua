@@ -19,7 +19,7 @@ CV_RegisterVar({
 
 SafeFreeslot("MT_RINGEXIT")
 local MT_RINGEXIT = MT_RINGEXIT
-local flags = MF_NOGRAVITY|MF_NOBLOCKMAP|MF_NOCLIP|MF_NOCLIPHEIGHT|MF_NOCLIPTHING
+local flags = MF_NOGRAVITY|MF_NOBLOCKMAP|MF_NOCLIP|MF_NOCLIPHEIGHT|MF_NOCLIPTHING|MF_SCENERY
 local ring_height = 20 * FU
 local ring_yoffset = 35 * FU
 local sign_scale = FU / 3
@@ -112,5 +112,5 @@ local function RingThinker(mo)
 end
 
 -- [[ Hook ]] --
-gBundleHook("MapThingSpawn", "ExitRing Spawn", RingSpawn, MT_SIGN)
-gBundleHook("MobjThinker", "ExitRing Thinker", RingThinker, MT_RINGEXIT)
+addHook("MapThingSpawn", RingSpawn, MT_SIGN)
+addHook("MobjThinker", RingThinker, MT_RINGEXIT)
