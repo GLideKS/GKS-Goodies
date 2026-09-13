@@ -90,7 +90,7 @@ local function RingThinker(mo)
         ov.spriteyoffset = FixedDiv($, skins[ov.skin].highresscale) -- Offset fix for highres characters
         ov.sprite2 = SPR2_SIGN -- TODO: Make the "Clear!" stay if the character doesn't have it.
         ov.frame = A
-        mo.color = t.color
+        mo.color = t.player.skincolor
         ov.color = mo.color
         S_StartSound(mo, sfx_s243)
         for i = 0, 15 do
