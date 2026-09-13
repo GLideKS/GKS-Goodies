@@ -91,7 +91,7 @@ local function GD_CanHurtPlayer(p1,p2,nobs)
 			return false
 		end
 
-		if (leveltime <= CV_FindVar("hidetime").value*TR)
+		if (leveltime <= CV_FindVar("hidetime").value*TICRATE)
 		and (gametyperules & GTR_STARTCOUNTDOWN) then
 			return false
 		end
@@ -176,6 +176,35 @@ local function GD_FollowMobj(mo, x, y, z)
     mo.angle = angle
 end
 
+--Performs a height check between two objects. For use in MobjCollide hooks
+---@param mo1 mobj_t first object
+---@param mo2 mobj_t second object
+local function L_ZCollide(mo1,mo2)
+	if mo1.z > mo2.height+mo2.z then return false end
+	if mo2.z > mo1.height+mo1.z then return false end
+	return true
+end
+
+rawset(_G,'L_DoBrakesXY', function(mo,factor)
+	mo.momx = FixedMul($,factor)
+	mo.momy = FixedMul($,factor)
+end)
+
+rawset(_G,'L_SpeedCapXY', function(mo,limit,factor)
+	local spd, ang =
+		R_PointToDist2(0,0,mo.momx,mo.momy),
+		R_PointToAngle2(0,0,mo.momx,mo.momy)
+	if spd > limit
+		if factor == nil
+			factor = FixedDiv(limit,spd)
+		end
+		L_DoBrakesXY(mo,factor)
+		return factor
+	end
+end)
+
+
 rawset(_G, "GD_CanHurtPlayer", GD_CanHurtPlayer)
 rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)
 rawset(_G, "GD_FollowMobj", GD_FollowMobj)
+rawset(_G, "L_ZCollide", L_ZCollide)

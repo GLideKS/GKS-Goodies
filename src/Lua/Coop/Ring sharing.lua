@@ -36,8 +36,10 @@ mobjinfo[MT_RINGSHARE] = { -- The Ring to share with players.
 -- [[ Main Function ]] --
 
 local function RingShare(p) -- Player's ring sharing functionality
+    if not multiplayer then return end
     if not rshare.value then return end
     if not G_CoopGametype() then return end -- Only Co-Op
+    if G_IsSpecialStage() then return end -- This is like, sabotage on special stages lol
     if p.spectator then return end -- I saw cases...
     if not p.rings then return end
     local mo = p.mo

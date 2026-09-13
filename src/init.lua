@@ -1,24 +1,58 @@
---Must load first
-local libs = "Libraries/"
-dofile(libs.."L_Lib-HookBundler-v2.lua")
-dofile("Globals.lua")
-dofile("Functions.lua")
-dofile(libs.."Info_Fireworks.lua")
+--load all files
+local directory = { "/",
 
-local racedir = "Race/" -- Race stuff
-dofile(racedir.."Race Adjustments")
-dofile(racedir.."Hurry Up.lua")
-dofile(racedir.."Race Start")
+    -- [[ Must load first]] --
+    {"Libraries",
+        "L_Lib-HookBundler-v2.lua",
+    },
+    "Globals.lua",
+    "Functions.lua",
+    "Libraries/Info_Fireworks.lua",
 
-local coop = "Coop/" -- Coop stuff
-dofile(coop.."Ring sharing.lua")
+    -- [[ Anything else ]] --
 
-dofile("Team Visuals/Color Variants")
-dofile("Team Visuals/Flag Capture Firework")
-dofile("Team Visuals/Flag Hold")
---dofile("Round Control")
-dofile("tips.lua") --wip
-dofile("Status Bubbles.lua")
-dofile("TimeLimit stuff.lua")
-dofile("Windlines.lua")
-dofile("Super Sparkles.lua")
+    {"Race", -- Race gamemode stuff
+        {"Voices",
+            "definitions.lua",
+            "system.lua",
+        },
+        "Race Adjustments.lua",
+        "Hurry Up.lua",
+        "Race Start.lua",
+    },
+
+    {"Coop", -- Coop stuff
+        "Ring sharing.lua",
+    },
+
+    {"Team Visuals", -- Team gamemodes stuff
+        "Color Variants.lua",
+        "Flag Capture Firework.lua",
+        "Flag Hold.lua",
+    },
+
+    -- General
+    "Tools.lua",
+    -- "Round Control.lua",
+    "tips.lua",
+    "Status Bubbles.lua",
+    "TimeLimit stuff.lua",
+    "Windlines.lua",
+    "Super Sparkles.lua",
+    "Enhanced_FF.lua",
+    "ring_signpost.lua",
+}
+
+local function load(dir, path)
+	for i, v in ipairs(dir) do
+		if i == 1 then continue end
+
+		if type(v) == "string" then
+			dofile(path..v)
+		elseif type(v) == "table" then
+			load(v, path..v[1].."/")
+		end
+	end
+end
+
+load(directory, "")
