@@ -32,6 +32,7 @@ local directory = { "/",
     },
 
     -- General
+    "Tools.lua",
     "Round Control.lua",
     "tips.lua",
     "Status Bubbles.lua",
