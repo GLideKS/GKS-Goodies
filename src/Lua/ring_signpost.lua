@@ -15,6 +15,14 @@ CV_RegisterVar({
     func = notice
 })
 
+CV_RegisterVar({
+	name = "goalring_clientsided",
+	defaultvalue = 0,
+	PossibleValue = CV_TrueFalse,
+	flags = CV_NETVAR|CV_CALL,
+    func = notice
+})
+
 -- [[ Main Object ]] --
 
 SafeFreeslot("MT_RINGEXIT")
@@ -68,9 +76,13 @@ local function RingThinker(mo)
     local t = mo.target
 
     if not mo.target then -- Search a player who finished first
-        for p in players.iterate do
-            if not (p.pflags & PF_FINISHED) then continue end
-            mo.target = p.mo
+        if not CV_FindVar("goalring_clientsided").value then -- If not, it will search for any player
+            for p in players.iterate do
+                if not (p.pflags & PF_FINISHED) then continue end
+                mo.target = p.mo
+            end
+        elseif (consoleplayer and consoleplayer.pflags & PF_FINISHED) then -- Otherwise only for you in your screen.
+            mo.target = consoleplayer.mo
         end
     elseif not mo.completed then -- Player found! let's set the corresponding sign icon and color.
         ov.translation = nil
