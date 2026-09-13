@@ -60,6 +60,7 @@ local function RingSpawn(mo, thing)
     ring.overlay.spriteyscale = sign_scale
     ring.overlay.spriteyoffset = ring_yoffset
     ring.overlay.translation = "Grayscale"
+    ring.overlay.dispoffset = 60
     ring.overlay.tics = -1
     P_RemoveMobj(mo)
     return true
@@ -123,3 +124,14 @@ end
 -- [[ Hook ]] --
 addHook("MapThingSpawn", RingSpawn, MT_SIGN)
 addHook("MobjThinker", RingThinker, MT_RINGEXIT)
+
+-- [[ Lighting System Support ]] --
+
+if not LightObjects then rawset(_G, "LightObjects", {}) end
+LightObjects[MT_RINGEXIT] = {
+    scale = FU/2,
+    alpha = FU/2,
+    centered_offset = true,
+    zoffset = 3,
+    floorlight = true
+}
