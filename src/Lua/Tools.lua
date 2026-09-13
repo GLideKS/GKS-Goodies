@@ -12,3 +12,19 @@ COM_AddCommand("gd_spawnobject", function(p, object) --Spawn object
 		obj.angle = p.realmo.angle
 	end
 end, COM_ADMIN)
+
+-- Speed Cap
+CV_RegisterVar({
+	name = "gd_speedcap",
+	defaultvalue = 0,
+	PossibleValue = {MIN = 0, MAX = FU * 50},
+	flags = CV_NETVAR|CV_FLOAT
+})
+
+gBundleHook("PlayerThink", "Speed Cap", function(p)
+	local mo = p.mo
+	if not CV_FindVar("gd_speedcap").value then return end
+	if not (mo and mo.valid and mo.health) then return end
+
+	L_SpeedCapXY(mo, FixedMul(CV_FindVar("gd_speedcap").value, mo.scale))
+end)

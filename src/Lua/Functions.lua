@@ -185,6 +185,25 @@ local function L_ZCollide(mo1,mo2)
 	return true
 end
 
+rawset(_G,'L_DoBrakesXY', function(mo,factor)
+	mo.momx = FixedMul($,factor)
+	mo.momy = FixedMul($,factor)
+end)
+
+rawset(_G,'L_SpeedCapXY', function(mo,limit,factor)
+	local spd, ang =
+		R_PointToDist2(0,0,mo.momx,mo.momy),
+		R_PointToAngle2(0,0,mo.momx,mo.momy)
+	if spd > limit
+		if factor == nil
+			factor = FixedDiv(limit,spd)
+		end
+		L_DoBrakesXY(mo,factor)
+		return factor
+	end
+end)
+
+
 rawset(_G, "GD_CanHurtPlayer", GD_CanHurtPlayer)
 rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)
 rawset(_G, "GD_FollowMobj", GD_FollowMobj)
