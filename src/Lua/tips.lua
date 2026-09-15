@@ -96,17 +96,16 @@ COM_AddCommand("tips_clear", function(p)
 end, COM_ADMIN)
 
 gBundleHook("ThinkFrame", "Tips", function()
-	if not (netgame and multiplayer) then return end
+	if not netgame then return end
+	if not ((leveltime % 6300) == 700) then return end
+	if not #GKSGoodies.tips.messages then return end
 
 	local prefix = GKSGoodies.serverprefix.text
 	local prefix_color = GKSGoodies.serverprefix.color
 	local colors = GKSGoodies.prefixcolors
 
-	if #GKSGoodies.tips.messages --Tips
-	and ((leveltime % 6300) == 700) then
-		local tip_message = GKSGoodies.tips.messages[P_RandomRange(1, #GKSGoodies.tips.messages)]
-		local tip_sound = GKSGoodies.tips.sound
-		chatprint(colors[prefix_color].."<"..prefix.."> "..colors["white"]..tip_message)
-		S_StartSound(nil, tip_sound)
-	end
+	local tip_message = GKSGoodies.tips.messages[P_RandomRange(1, #GKSGoodies.tips.messages)]
+	local tip_sound = GKSGoodies.tips.sound
+	chatprint(colors[prefix_color].."<"..prefix.."> "..colors["white"]..tip_message)
+	S_StartSound(nil, tip_sound)
 end)
