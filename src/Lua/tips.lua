@@ -95,16 +95,6 @@ COM_AddCommand("tips_clear", function(p)
 	end
 end, COM_ADMIN)
 
---Set a welcome message
-COM_AddCommand("welcome_message", function(p, message)
-	if message then
-		GKSGoodies.welcome.message = message
-		CONS_Printf(p, "Welcome message has been set")
-	else
-		CONS_Printf(p, "Sets a welcome message for the joining player")
-	end
-end, COM_ADMIN)
-
 gBundleHook("ThinkFrame", "Tips", function()
 	if not (netgame and multiplayer) then return end
 
@@ -118,13 +108,5 @@ gBundleHook("ThinkFrame", "Tips", function()
 		local tip_sound = GKSGoodies.tips.sound
 		chatprint(colors[prefix_color].."<"..prefix.."> "..colors["white"]..tip_message)
 		S_StartSound(nil, tip_sound)
-	end
-
-	for p in players.iterate do --Welcome
-		if not (p.jointime == TICRATE) then continue end
-		local welcome_message = GKSGoodies.welcome.message
-		local welcome_sound = GKSGoodies.welcome.sound
-		chatprintf(p, colors[prefix_color].."<"..prefix.."> "..colors["white"]..welcome_message)
-		S_StartSound(nil, welcome_sound, p)
 	end
 end)

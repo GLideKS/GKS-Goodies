@@ -16,10 +16,6 @@ rawset(_G, "GKSGoodies", {
 	tips = {
 		sound = sfx_radio,
 		messages = {}
-	},
-	welcome = {
-		sound = sfx_strpst,
-		message = "Welcome to the server!"
 	}
 })
 
@@ -31,5 +27,4 @@ gBundleHook("NetVars", "SyncGKSGoodies", function(network)
 	GKSGoodies.lowtime = network($)
 	GKSGoodies.serverprefix = network($)
 	GKSGoodies.tips = network($)
-	GKSGoodies.welcome = network($)
 end)
