@@ -24,8 +24,9 @@ CV_RegisterVar({
 
 -- [[ Main Object ]] --
 
-SafeFreeslot("MT_RINGEXIT")
+SafeFreeslot("MT_RINGEXIT", "SPR_GKS_GOALRING")
 local MT_RINGEXIT = MT_RINGEXIT
+local SPR_GKS_GOALRING = SPR_GKS_GOALRING
 local flags = MF_NOGRAVITY|MF_NOBLOCKMAP|MF_NOCLIP|MF_NOCLIPHEIGHT|MF_NOCLIPTHING|MF_SCENERY
 local ring_height = 20 * FU
 local ring_yoffset = 35 * FU
@@ -48,6 +49,9 @@ local function RingSpawn(mo, thing)
     local ring = P_SpawnMobjFromMobj(mo, 0, 0, ring_height, MT_RINGEXIT)
     ring.color = SKINCOLOR_GOLDENROD -- Replaced by the finishing player's color
     ring.renderflags = $|RF_SEMIBRIGHT
+	ring.spritexscale = $/2 -- Sprite scale
+	ring.spriteyscale = $/2 -- Sprite scale
+    ring.sprite = SPR_GKS_GOALRING
     ring.scale = $ * 4
 
     -- Overlay, used to show the Character's sign icon. 
