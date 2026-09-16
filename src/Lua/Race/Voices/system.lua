@@ -1,5 +1,12 @@
 SafeFreeslot("sfx_defred", "sfx_defset", "sfx_defgo")
 
+-- Super Optimize
+local S_StartSound = S_StartSound
+local P_RandomRange = P_RandomRange
+local P_RandomKey = P_RandomKey
+local PF_FINISHED = PF_FINISHED
+local GTR_RACE = GTR_RACE
+
 local countdown_voice = {
     [35] = true,
     [105] = true,

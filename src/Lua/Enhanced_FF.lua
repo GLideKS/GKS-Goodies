@@ -1,37 +1,48 @@
-CV_RegisterVar({
+local ffenh_toggle = CV_RegisterVar({
 	name = "friendlyfire_enhanced",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR,
 })
 
-CV_RegisterVar({
+local collide = CV_RegisterVar({
 	name = "ff_collision",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR,
 })
 
-CV_RegisterVar({
+local momentum = CV_RegisterVar({
 	name = "ff_momentum",
 	defaultvalue = 0,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR,
 })
 
-CV_RegisterVar({
+local onlyabilities = CV_RegisterVar({
 	name = "ff_onlyabilities",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR,
 })
 
-CV_RegisterVar({
+local hittype = CV_RegisterVar({
 	name = "ff_hittype",
 	defaultvalue = 0,
 	PossibleValue = {bump = 0, damage = 1},
 	flags = CV_NETVAR,
 })
+
+-- Super Optimize
+local MT_DUST = MT_DUST
+local sfx_s259 = sfx_s259
+local S_StartSound = S_StartSound
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_RandomRange = P_RandomRange
+local TICRATE = TICRATE
+local P_DamageMobj = P_DamageMobj
+local P_DoPlayerPain = P_DoPlayerPain
+local P_PlayerCanDamage = P_PlayerCanDamage
 
 local hitsounds = {
     [1] = sfx_bnce1,
@@ -70,24 +81,21 @@ local function PVP_Damage(toucher, mo, split)
     vfx.scale = mo.scale * 2
 
     if not split then
-        local hittype = CV_FindVar("ff_hittype").value
-        local collide = CV_FindVar("ff_collision").value
-        local momentum = CV_FindVar("ff_momentum").value
 
-        if hittype then
+        if hittype.value then
             P_DamageMobj(mo, toucher, toucher)
         else
             P_DoPlayerPain(mo.player, toucher, toucher)
             S_StartSound(toucher, randomized_sound)
         end
 
-        if collide then
+        if collide.value then
             toucher.momx = (-$)/2
             toucher.momy = (-$)/2
             toucher.momz = ($ < 0) and (-$)/2 or $
         end
 
-        if momentum then
+        if momentum.value then
             mo.momx = collide and -toucher.momx or toucher.momx
             mo.momy = collide and -toucher.momy or toucher.momy
         end
@@ -99,14 +107,14 @@ local function PVP_Damage(toucher, mo, split)
 end
 
 local function PVP(toucher, mo)
-    if not CV_FindVar("friendlyfire_enhanced").value then return end
+    if not ffenh_toggle.value then return end
 	local p1, p2 = toucher.player, mo.player
 	if not (toucher and toucher.valid) then return end
     if not (mo and mo.valid) then return end
 	if not L_ZCollide(toucher, mo) then return end
     if not GD_CanHurtPlayer(p1, p2) then return end
     if not P_PlayerCanDamage(p1, mo) then return end
-    if (CV_FindVar("ff_onlyabilities").value and not (p1.pflags & (PF_THOKKED|PF_GLIDING|PF_SPINNING))) then return end
+    if (onlyabilities.value and not (p1.pflags & (PF_THOKKED|PF_GLIDING|PF_SPINNING))) then return end
     if (gametyperules & GTR_RACE) and ((leveltime < 8*TICRATE) or (p1.realtime == 0)) then return end
 
     if P_PlayerCanDamage(p2, toucher) then

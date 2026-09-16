@@ -19,7 +19,7 @@ gBundleHook("ThinkFrame", "HurryUp", function()
 
 			S_ChangeGlobalMusic(hurrymusic, settings.overtime_weather, settings.overtime_sky)
 			S_StartSound(nil, 43)
-			P_StartQuake(3*FRACUNIT, -1)
+			P_StartQuake(3*FU, -1)
 			race_finished = true
 		end
 	end

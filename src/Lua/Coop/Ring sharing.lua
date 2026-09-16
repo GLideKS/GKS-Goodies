@@ -7,6 +7,27 @@ local rshare = CV_RegisterVar({ -- Global command
 	flags = CV_NETVAR
 })
 
+-- Super Optimize
+local S_THOK = S_THOK
+local S_TEAMRING = S_TEAMRING
+local S_SPRK1 = S_SPRK1
+local FixedMul = FixedMul
+local S_StartSound = S_StartSound
+local P_ReturnThrustX = P_ReturnThrustX
+local P_ReturnThrustY = P_ReturnThrustY
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_GivePlayerRings = P_GivePlayerRings
+local P_InstaThrust = P_InstaThrust
+local P_SetObjectMomZ = P_SetObjectMomZ
+local P_RemoveMobj = P_RemoveMobj
+local G_CoopGametype = G_CoopGametype
+local G_IsSpecialStage = G_IsSpecialStage
+local G_RingSlingerGametype = G_RingSlingerGametype
+local FU = FU
+local TICRATE = TICRATE
+local BT_TOSSFLAG = BT_TOSSFLAG
+local sfx_itemup = sfx_itemup
+
 -- [[ Object Definition ]] --
 
 SafeFreeslot("MT_RINGHOLD", "MT_RINGSHARE")

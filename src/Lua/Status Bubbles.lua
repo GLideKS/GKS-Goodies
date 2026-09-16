@@ -9,10 +9,17 @@ local bubbles = CV_RegisterVar({
 
 SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS", "SPR_GD_TERMINAL",
 "MT_GD_BUBBLE", "S_GD_BUBBLE")
+
+-- Super Optimization
 local SPR_GD_CHATBUBBLE = SPR_GD_CHATBUBBLE
 local SPR_GD_OPTIONS = SPR_GD_OPTIONS
 local MT_GD_BUBBLE = MT_GD_BUBBLE
 local S_GD_BUBBLE = S_GD_BUBBLE
+local P_RandomFixed = P_RandomFixed
+local P_RemoveMobj = P_RemoveMobj
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local FU = FU
+local TICRATE = TICRATE
 
 local old_menuactive = false
 local old_chatactive = false

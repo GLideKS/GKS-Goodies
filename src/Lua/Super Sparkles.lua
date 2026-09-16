@@ -10,6 +10,14 @@ COM_AddCommand("toggle_supersparkles", function(p)
     end
 end)
 
+-- Super Optimize
+local MT_BOXSPARKLE = MT_BOXSPARKLE
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_RandomRange = P_RandomRange
+local P_RandomChance = P_RandomChance
+local FixedDiv = FixedDiv
+local RF_FULLBRIGHT = RF_FULLBRIGHT
+
 local function SuperCheck(p)
     if p.powers[pw_super] then return true end --Vanilla Super Form
     if (p.solchar and p.solchar.istransformed) then return true end --Sol Forms

@@ -5,6 +5,18 @@ local windflags = FF_PAPERSPRITE|FF_SEMIBRIGHT|FF_ADD
 local windsprite = SPR_RAIN
 local fall_speed = 20 * FU
 local MT_THOK = MT_THOK
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_RandomRange = P_RandomRange
+local FixedMul = FixedMul
+local FixedDiv = FixedDiv
+local FixedHypot = FixedHypot
+local CONS_Printf = CONS_Printf
+local R_PointToAngle2 = R_PointToAngle2
+local R_PointToDist2 = R_PointToDist2
+local FU = FU
+local pw_carry = pw_carry
+local pw_justsprung = pw_justsprung
+local CR_NIGHTSMODE = CR_NIGHTSMODE
 
 -- Command
 

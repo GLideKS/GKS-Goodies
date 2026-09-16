@@ -7,7 +7,7 @@ local function notice()
     end
 end
 
-CV_RegisterVar({
+local goalring = CV_RegisterVar({
 	name = "goalring",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
@@ -15,7 +15,7 @@ CV_RegisterVar({
     func = notice
 })
 
-CV_RegisterVar({
+local gr_clientsided = CV_RegisterVar({
 	name = "goalring_clientsided",
 	defaultvalue = 0,
 	PossibleValue = CV_TrueFalse,
@@ -25,8 +25,37 @@ CV_RegisterVar({
 -- [[ Main Object ]] --
 
 SafeFreeslot("MT_RINGEXIT", "SPR_GKS_GOALRING")
+
+-- Super Optimization
 local MT_RINGEXIT = MT_RINGEXIT
 local SPR_GKS_GOALRING = SPR_GKS_GOALRING
+local MT_OVERLAY = MT_OVERLAY
+local S_THOK = S_THOK
+local S_TEAMRING = S_TEAMRING
+local S_NULL = S_NULL
+local RF_SEMIBRIGHT = RF_SEMIBRIGHT
+local FF_FRAMEMASK = FF_FRAMEMASK
+local SPR_SIGN = SPR_SIGN
+local PF_FINISHED = PF_FINISHED
+local MT_RING = MT_RING
+local MT_BOXSPARKLE = MT_BOXSPARKLE
+local MT_SIGN = MT_SIGN
+local SKINCOLOR_GOLDENROD = SKINCOLOR_GOLDENROD
+local addHook = addHook
+local S_StartSound = S_StartSound
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_RemoveMobj = P_RemoveMobj
+local P_RandomRange = P_RandomRange
+local P_RandomChance = P_RandomChance
+local abs = abs
+local cos = cos
+local FixedMul = FixedMul
+local FixedDiv = FixedDiv
+local FixedAngle = FixedAngle
+local FU = FU
+
+-- Ring Properties
+local clear_translation = "Grayscale"
 local flags = MF_NOGRAVITY|MF_NOBLOCKMAP|MF_NOCLIP|MF_NOCLIPHEIGHT|MF_NOCLIPTHING|MF_SCENERY
 local ring_height = 20 * FU
 local ring_yoffset = 35 * FU
@@ -44,7 +73,7 @@ mobjinfo[MT_RINGEXIT] = {
 -- [[ Replace ]] --
 
 local function RingSpawn(mo, thing)
-    if not CV_FindVar("goalring").value then return end
+    if not goalring.value then return end
 
     local ring = P_SpawnMobjFromMobj(mo, 0, 0, ring_height, MT_RINGEXIT)
     ring.color = SKINCOLOR_GOLDENROD -- Replaced by the finishing player's color
@@ -63,7 +92,7 @@ local function RingSpawn(mo, thing)
     ring.overlay.renderflags = $|RF_SEMIBRIGHT
     ring.overlay.spriteyscale = sign_scale
     ring.overlay.spriteyoffset = ring_yoffset
-    ring.overlay.translation = "Grayscale"
+    ring.overlay.translation = clear_translation
     ring.overlay.dispoffset = 60
     ring.overlay.tics = -1
     P_RemoveMobj(mo)
@@ -80,12 +109,14 @@ local function RingThinker(mo)
     local t = mo.target
 
     if not mo.target then -- Search a player who finished first
-        if not CV_FindVar("goalring_clientsided").value then -- If not, it will search for any player
+        local local_finished = (consoleplayer.pflags & PF_FINISHED)
+        if not gr_clientsided.value then -- If not, it will search for any player
             for p in players.iterate do
-                if not (p.pflags & PF_FINISHED) then continue end
+                local finished = (p.pflags & PF_FINISHED)
+                if not finished then continue end
                 mo.target = p.mo
             end
-        elseif (consoleplayer and consoleplayer.pflags & PF_FINISHED) then -- Otherwise only for you in your screen.
+        elseif (consoleplayer and local_finished) then -- Otherwise only for you in your screen.
             mo.target = consoleplayer.mo
         end
     elseif not mo.completed then -- Player found! let's set the corresponding sign icon and color.
@@ -98,8 +129,11 @@ local function RingThinker(mo)
         mo.color = t.player.skincolor
         ov.color = mo.color
         S_StartSound(mo, sfx_s243)
+
+        local x, y, z = mo.x, mo.y, mo.z + mo.height / 2
+        local radius = FixedMul(mo.info.painchance, mo.scale)
         for i = 0, 15 do
-	        P_SpawnParaloop(mo.x, mo.y, mo.z + mo.height / 2, FixedMul(mo.info.painchance, mo.scale), 7, MT_BOXSPARKLE, i*ANGLE_22h, S_NULL, true)
+	        P_SpawnParaloop(x, y, z, radius, 7, MT_BOXSPARKLE, i*ANGLE_22h, S_NULL, true)
         end
         mo.completed = true
     end
