@@ -109,7 +109,7 @@ local function RingThinker(mo)
     local t = mo.target
 
     if not mo.target then -- Search a player who finished first
-        local local_finished = (consoleplayer.pflags & PF_FINISHED)
+        local local_finished = (consoleplayer and consoleplayer.pflags & PF_FINISHED)
         if not gr_clientsided.value then -- If not, it will search for any player
             for p in players.iterate do
                 local finished = (p.pflags & PF_FINISHED)
