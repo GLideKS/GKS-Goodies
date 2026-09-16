@@ -138,6 +138,10 @@ local function RingThinker(mo)
         mo.completed = true
     end
 
+    if frame == 12 then
+        ov.renderflags = not (ov.renderflags & RF_HORIZONTALFLIP) and $|RF_HORIZONTALFLIP or $ & ~RF_HORIZONTALFLIP
+    end
+
     ov.spritexscale = abs(FixedMul(sign_scale, cos(FixedAngle(frame * ((FU * 15) / 2)))))
 
     -- Spawn sparkles around the ring
