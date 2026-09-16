@@ -50,6 +50,7 @@ end)
 
 local function windeffect(p) -- Grabbed from Epic Murder Mystery with some adjustments
 	local me = p.mo
+    local f = P_MobjFlip(me)
 	local rad = FixedDiv(me.radius * 3 / 2, me.scale)/FU
 	local hei = FixedDiv(me.height, me.scale)/FU
 
@@ -70,16 +71,13 @@ local function windeffect(p) -- Grabbed from Epic Murder Mystery with some adjus
 	end
 
 	wind.angle = R_PointToAngle2(0,0, me.momx, me.momy)
-	wind.rollangle = R_PointToAngle2(0, 0, R_PointToDist2(0,0,me.momx,me.momy), momz) + ANGLE_90
+	wind.rollangle = f * (R_PointToAngle2(0, 0, R_PointToDist2(0,0,me.momx,me.momy), momz) + ANGLE_90)
 
 	wind.momx = me.momx/3
 	wind.momy = me.momy/3
 	wind.momz = momz/3
 
 	wind.spriteyoffset = windoffset
-
-	wind.height = wind.scale
-	wind.radius = 5*wind.scale
 	wind.dontdrawforviewmobj = me
 
     if p.ctfteam then
