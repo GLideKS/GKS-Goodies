@@ -1,5 +1,6 @@
 local gd = GKSGoodies
 local settings = GKSGoodies.serversettings
+local addHook = addHook
 rawset(_G, "race_finished", false)
 
 addHook("NetVars", function(net)

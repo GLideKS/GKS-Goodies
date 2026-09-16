@@ -18,6 +18,7 @@ local S_GD_BUBBLE = S_GD_BUBBLE
 local P_RandomFixed = P_RandomFixed
 local P_RemoveMobj = P_RemoveMobj
 local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local addHook = addHook
 local FU = FU
 local TICRATE = TICRATE
 

@@ -16,6 +16,7 @@ local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
 local P_RandomRange = P_RandomRange
 local P_RandomChance = P_RandomChance
 local FixedDiv = FixedDiv
+local addHook = addHook
 local RF_FULLBRIGHT = RF_FULLBRIGHT
 
 local function SuperCheck(p)

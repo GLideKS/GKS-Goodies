@@ -5,6 +5,7 @@ local S_StartSound = S_StartSound
 local P_RandomRange = P_RandomRange
 local P_RandomKey = P_RandomKey
 local PF_FINISHED = PF_FINISHED
+local addHook = addHook
 local GTR_RACE = GTR_RACE
 
 local countdown_voice = {

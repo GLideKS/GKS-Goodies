@@ -1,3 +1,5 @@
+local addHook = addHook
+
 --List of prefix colors
 GKSGoodies.prefixcolors = {
 	["white"] = "\x80",

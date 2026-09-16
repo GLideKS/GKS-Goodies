@@ -1,3 +1,5 @@
+local addHook = addHook
+
 --Spawn an object
 COM_AddCommand("gd_spawnobject", function(p, object) --Spawn object
 	if not object then

@@ -1,3 +1,5 @@
+local addHook = addHook
+
 local ffenh_toggle = CV_RegisterVar({
 	name = "friendlyfire_enhanced",
 	defaultvalue = 1,

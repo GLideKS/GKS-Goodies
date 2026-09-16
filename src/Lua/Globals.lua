@@ -1,3 +1,5 @@
+local addHook = addHook
+
 rawset(_G, "GKSGoodies", {
     overtime = false,
     lowtime = false,

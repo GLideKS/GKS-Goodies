@@ -12,6 +12,7 @@ local P_ReturnThrustY = P_ReturnThrustY
 local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
 local P_RemoveMobj = P_RemoveMobj
 local FixedMul = FixedMul
+local addHook = addHook
 
 ---Spawns a flag for the player
 ---@param p player_t

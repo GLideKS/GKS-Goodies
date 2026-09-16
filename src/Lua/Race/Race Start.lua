@@ -2,6 +2,7 @@
 
 local P_RandomRange = P_RandomRange
 local S_ChangeMusic = S_ChangeMusic
+local addHook = addHook
 local GTR_RACE = GTR_RACE
 
 addHook("MapLoad", function()

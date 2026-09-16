@@ -12,6 +12,7 @@ local FixedDiv = FixedDiv
 local FixedHypot = FixedHypot
 local CONS_Printf = CONS_Printf
 local R_PointToAngle2 = R_PointToAngle2
+local addHook = addHook
 local R_PointToDist2 = R_PointToDist2
 local FU = FU
 local pw_carry = pw_carry

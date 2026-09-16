@@ -1,5 +1,7 @@
 -- [[ No damage on countdown ]] --
 
+local addHook = addHook
+
 local function RaceCountdownNoDMG(mo, mo2)
 	if not (gametyperules & GTR_RACE) then return end
 	if not (mo and mo.valid) then return end

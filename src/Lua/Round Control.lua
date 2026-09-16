@@ -1,4 +1,5 @@
 local setting = GKSGoodies.serversettings
+local addHook = addHook
 
 --Defaults
 

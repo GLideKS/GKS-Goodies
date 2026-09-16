@@ -23,6 +23,7 @@ local P_RemoveMobj = P_RemoveMobj
 local G_CoopGametype = G_CoopGametype
 local G_IsSpecialStage = G_IsSpecialStage
 local G_RingSlingerGametype = G_RingSlingerGametype
+local addHook = addHook
 local FU = FU
 local TICRATE = TICRATE
 local BT_TOSSFLAG = BT_TOSSFLAG

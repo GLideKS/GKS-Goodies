@@ -1,5 +1,7 @@
 -- [[ Colors ]] --
 
+local addHook = addHook
+
 GKSGoodies.TeamColors = {
 	--List of blue color variants for the Blue Team
 	blue = {
