@@ -15,4 +15,4 @@ local function RaceCountdownNoDMG(mo, mo2)
 	end
 end
 
-gBundleHook("ShouldDamage", "No Countdown Damage", RaceCountdownNoDMG, MT_PLAYER)
+addHook("ShouldDamage", RaceCountdownNoDMG, MT_PLAYER)

@@ -66,7 +66,7 @@ local function flaghold_behavior(mo)
 end
 
 --Spawn the flag if the player got the flag
-gBundleHook("PlayerThink", "Spawn Player Team Flag", function(p)
+addHook("PlayerThink", function(p)
     if p.spectator then return end
     if not p.gotflag then return end
     local pmo = p.mo
@@ -77,4 +77,4 @@ gBundleHook("PlayerThink", "Spawn Player Team Flag", function(p)
     P_SpawnVisualFlag(p)
 end)
 
-gBundleHook("MobjThinker", "Flag Hold Behavior", flaghold_behavior, MT_GKS_FLAGHOLD)
+addHook("MobjThinker", flaghold_behavior, MT_GKS_FLAGHOLD)

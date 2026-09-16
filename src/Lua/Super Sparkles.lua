@@ -60,4 +60,4 @@ local function Sparkles_Func(p)
     P_SetObjectMomZ(sparkle, P_RandomRange(1, 2) * FU)
 end
 
-gBundleHook("PlayerThink", "SuperSparkles", Sparkles_Func)
+addHook("PlayerThink", Sparkles_Func)

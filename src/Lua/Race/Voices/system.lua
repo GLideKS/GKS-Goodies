@@ -25,7 +25,7 @@ local function GetVoice(skin, vctype)
     return type(vc_type) == "table" and vc_type[P_RandomRange(1, #vc_type)] or vc_type
 end
 
-gBundleHook("PlayerThink", "Race_Voices", function(p)
+addHook("PlayerThink", function(p)
     local mo = p.mo
     if not (gametyperules & GTR_RACE) then return end
     if not (mo and mo.valid and mo.health) then return end

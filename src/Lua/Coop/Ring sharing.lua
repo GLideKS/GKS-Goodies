@@ -142,6 +142,6 @@ local function RingMobj_Touch(mo, toucher) -- Shared ring on touch
 end
 
 -- Hook everything
-gBundleHook("PlayerThink", "Ring_Sharing", RingShare)
-gBundleHook("MobjThinker", "RingHand", RingHand, MT_RINGHOLD)
-gBundleHook("TouchSpecial", "ShareRing_Mobj", RingMobj_Touch, MT_RINGSHARE)
+addHook("PlayerThink", RingShare)
+addHook("MobjThinker", RingHand, MT_RINGHOLD)
+addHook("TouchSpecial", RingMobj_Touch, MT_RINGSHARE)

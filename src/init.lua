@@ -2,9 +2,6 @@
 local directory = { "/",
 
     -- [[ Must load first]] --
-    {"Libraries",
-        "L_Lib-HookBundler-v2.lua",
-    },
     "Globals.lua",
     "Functions.lua",
     "Libraries/Info_Fireworks.lua",

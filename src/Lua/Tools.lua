@@ -21,7 +21,7 @@ CV_RegisterVar({
 	flags = CV_NETVAR|CV_FLOAT
 })
 
-gBundleHook("PlayerThink", "Speed Cap", function(p)
+addHook("PlayerThink", function(p)
 	local mo = p.mo
 	if not CV_FindVar("gd_speedcap").value then return end
 	if not (mo and mo.valid and mo.health) then return end

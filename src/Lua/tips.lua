@@ -95,7 +95,7 @@ COM_AddCommand("tips_clear", function(p)
 	end
 end, COM_ADMIN)
 
-gBundleHook("ThinkFrame", "Tips", function()
+addHook("ThinkFrame", function()
 	if not netgame then return end
 	if not ((leveltime % 6300) == 700) then return end
 	if not #GKSGoodies.tips.messages then return end

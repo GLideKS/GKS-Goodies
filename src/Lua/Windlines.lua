@@ -114,4 +114,4 @@ local function Windlines_Func(p)
     end
 end
 
-gBundleHook("PlayerThink", "Windlines", Windlines_Func)
+addHook("PlayerThink", Windlines_Func)

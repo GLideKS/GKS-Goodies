@@ -37,7 +37,7 @@ local function getRemainingTics()
 end
 
 --Main Overtime and lowtime trigger
-gBundleHook("ThinkFrame", "Overtime Main Think", function()
+addHook("ThinkFrame", function()
 	if gamestate != GS_LEVEL then return end
 	if not (gametyperules & GTR_TIMELIMIT) then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
@@ -86,5 +86,5 @@ local resetmus = function()
 	gd.lowtime = false
 	gd.currentmusicplaying = mapmusname
 end
-gBundleHook("MapChange", "Reset Music Change", resetmus)
-gBundleHook("MapLoad", "Reset Music Load", resetmus)
+addHook("MapChange", resetmus)
+addHook("MapLoad", resetmus)
