@@ -1,5 +1,20 @@
 local gd = GKSGoodies
 
+-- Super Optimize
+local FixedMul = FixedMul
+local FixedDiv = FixedDiv
+local S_ChangeMusic = S_ChangeMusic
+local R_PointToDist2 = R_PointToDist2
+local R_PointToAngle2 = R_PointToAngle2
+local G_IsSpecialStage = G_IsSpecialStage
+local G_TagGametype = G_TagGametype
+local G_GametypeHasTeams = G_GametypeHasTeams
+local P_SwitchWeather = P_SwitchWeather
+local P_SetSkyboxMobj = P_SetSkyboxMobj
+local P_SetupLevelSky = P_SetupLevelSky
+local P_PlayerInPain = P_PlayerInPain
+local P_MoveOrigin = P_MoveOrigin
+
 /*
 SafeFreeslot, generally good practice to avoid wasting freeslots
 regardless of how specific the freeslot name is. Also modder friendly

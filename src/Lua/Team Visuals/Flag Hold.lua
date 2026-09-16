@@ -5,6 +5,13 @@ SafeFreeslot("MT_GKS_FLAGHOLD")
 --Localize for optimization
 local MT_GKS_FLAGHOLD = MT_GKS_FLAGHOLD
 local S_THOK = S_THOK
+local SPR_BFLG = SPR_BFLG
+local SPR_RFLG = SPR_RFLG
+local P_ReturnThrustX = P_ReturnThrustX
+local P_ReturnThrustY = P_ReturnThrustY
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_RemoveMobj = P_RemoveMobj
+local FixedMul = FixedMul
 
 ---Spawns a flag for the player
 ---@param p player_t

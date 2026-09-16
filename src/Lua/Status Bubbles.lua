@@ -1,12 +1,25 @@
+local bubbles = CV_RegisterVar({
+	name = "bubble_status",
+	defaultvalue = 1,
+	PossibleValue = CV_TrueFalse,
+})
+
 --All these stuff to sync chatactive and menu active per player.
 --Ty Epix
 
 SafeFreeslot("SPR_GD_CHATBUBBLE", "SPR_GD_OPTIONS", "SPR_GD_TERMINAL",
 "MT_GD_BUBBLE", "S_GD_BUBBLE")
+
+-- Super Optimization
 local SPR_GD_CHATBUBBLE = SPR_GD_CHATBUBBLE
 local SPR_GD_OPTIONS = SPR_GD_OPTIONS
 local MT_GD_BUBBLE = MT_GD_BUBBLE
 local S_GD_BUBBLE = S_GD_BUBBLE
+local P_RandomFixed = P_RandomFixed
+local P_RemoveMobj = P_RemoveMobj
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local FU = FU
+local TICRATE = TICRATE
 
 local old_menuactive = false
 local old_chatactive = false
@@ -79,6 +92,11 @@ end
 local function bubblefollow(mo)
     local t = mo.target
 
+    if not bubbles.value then
+        P_RemoveMobj(mo)
+        return
+    end
+
     if not (t and t.valid) then
         P_RemoveMobj(mo)
         return
@@ -97,6 +115,7 @@ end
 
 --Spawn the bubble if the player is doing one of these actions
 gBundleHook("PlayerThink", "Spawn Bubble", function(p)
+    if not bubbles.value then return end
     if not StatusCheck(p) then return end
     local mo = p.mo
     if not (mo and mo.valid) then return end

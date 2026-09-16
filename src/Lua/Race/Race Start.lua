@@ -1,5 +1,9 @@
 -- [[ Race Start Music ]] --
 
+local P_RandomRange = P_RandomRange
+local S_ChangeMusic = S_ChangeMusic
+local GTR_RACE = GTR_RACE
+
 gBundleHook("MapLoad", "RaceStartMus", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if mapheaderinfo[gamemap].noracestartmusic then return end

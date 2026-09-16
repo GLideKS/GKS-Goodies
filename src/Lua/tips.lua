@@ -95,36 +95,17 @@ COM_AddCommand("tips_clear", function(p)
 	end
 end, COM_ADMIN)
 
---Set a welcome message
-COM_AddCommand("welcome_message", function(p, message)
-	if message then
-		GKSGoodies.welcome.message = message
-		CONS_Printf(p, "Welcome message has been set")
-	else
-		CONS_Printf(p, "Sets a welcome message for the joining player")
-	end
-end, COM_ADMIN)
-
 gBundleHook("ThinkFrame", "Tips", function()
-	if not (netgame and multiplayer) then return end
+	if not netgame then return end
+	if not ((leveltime % 6300) == 700) then return end
+	if not #GKSGoodies.tips.messages then return end
 
 	local prefix = GKSGoodies.serverprefix.text
 	local prefix_color = GKSGoodies.serverprefix.color
 	local colors = GKSGoodies.prefixcolors
 
-	if #GKSGoodies.tips.messages --Tips
-	and ((leveltime % 6300) == 700) then
-		local tip_message = GKSGoodies.tips.messages[P_RandomRange(1, #GKSGoodies.tips.messages)]
-		local tip_sound = GKSGoodies.tips.sound
-		chatprint(colors[prefix_color].."<"..prefix.."> "..colors["white"]..tip_message)
-		S_StartSound(nil, tip_sound)
-	end
-
-	for p in players.iterate do --Welcome
-		if not (p.jointime == TICRATE) then continue end
-		local welcome_message = GKSGoodies.welcome.message
-		local welcome_sound = GKSGoodies.welcome.sound
-		chatprintf(p, colors[prefix_color].."<"..prefix.."> "..colors["white"]..welcome_message)
-		S_StartSound(nil, welcome_sound, p)
-	end
+	local tip_message = GKSGoodies.tips.messages[P_RandomRange(1, #GKSGoodies.tips.messages)]
+	local tip_sound = GKSGoodies.tips.sound
+	chatprint(colors[prefix_color].."<"..prefix.."> "..colors["white"]..tip_message)
+	S_StartSound(nil, tip_sound)
 end)

@@ -1,6 +1,8 @@
 local MT_SUPERSPARK = MT_SUPERSPARK
 local MT_EFIREWORK = MT_EFIREWORK
 local S_EFIREWORK0 = S_EFIREWORK0
+local P_SpawnMobj = P_SpawnMobj
+local P_IsObjectOnGround = P_IsObjectOnGround
 
 --Firework to the player who captured the flag
 --Borrowed from BattleMod, all credits to it.

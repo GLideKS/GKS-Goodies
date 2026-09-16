@@ -5,6 +5,18 @@ local windflags = FF_PAPERSPRITE|FF_SEMIBRIGHT|FF_ADD
 local windsprite = SPR_RAIN
 local fall_speed = 20 * FU
 local MT_THOK = MT_THOK
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_RandomRange = P_RandomRange
+local FixedMul = FixedMul
+local FixedDiv = FixedDiv
+local FixedHypot = FixedHypot
+local CONS_Printf = CONS_Printf
+local R_PointToAngle2 = R_PointToAngle2
+local R_PointToDist2 = R_PointToDist2
+local FU = FU
+local pw_carry = pw_carry
+local pw_justsprung = pw_justsprung
+local CR_NIGHTSMODE = CR_NIGHTSMODE
 
 -- Command
 
@@ -38,6 +50,7 @@ end)
 
 local function windeffect(p) -- Grabbed from Epic Murder Mystery with some adjustments
 	local me = p.mo
+    local f = P_MobjFlip(me)
 	local rad = FixedDiv(me.radius * 3 / 2, me.scale)/FU
 	local hei = FixedDiv(me.height, me.scale)/FU
 
@@ -58,16 +71,13 @@ local function windeffect(p) -- Grabbed from Epic Murder Mystery with some adjus
 	end
 
 	wind.angle = R_PointToAngle2(0,0, me.momx, me.momy)
-	wind.rollangle = R_PointToAngle2(0, 0, R_PointToDist2(0,0,me.momx,me.momy), momz) + ANGLE_90
+	wind.rollangle = f * (R_PointToAngle2(0, 0, R_PointToDist2(0,0,me.momx,me.momy), momz) + ANGLE_90)
 
 	wind.momx = me.momx/3
 	wind.momy = me.momy/3
 	wind.momz = momz/3
 
 	wind.spriteyoffset = windoffset
-
-	wind.height = wind.scale
-	wind.radius = 5*wind.scale
 	wind.dontdrawforviewmobj = me
 
     if p.ctfteam then
