@@ -38,6 +38,7 @@ local directory = { "/",
     "Super Sparkles.lua",
     "Enhanced_FF.lua",
     "ring_signpost.lua",
+    "AbilityPlus.lua",
 }
 
 local function load(dir, path)
