@@ -39,6 +39,7 @@ local directory = { "/",
     "Enhanced_FF.lua",
     "ring_signpost.lua",
     "AbilityPlus.lua",
+    "Pre22Token.lua",
 }
 
 local function load(dir, path)
