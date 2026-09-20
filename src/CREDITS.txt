@@ -8,7 +8,7 @@ Sprites and graphics:
 
 Coding:
 - GLide KS (Main coding)
-- Epix (Small bubble status assistance)
+- Epix (Small bubble status assistance back in January 2026)
 - Jisk (for some code imported from Zombie Escape 2 gamemode)
 - Romoney5, Medii/ip_.x (Goal Ring code assistance)
 
