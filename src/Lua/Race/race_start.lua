@@ -9,7 +9,8 @@ local racestartmusic = CV_RegisterVar({
 	name = "race_startmusic",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
-	flags = CV_NETVAR,
+	flags = CV_NETVAR|CV_CALL,
+	func = gd_notice
 })
 
 addHook("MapLoad", function()

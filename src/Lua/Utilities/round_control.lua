@@ -6,7 +6,8 @@ local roundcontrol = CV_RegisterVar({
 	name = "roundcontrol",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
-	flags = CV_NETVAR,
+	flags = CV_NETVAR|CV_CALL,
+	func = gd_notice
 })
 
 CV_RegisterVar({

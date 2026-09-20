@@ -1,18 +1,12 @@
 // Inspired by the goal ring that Soashi's Modded Planet has.
 // Thanks to Romoney5 and Medii/ip._x for the sign sprite stretching math
 
-local function notice()
-    if consoleplayer then
-        print("Changes will be made in the next map load.")
-    end
-end
-
 local goalring = CV_RegisterVar({
 	name = "goalring",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
 	flags = CV_NETVAR|CV_CALL,
-    func = notice
+    func = gd_notice
 })
 
 local gr_clientsided = CV_RegisterVar({
