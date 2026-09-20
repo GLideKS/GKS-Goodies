@@ -2,6 +2,13 @@ local addHook = addHook
 
 --Defaults
 
+local roundcontrol = CV_RegisterVar({
+	name = "roundcontrol",
+	defaultvalue = 1,
+	PossibleValue = CV_TrueFalse,
+	flags = CV_NETVAR,
+})
+
 CV_RegisterVar({
 	name = "default_timelimit",
 	defaultvalue = 6,
@@ -94,6 +101,7 @@ local function SetValueOrDefault(cvar, num)
 end
 
 addHook("MapLoad", function()
+	if not roundcontrol.value then return end
 	if not (isdedicatedserver or isserver) then return end
 
 	local ctf = {
