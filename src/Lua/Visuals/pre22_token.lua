@@ -4,6 +4,8 @@ local tokencvar = CV_RegisterVar({
 	name = "token_alt",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
+    flags = CV_NETVAR|CV_CALL,
+    func = gd_notice
 })
 
 SafeFreeslot("SKINCOLOR_GDCHROMA") -- From Zombie Escape 2's Exit ring, however it's renamed to avoid conflicts with ZE2
@@ -35,8 +37,20 @@ skincolors[SKINCOLOR_GDCHROMA] = {
 }
 
 -- Localize to optimize
+local addHook = addHook
+local MT_OVERLAY = MT_OVERLAY
 local SKINCOLOR_GDCHROMA = SKINCOLOR_GDCHROMA
+local S_THOK = S_THOK
+local SPR_OILF = SPR_OILF
 local chroma = skincolors[SKINCOLOR_GDCHROMA]
+local P_RandomRange = P_RandomRange
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local P_RemoveMobj = P_RemoveMobj
+local P_RandomChance = P_RandomChance
+local RF_SEMIBRIGHT = RF_SEMIBRIGHT
+local RF_FULLBRIGHT = RF_FULLBRIGHT
+local FU = FU
+local AST_ADD = AST_ADD
 local paletteToRgb = color.paletteToRgb
 local rgbToHsl = color.rgbToHsl
 local hslToRgb = color.hslToRgb
@@ -64,6 +78,7 @@ end)
 -- [[ Token Alt (Pre 2.2 inspired token) ]] --
 
 SafeFreeslot("SPR_COLORABLE_EMERALD")
+local SPR_COLORABLE_EMERALD = SPR_COLORABLE_EMERALD
 
 local function TokenSpawn(mo)
     if not tokencvar.value then return end

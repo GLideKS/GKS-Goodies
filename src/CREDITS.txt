@@ -1,5 +1,16 @@
-GKS Goodies made by: GLide kS
+GKS Goodies made by GLide KS
+NOTE: THIS IS A DEMO! Features are subject to change in the future.
 
-All assets are reusable. ;)
+Sprites and graphics:
+- SRB2 Battle! (Sweating sprites)
+- Sonic Team Jr. (Chaos Emerald, edited to be colorable)
+- GLide KS (Everything else)
 
+Coding:
+- GLide KS (Main coding)
+- Epix (Small bubble status assistance back in January 2026)
+- Jisk (for some code imported from Zombie Escape 2 gamemode)
+- Romoney5, Medii/ip_.x (Goal Ring code assistance)
+
+All assets and code are reusable.
 Feel free to contribute at https://github.com/GLideKS/GKS-Goodies

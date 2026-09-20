@@ -8,13 +8,12 @@ states[S_GD_SWEAT] = {SPR_GD_SWEAT, FF_ANIMATE, 6, nil, 1, 3, S_NULL}
 
 local addHook = addHook
 local S_StartSound = S_StartSound
-local P_RandomRange = P_RandomRange
 local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
 local sfx_s3k6d = sfx_s3k6d
 local CA_FLY = CA_FLY
 local MT_THOK = MT_THOK
 local PF_THOKKED = PF_THOKKED
-local FU = FU
+local pw_tailsfly = pw_tailsfly
 local tired_incoming = TICRATE * 3 / 2
 
 addHook("PlayerThink", function(p)

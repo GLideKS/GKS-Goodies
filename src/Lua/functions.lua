@@ -53,6 +53,11 @@ local S_ChangeGlobalMusic = function(music, weather, sky)
 	end
 end
 
+local function gd_notice()
+    if not consoleplayer then return end
+    CONS_Printf(consoleplayer, "This change will be made in the next map load.")
+end
+
 --Thanks luigi budd for this function
 --can @p1 damage @p2?
 --P_TagDamage, P_PlayerHitsPlayer
@@ -223,3 +228,4 @@ rawset(_G, "GD_CanHurtPlayer", GD_CanHurtPlayer)
 rawset(_G, "S_ChangeGlobalMusic", S_ChangeGlobalMusic)
 rawset(_G, "GD_FollowMobj", GD_FollowMobj)
 rawset(_G, "L_ZCollide", L_ZCollide)
+rawset(_G, "gd_notice", gd_notice)

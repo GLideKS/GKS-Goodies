@@ -5,7 +5,16 @@ local S_ChangeMusic = S_ChangeMusic
 local addHook = addHook
 local GTR_RACE = GTR_RACE
 
+local racestartmusic = CV_RegisterVar({
+	name = "race_startmusic",
+	defaultvalue = 1,
+	PossibleValue = CV_TrueFalse,
+	flags = CV_NETVAR|CV_CALL,
+	func = gd_notice
+})
+
 addHook("MapLoad", function()
+	if not racestartmusic.value then return end
 	if not (gametyperules & GTR_RACE) then return end
 	if mapheaderinfo[gamemap].noracestartmusic then return end
 
@@ -16,6 +25,7 @@ end)
 -- [[ Restore the map's music if start countdown is over ]] --
 
 addHook("ThinkFrame", function()
+	if not racestartmusic.value then return end
 	if not (gametyperules & GTR_RACE) then return end
 	if mapheaderinfo[gamemap].noracestartmusic then return end
 

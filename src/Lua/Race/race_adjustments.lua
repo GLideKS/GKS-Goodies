@@ -2,7 +2,15 @@
 
 local addHook = addHook
 
+local nodmgracecd = CV_RegisterVar({
+	name = "race_nocountdowndamage",
+	defaultvalue = 1,
+	PossibleValue = CV_TrueFalse,
+	flags = CV_NETVAR,
+})
+
 local function RaceCountdownNoDMG(mo, mo2)
+	if not nodmgracecd.value then return end
 	if not (gametyperules & GTR_RACE) then return end
 	if not (mo and mo.valid) then return end
 	if (leveltime < 4*TICRATE) or (mo.player.realtime == 0) then

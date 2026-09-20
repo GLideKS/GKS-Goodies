@@ -1,17 +1,23 @@
 -- TODO: Orbit around the player in proportion of the shards collected to be a symmetrical rotation
 
 SafeFreeslot("MT_SHARDHOLD", "S_SHARDHOLD")
+
+-- Localize to optimize
 local MT_SHARDHOLD = MT_SHARDHOLD
 local S_SHARDHOLD = S_SHARDHOLD
+local addHook = addHook
+local A_RotateSpikeBall = A_RotateSpikeBall
+local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local flags = MF_SCENERY|MF_NOGRAVITY|MF_NOBLOCKMAP|MF_NOCLIP|MF_NOCLIPHEIGHT|MF_NOCLIPTHING
 
-states[S_SHARDHOLD] = {SPR_SHRD, A, -1, A_RotateSpikeBall, nil, 0, 0, S_SHARDHOLD}
+states[S_SHARDHOLD] = {SPR_SHRD, A, -1, A_RotateSpikeBall, 0, 0, S_SHARDHOLD}
 mobjinfo[MT_SHARDHOLD] = {
     doomednum = -1,
     spawnstate = S_SHARDHOLD,
     speed = 4 * FU,
     radius = 20 * FU,
     height = 20 * FU,
-    flags = MF_SCENERY|MF_NOGRAVITY|MF_NOBLOCKMAP|MF_NOCLIP|MF_NOCLIPHEIGHT|MF_NOCLIPTHING
+    flags = flags
 }
 
 local function ShardTouch(mo, toucher)
