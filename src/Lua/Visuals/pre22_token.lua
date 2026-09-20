@@ -4,6 +4,8 @@ local tokencvar = CV_RegisterVar({
 	name = "token_alt",
 	defaultvalue = 1,
 	PossibleValue = CV_TrueFalse,
+    flags = CV_NETVAR|CV_CALL,
+    func = gd_notice
 })
 
 SafeFreeslot("SKINCOLOR_GDCHROMA") -- From Zombie Escape 2's Exit ring, however it's renamed to avoid conflicts with ZE2
