@@ -14,6 +14,13 @@ local countdown_voice = {
     [140] = true
 }
 
+local voices = CV_RegisterVar({
+	name = "race_voices",
+	defaultvalue = 1,
+	PossibleValue = CV_TrueFalse,
+	flags = CV_NETVAR,
+})
+
 local function GetVoice(skin, vctype)
     if not GKSR_Voices[skin] then return end
 
@@ -27,6 +34,7 @@ local function GetVoice(skin, vctype)
 end
 
 addHook("PlayerThink", function(p)
+    if not voices.value then return end
     local mo = p.mo
     if not (gametyperules & GTR_RACE) then return end
     if not (mo and mo.valid and mo.health) then return end
