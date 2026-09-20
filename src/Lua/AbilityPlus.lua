@@ -1,5 +1,11 @@
 -- NOTE: This doesn't add extra moveset, just visuals
 
+SafeFreeslot("SPR_GD_SWEAT", "S_GD_SWEAT")
+local SPR_GD_SWEAT = SPR_GD_SWEAT
+local S_GD_SWEAT = S_GD_SWEAT
+
+states[S_GD_SWEAT] = {SPR_GD_SWEAT, FF_ANIMATE, 6, nil, 1, 3, S_NULL}
+
 local addHook = addHook
 local S_StartSound = S_StartSound
 local P_RandomRange = P_RandomRange
@@ -23,19 +29,9 @@ addHook("PlayerThink", function(p)
 
         if flight and (flight <= tired_incoming) and (flight % 15) == 0 then -- Sweating
             S_StartSound(mo, sfx_s3k6d)
-            local rad = (mo.radius / FU) or 0
-            for _ = 1, 4 do
-                local x = P_RandomRange(-rad, rad) * FU
-                local y = P_RandomRange(-rad, rad) * FU
-                local watr = P_SpawnMobjFromMobj(mo, x, y, mo.height, MT_THOK)
-                watr.sprite = SPR_DRIP
-                watr.frame = D
-                watr.flags = $ & ~MF_NOGRAVITY
-                watr.scale = $ * 3 / 2
-                watr.alpha = $ / 2
-                watr.fuse = 13
-                watr.dispoffset = 20
-            end
+            local watr = P_SpawnMobjFromMobj(mo, x, y, mo.height, MT_THOK)
+            watr.state = S_GD_SWEAT
+            watr.flags = $ & ~MF_NOGRAVITY
         end
     end
 end)
