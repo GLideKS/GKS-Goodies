@@ -3,6 +3,7 @@ local MT_EFIREWORK = MT_EFIREWORK
 local S_EFIREWORK0 = S_EFIREWORK0
 local P_SpawnMobj = P_SpawnMobj
 local P_IsObjectOnGround = P_IsObjectOnGround
+local addHook = addHook
 
 --Firework to the player who captured the flag
 --Borrowed from BattleMod, all credits to it.
@@ -12,10 +13,10 @@ local old = {
 	redscore = 0
 }
 
-gBundleHook("NetVars", "Old Score", function(net)
+addHook("NetVars", function(net)
 	old = net($)
 end)
-gBundleHook("MapLoad", "Set Old Score", function()
+addHook("MapLoad", function()
 	old.bluescore = bluescore
 	old.redscore = redscore
 end)
@@ -36,7 +37,7 @@ local DoFirework = function(mo)
 	end
 end
 
-gBundleHook("PlayerThink", "Captured Flag FireWork", function(p)
+addHook("PlayerThink", function(p)
 	if not (gametyperules & GTR_TEAMFLAGS) then return end
 	if CBW_Battle then return end --BattleMod already has this
 

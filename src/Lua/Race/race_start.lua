@@ -2,9 +2,10 @@
 
 local P_RandomRange = P_RandomRange
 local S_ChangeMusic = S_ChangeMusic
+local addHook = addHook
 local GTR_RACE = GTR_RACE
 
-gBundleHook("MapLoad", "RaceStartMus", function()
+addHook("MapLoad", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if mapheaderinfo[gamemap].noracestartmusic then return end
 
@@ -14,7 +15,7 @@ end)
 
 -- [[ Restore the map's music if start countdown is over ]] --
 
-gBundleHook("ThinkFrame", "RestoreMapMusic", function()
+addHook("ThinkFrame", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if mapheaderinfo[gamemap].noracestartmusic then return end
 

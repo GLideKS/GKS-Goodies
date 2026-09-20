@@ -24,11 +24,12 @@ local gr_clientsided = CV_RegisterVar({
 
 -- [[ Main Object ]] --
 
-SafeFreeslot("MT_RINGEXIT", "SPR_GKS_GOALRING")
+SafeFreeslot("MT_RINGEXIT", "SPR_GKS_GOALRING", "SPR_GD_RACEGOAL")
 
 -- Super Optimization
 local MT_RINGEXIT = MT_RINGEXIT
 local SPR_GKS_GOALRING = SPR_GKS_GOALRING
+local SPR_GD_RACEGOAL = SPR_GD_RACEGOAL
 local MT_OVERLAY = MT_OVERLAY
 local S_THOK = S_THOK
 local S_TEAMRING = S_TEAMRING
@@ -74,6 +75,7 @@ mobjinfo[MT_RINGEXIT] = {
 
 local function RingSpawn(mo, thing)
     if not goalring.value then return end
+    local israce = (gametyperules & GTR_RACE)
 
     local ring = P_SpawnMobjFromMobj(mo, 0, 0, ring_height, MT_RINGEXIT)
     ring.color = SKINCOLOR_GOLDENROD -- Replaced by the finishing player's color
@@ -87,8 +89,12 @@ local function RingSpawn(mo, thing)
     ring.overlay = P_SpawnMobjFromMobj(ring, 0, 0, 0, MT_OVERLAY)
     ring.overlay.target = ring
     ring.overlay.state = S_THOK
-    ring.overlay.sprite = SPR_SIGN -- Replaced by the finishing player's sign sprite.
-    ring.overlay.frame = S
+    ring.overlay.sprite = israce and SPR_GD_RACEGOAL or SPR_SIGN -- Replaced by the finishing player's sign sprite.
+    if israce then -- I wish I could do "israce and A or S" but srb2 just doesn't let me lol.  Amazing game.
+        ring.overlay.frame = A
+    else
+        ring.overlay.frame = S
+    end
     ring.overlay.renderflags = $|RF_SEMIBRIGHT
     ring.overlay.spriteyscale = sign_scale
     ring.overlay.spriteyoffset = ring_yoffset

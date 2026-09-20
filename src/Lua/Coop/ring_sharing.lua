@@ -23,6 +23,7 @@ local P_RemoveMobj = P_RemoveMobj
 local G_CoopGametype = G_CoopGametype
 local G_IsSpecialStage = G_IsSpecialStage
 local G_RingSlingerGametype = G_RingSlingerGametype
+local addHook = addHook
 local FU = FU
 local TICRATE = TICRATE
 local BT_TOSSFLAG = BT_TOSSFLAG
@@ -142,6 +143,6 @@ local function RingMobj_Touch(mo, toucher) -- Shared ring on touch
 end
 
 -- Hook everything
-gBundleHook("PlayerThink", "Ring_Sharing", RingShare)
-gBundleHook("MobjThinker", "RingHand", RingHand, MT_RINGHOLD)
-gBundleHook("TouchSpecial", "ShareRing_Mobj", RingMobj_Touch, MT_RINGSHARE)
+addHook("PlayerThink", RingShare)
+addHook("MobjThinker", RingHand, MT_RINGHOLD)
+addHook("TouchSpecial", RingMobj_Touch, MT_RINGSHARE)

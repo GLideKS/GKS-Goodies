@@ -1,6 +1,7 @@
 local gd = GKSGoodies
 local LowTime_Trigger = 30*TICRATE --which seconds remaining will the music trigger
 local settings = GKSGoodies.serversettings --settings of the server
+local addHook = addHook
 
 --Function to update overtime settings
 local function update_overtime()
@@ -37,7 +38,7 @@ local function getRemainingTics()
 end
 
 --Main Overtime and lowtime trigger
-gBundleHook("ThinkFrame", "Overtime Main Think", function()
+addHook("ThinkFrame", function()
 	if gamestate != GS_LEVEL then return end
 	if not (gametyperules & GTR_TIMELIMIT) then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
@@ -86,5 +87,5 @@ local resetmus = function()
 	gd.lowtime = false
 	gd.currentmusicplaying = mapmusname
 end
-gBundleHook("MapChange", "Reset Music Change", resetmus)
-gBundleHook("MapLoad", "Reset Music Load", resetmus)
+addHook("MapChange", resetmus)
+addHook("MapLoad", resetmus)

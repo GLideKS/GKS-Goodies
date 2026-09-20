@@ -1,3 +1,5 @@
+local addHook = addHook
+
 local ffenh_toggle = CV_RegisterVar({
 	name = "friendlyfire_enhanced",
 	defaultvalue = 1,
@@ -125,4 +127,4 @@ local function PVP(toucher, mo)
 	PVP_Damage(toucher, mo)
 end
 
-gBundleHook("MobjMoveCollide", "Enhanced FriendlyFire", PVP, MT_PLAYER)
+addHook("MobjMoveCollide", PVP, MT_PLAYER)

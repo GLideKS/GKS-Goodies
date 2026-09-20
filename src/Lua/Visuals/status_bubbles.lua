@@ -18,13 +18,14 @@ local S_GD_BUBBLE = S_GD_BUBBLE
 local P_RandomFixed = P_RandomFixed
 local P_RemoveMobj = P_RemoveMobj
 local P_SpawnMobjFromMobj = P_SpawnMobjFromMobj
+local addHook = addHook
 local FU = FU
 local TICRATE = TICRATE
 
 local old_menuactive = false
 local old_chatactive = false
 local luasig = "iAmLua"..P_RandomFixed()
-gBundleHook("NetVars", "Random Fixed", function(n) luasig = n($); end)
+addHook("NetVars", function(n) luasig = n($); end)
 
 local bubble_scale = FU * 3 / 2
 
@@ -40,7 +41,7 @@ COM_AddCommand("_chatcheck", function(p, signature, status)
     p.chatactive = (status == "true") and true or false
 end)
 
-gBundleHook("PostThinkFrame", "Synced status check", function()
+addHook("PostThinkFrame", function()
     local p = consoleplayer
     if not (p and p.valid) then return end
 
@@ -114,7 +115,7 @@ local function bubblefollow(mo)
 end
 
 --Spawn the bubble if the player is doing one of these actions
-gBundleHook("PlayerThink", "Spawn Bubble", function(p)
+addHook("PlayerThink", function(p)
     if not bubbles.value then return end
     if not StatusCheck(p) then return end
     local mo = p.mo
@@ -127,4 +128,4 @@ gBundleHook("PlayerThink", "Spawn Bubble", function(p)
     end
 end)
 
-gBundleHook("MobjThinker", "Bubble Follow", bubblefollow, MT_GD_BUBBLE)
+addHook("MobjThinker", bubblefollow, MT_GD_BUBBLE)

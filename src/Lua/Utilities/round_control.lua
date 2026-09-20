@@ -1,4 +1,5 @@
 local setting = GKSGoodies.serversettings
+local addHook = addHook
 
 --Defaults
 
@@ -93,7 +94,7 @@ local function SetValueOrDefault(cvar, num)
 	end
 end
 
-gBundleHook("MapLoad", "Round Control", function()
+addHook("MapLoad", function()
 	if not (isdedicatedserver or isserver) then return end
 
 	local ctf = {

@@ -1,14 +1,15 @@
 local gd = GKSGoodies
 local settings = GKSGoodies.serversettings
+local addHook = addHook
 rawset(_G, "race_finished", false)
 
-gBundleHook("NetVars", "Race Finish", function(net)
+addHook("NetVars", function(net)
 	race_finished = net($)
 end)
 
 -- [[ Main Hurry Up trigger ]] --
 
-gBundleHook("ThinkFrame", "HurryUp", function()
+addHook("ThinkFrame", function()
 	if not (gametyperules & GTR_RACE) then return end
 	if not (gamestate & GS_LEVEL) then return end
 	if race_finished then return end
@@ -25,14 +26,14 @@ gBundleHook("ThinkFrame", "HurryUp", function()
 	end
 end)
 
-gBundleHook("MapLoad", "ResetRaceFinish", function()
+addHook("MapLoad", function()
 	race_finished = false
 end)
 
 -- [[ HUD ]] --
 
 local drawString
-gBundleHook("HUD", "HurryUp HUD", function(v)
+addHook("HUD", function(v)
 	if not (gametyperules & GTR_RACE) then return end
 	if not (gamestate & GS_LEVEL) then return end
 	if not race_finished then return end
