@@ -43,7 +43,7 @@ local directory = { "/",
 
     {"Utilities",
         "tools.lua",
-        -- "round_control.lua",
+        "round_control.lua",
         "timelimit_tweaks.lua",
         "tips.lua",
         "enhanced_friendlyfire.lua",
