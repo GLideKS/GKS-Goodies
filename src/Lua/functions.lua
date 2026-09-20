@@ -214,8 +214,8 @@ rawset(_G,'L_SpeedCapXY', function(mo,limit,factor)
 	local spd, ang =
 		R_PointToDist2(0,0,mo.momx,mo.momy),
 		R_PointToAngle2(0,0,mo.momx,mo.momy)
-	if spd > limit
-		if factor == nil
+	if spd > limit then
+		if factor == nil then
 			factor = FixedDiv(limit,spd)
 		end
 		L_DoBrakesXY(mo,factor)
