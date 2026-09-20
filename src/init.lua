@@ -2,45 +2,52 @@
 local directory = { "/",
 
     -- [[ Must load first]] --
-    "Globals.lua",
-    "Functions.lua",
-    "Libraries/Info_Fireworks.lua",
+    "globals.lua",
+    "functions.lua",
+    "Libraries/fireworks.lua",
 
     -- [[ Anything else ]] --
 
     {"Race", -- Race gamemode stuff
         {"Voices",
-            "definitions.lua",
-            "system.lua",
+            "voices_definitions.lua",
+            "voices_system.lua",
         },
-        "Race Adjustments.lua",
-        "Hurry Up.lua",
-        "Race Start.lua",
+        "race_adjustments.lua",
+        "race_start.lua",
+        "hurry_up.lua",
     },
 
     {"Coop", -- Coop stuff
-        "Ring sharing.lua",
+        "ring_sharing.lua",
     },
 
-    {"Team Visuals", -- Team gamemodes stuff
-        "Color Variants.lua",
-        "Flag Capture Firework.lua",
-        "Flag Hold.lua",
+    -- Visuals
+
+    {"Visuals",
+        {"Team Visuals", -- Team gamemodes stuff
+            "color_variants.lua",
+            "flag_capture_firework.lua",
+            "flag_hold.lua",
+        },
+        "status_bubbles.lua",
+        "windlines.lua",
+        "ring_signpost.lua",
+        "super_sparkles.lua",
+        "ability_plus.lua",
+        "pre22_token.lua",
+        "shard_holding.lua"
     },
 
-    -- General
-    "Tools.lua",
-    "Round Control.lua",
-    "tips.lua",
-    "Status Bubbles.lua",
-    "TimeLimit stuff.lua",
-    "Windlines.lua",
-    "Super Sparkles.lua",
-    "Enhanced_FF.lua",
-    "ring_signpost.lua",
-    "AbilityPlus.lua",
-    "Pre22Token.lua",
-    "Shard_Holding.lua",
+    -- Utilities
+
+    {"Utilities",
+        "tools.lua",
+        "round_control.lua",
+        "timelimit_tweaks.lua",
+        "tips.lua",
+        "enhanced_friendlyfire.lua",
+    },
 }
 
 local function load(dir, path)
