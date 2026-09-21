@@ -7,6 +7,7 @@ local directory = { "/",
     {"Libraries",
         "fireworks.lua",
         "w2s.lua",
+        "LugentMenu.lua"
     },
 
     -- [[ Anything else ]] --
@@ -52,6 +53,8 @@ local directory = { "/",
         "tips.lua",
         "enhanced_friendlyfire.lua",
     },
+
+    "menu.lua",
 }
 
 local function load(dir, path)
