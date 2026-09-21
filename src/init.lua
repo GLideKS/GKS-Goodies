@@ -4,7 +4,10 @@ local directory = { "/",
     -- [[ Must load first]] --
     "globals.lua",
     "functions.lua",
-    "Libraries/fireworks.lua",
+    {"Libraries",
+        "fireworks.lua",
+        "w2s.lua",
+    },
 
     -- [[ Anything else ]] --
 
@@ -36,7 +39,8 @@ local directory = { "/",
         "super_sparkles.lua",
         "ability_plus.lua",
         "pre22_token.lua",
-        "shard_holding.lua"
+        "shard_holding.lua",
+        "nametags.lua",
     },
 
     -- Utilities
