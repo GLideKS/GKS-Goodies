@@ -49,10 +49,6 @@ COM_AddCommand("custommapexit", function(p, map, nextmap)
 
     custom_exits[map] = nextmap -- If both of these are found, do the changes
     CONS_Printf(p, "\x83"..IDAndName(map).." next level is now: "..IDAndName(nextmap))
-
-    if gamemap == map then -- If the map given is the same one we're in, apply directly.
-        SetCustomExitFromMap(map)
-    end
 end, COM_ADMIN)
 
 COM_AddCommand("custommapexit_remove", function(p, map) -- Seems weird when trying to remove a custom exit from the list so betet
