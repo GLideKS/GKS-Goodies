@@ -13,6 +13,12 @@ local nametags = CV_RegisterVar({ -- User's choice
 	PossibleValue = CV_TrueFalse,
 })
 
+local nametag_self = CV_RegisterVar({ -- Also make appear your nametag as well??
+	name = "nametags_self",
+	defaultvalue = 0,
+	PossibleValue = CV_TrueFalse,
+})
+
 local nametag_scale = CV_RegisterVar({
 	name = "nametags_scale",
 	defaultvalue = 0,
@@ -55,6 +61,20 @@ local function Nametags(v, p, c)
 	end, pmo,
 	pmo.x - range, pmo.x + range,
 	pmo.y - range, pmo.y + range)
+
+    if nametag_self.value then
+        local self_result = GD_GetScreenCoords(v, p, c, {
+            x = pmo.x,
+            y = pmo.y,
+            z = pmo.z + pmo.height
+        })
+		if self_result or self_result.onscreen then
+            local self_x, self_y = self_result.x, self_result.y
+            local self_name, self_color = p.name, skincolors[pmo.color].chatcolor
+
+            drawString(self_x, self_y - (9 * FU), self_name, self_color|V_ALLOWLOWERCASE, font_types[nametag_scale.value])
+        end
+    end
 
 	if (#found <= 0) then return end
 
