@@ -33,7 +33,7 @@ skincolors[SKINCOLOR_GDCHROMA] = {
 	invcolor = SKINCOLOR_SKY,
 	invshade = 0,
 	chatcolor = V_BLUEMAP,
-	accessible = true
+	accessible = false
 }
 
 -- Localize to optimize
