@@ -5,7 +5,7 @@ local function COM_Execute(command)
     S_StartSound(nil, sfx_strpst, consoleplayer)
 end
 
-local ExampleMenu = {
+local GDMenu = {
     {
         x_pos = 30,
         y_pos = 30,
@@ -20,36 +20,92 @@ local ExampleMenu = {
             {header = true, text = "User Options", y_pos = 0},
             {text = "Toggle Super Sparkles", action = function() COM_Execute("toggle_supersparkles") end, y_pos = 12},
             {text = "Toggle Windlines", action = function() COM_Execute("toggle_windlines") end, y_pos = 22},
-            {text = "Nametags", cvar = CV_FindVar("nametags"), y_pos = 32},
-            {text = "Nametag self", cvar = CV_FindVar("nametags_self"), y_pos = 42},
-            {text = "Nametags scale", cvar = CV_FindVar("nametags_scale"), y_pos = 52},
-            {text = "Bubble Status", cvar = CV_FindVar("bubble_status"), y_pos = 62},
+            {text = "Bubble Status", cvar = CV_FindVar("bubble_status"), y_pos = 32},
+            {text = "\x88".."Nametags...", action = function() MENU:GoToPage(2) end, y_pos = 42},
 
-            {header = true, text = "Server Options", y_pos = 74},
-            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 86},
-            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 96},
-            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 106},
-            {text = "Friendly Fire tweaks...", y_pos = 116},
-            {text = "Race/Competition tweaks...", y_pos = 126},
-
-            /*
-            {header = true, text = "Header", y_pos = 0},
-            {text = "Text", y_pos = 12},
-            {text = "Action", action = ExampleAction, y_pos = 22},
-            {text = "CVar - Integer", cvar = ExampleCVar, y_pos = 32},
-            {text = "CVar - Float", cvar = ExampleCVar2, amount = "0.25", y_pos = 42},
-            {thintext = true, text = "Thin Text", y_pos = 52},
-            {disabled = true, text = "Disabled Text", y_pos = 62},
-            {text = "Color", color = SKINCOLOR_GREEN, y_pos = 72},
-            {text = "Player", player = 0, y_pos = 100},
-            {invisible = true, text = "Invisible Text & Range", range = {1000, 2000}, value = 1000, amount = 10, y_pos = 110},
-            {text = "Input", input = "", y_pos = 120},
-            {text = "Custom Options", options = {"Option 1", "Option 2", "Option 3", "Option 4"}, value = 1, y_pos = 144},
-            */
-        }
+            {header = true, text = "Server Options", y_pos = 64},
+            {text = "Goal Ring", cvar = CV_FindVar("goalring"), y_pos = 76},
+            {text = "Per-player Goal Ring", cvar = CV_FindVar("goalring_clientsided"), y_pos = 86},
+            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 96},
+            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 106},
+            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 116},
+            {text = "Round Control", cvar = CV_FindVar("roundcontrol"), y_pos = 126},
+            {text = "Token Alternative", cvar = CV_FindVar("token_alt"), y_pos = 136},
+            {text = "\x88".."Friendly Fire tweaks...", action = function() MENU:GoToPage(3) end,y_pos = 146},
+            {text = "\x88".."Race/Competition tweaks...", action = function() MENU:GoToPage(4) end, y_pos = 156},
+        },
+        on_open = function(menu, page)
+            if not (isserver or IsPlayerAdmin(consoleplayer)) then
+                for i = 9, #page.entries do -- So let's assume the next entries are admin related stuff
+                    if page.entries[i].header then continue end
+                    page.entries[i].disabled = true
+                end
+            end
+        end
+    },
+    {
+        x_pos = 30,
+        y_pos = 30,
+        header_text = "Nametags",
+        header_color = V_SKYMAP,
+        start_item = 1,
+        previous_page = 1,
+        previous_item = 5,
+        no_background = false,
+        scroll = false,
+        entries = {
+            {text = "Nametags", cvar = CV_FindVar("nametags"), y_pos = 0},
+            {text = "Scale", cvar = CV_FindVar("nametags_scale"), y_pos = 10},
+            {text = "Self Nametag", cvar = CV_FindVar("nametags_self"), y_pos = 20},
+        },
+    },
+    {
+        x_pos = 30,
+        y_pos = 30,
+        header_text = "Friendly Fire Tweaks",
+        header_color = V_REDMAP,
+        start_item = 1,
+        previous_page = 1,
+        previous_item = 14,
+        no_background = false,
+        scroll = false,
+        entries = {
+            {text = "Main Toggle", cvar = CV_FindVar("friendlyfire_enhanced"), y_pos = 0},
+            {text = "Hit colission", cvar = CV_FindVar("ff_collision"), y_pos = 10},
+            {text = "Hit with abilities only", cvar = CV_FindVar("ff_onlyabilities"), y_pos = 20},
+            {text = "Hit type", cvar = CV_FindVar("ff_hittype"), y_pos = 30},
+            {text = "Momentum on hit", cvar = CV_FindVar("ff_momentum"), y_pos = 40},
+        },
+        thinker = function(menu, page)
+            local ffenh = CV_FindVar("friendlyfire_enhanced").value
+            for i = 2, #page.entries do
+                if page.entries[i].header then continue end
+                if ffenh then
+                    page.entries[i].disabled = false
+                else
+                    page.entries[i].disabled = true
+                end
+            end
+        end
+    },
+    {
+        x_pos = 30,
+        y_pos = 30,
+        header_text = "Race/Competition Tweaks",
+        header_color = V_SKYMAP,
+        start_item = 1,
+        previous_page = 1,
+        previous_item = 15,
+        no_background = false,
+        scroll = false,
+        entries = {
+            {text = "Prevent damage on countdown", cvar = CV_FindVar("race_nocountdowndamage"), y_pos = 0},
+            {text = "Race starting music", cvar = CV_FindVar("race_startmusic"), y_pos = 10},
+            {text = "Voices", cvar = CV_FindVar("race_voices"), y_pos = 20},
+        },
     }
 }
 
 COM_AddCommand("gd_menu", function(player)
-    MENU:OpenMenu(ExampleMenu, 1)
+    MENU:OpenMenu(GDMenu, 1)
 end, COM_LOCAL)
