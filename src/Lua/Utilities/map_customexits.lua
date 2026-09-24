@@ -1,4 +1,5 @@
 -- Code by GLide KS
+-- TODO: This code will probably need to be changed for v2.2.16 where it will include longer map names!
 
 -- [[ Set up the map's next level, the code behavior will rely on this. ]] --
 

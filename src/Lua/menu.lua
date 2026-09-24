@@ -1,3 +1,8 @@
+-- TODO: In a future replace with a menu library that supports GC_ JA_ game controls to not be keyboard only
+-- I doubt Lugent wants to support gamepad users sooo better find one that supports it if possible.
+
+-- NOTE: v2.2.16 will feature CV_MENU for cvars, maybe I'll consider to use it when it comes out.
+
 local MENU = LugentMenu
 
 local function COM_Execute(command)

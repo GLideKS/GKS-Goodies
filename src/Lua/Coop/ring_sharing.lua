@@ -1,4 +1,5 @@
 // Inspired by Chaos Mode ring sharing.
+-- TODO: Allow the player who tossed the ring collect it after some time.
 
 local rshare = CV_RegisterVar({ -- Global command
 	name = "ring_sharing",

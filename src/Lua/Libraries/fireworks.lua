@@ -1,4 +1,6 @@
 --From BattleMod
+-- TODO: Doesn't make sense to leave it on Libraries folder...
+-- reconsider to merge it into flag_capture_firework.lua
 
 SafeFreeslot("MT_EFIREWORK","S_EFIREWORK0","S_EFIREWORK1","S_EFIREWORK2","S_EFIREWORK3")
 local MT_EFIREWORK = MT_EFIREWORK
