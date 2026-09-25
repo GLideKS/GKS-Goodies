@@ -70,7 +70,7 @@ local function Nametags(v, p, c)
         })
 		if self_result or self_result.onscreen then
             local self_x, self_y = self_result.x, self_result.y
-            local self_name, self_color = p.name, skincolors[pmo.color].chatcolor
+            local self_name, self_color = p.name, skincolors[pmo.color or SKINCOLOR_WHITE].chatcolor
 
             drawString(self_x, self_y - (9 * FU), self_name, self_color|V_ALLOWLOWERCASE, font_types[nametag_scale.value])
         end
@@ -87,7 +87,7 @@ local function Nametags(v, p, c)
         })
 		if not result or not result.onscreen then continue end
         local x, y = result.x, result.y
-        local name, color = mobj.player.name, skincolors[mobj.color].chatcolor
+        local name, color = mobj.player.name, skincolors[mobj.color or SKINCOLOR_WHITE].chatcolor
 
         drawString(x, y - (9 * FU), name, color|V_ALLOWLOWERCASE, font_types[nametag_scale.value])
 	end
