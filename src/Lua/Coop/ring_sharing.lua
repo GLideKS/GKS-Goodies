@@ -1,5 +1,4 @@
 // Inspired by Chaos Mode ring sharing.
--- TODO: Allow the player who tossed the ring collect it after some time.
 
 local rshare = CV_RegisterVar({ -- Global command
 	name = "ring_sharing",
@@ -102,6 +101,7 @@ local function RingShare(p) -- Player's ring sharing functionality
             ring.fuse = 5 * TICRATE
             ring.scale = $ * 3 / 2
             ring.color = mo.color
+            ring.collecttime = TICRATE / 2
             P_GivePlayerRings(p, -1)
             S_StartSound(mo, sfx_ngjump)
             P_InstaThrust(ring, mo.angle, FixedMul(20 * FU, mo.scale))
@@ -143,7 +143,18 @@ local function RingMobj_Touch(mo, toucher) -- Shared ring on touch
     S_StartSound(toucher, sfx_itemup)
 end
 
+local function RingMobj(mo) -- So we can collect it after
+    if not mo.target then return end
+
+    if mo.collecttime then
+        mo.collecttime = $ - 1
+    else
+        mo.target = nil
+    end
+end
+
 -- Hook everything
 addHook("PlayerThink", RingShare)
 addHook("MobjThinker", RingHand, MT_RINGHOLD)
 addHook("TouchSpecial", RingMobj_Touch, MT_RINGSHARE)
+addHook("MobjThinker", RingMobj, MT_RINGSHARE)
