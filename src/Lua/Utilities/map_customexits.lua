@@ -9,13 +9,7 @@ addHook("NetVars", function(net) -- Should be synched in the netgames
     custom_exits = net($)
 end)
 
-local function SetCustomExitFromMap(map, skipstats)
-    if not custom_exits[map] then return end
-    local newexit = custom_exits[map]
-    G_SetCustomExitVars(newexit, skipstats)
-end
-
-local function IDAndName(map)
+local function IDAndName(map) -- Return a string of the map's name and the map id
     return G_BuildMapTitle(map).." ["..G_BuildMapName(map).."]"
 end
 
@@ -97,7 +91,8 @@ end, COM_ADMIN)
 local function CustomExitOverride()
     if gamestate != GS_LEVEL then return end
     if not custom_exits[gamemap] then return end
-    SetCustomExitFromMap(gamemap)
+    local newexit = custom_exits[gamemap]
+    G_SetCustomExitVars(newexit)
 end
 
 addHook("ThinkFrame", CustomExitOverride)
