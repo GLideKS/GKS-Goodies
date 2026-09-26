@@ -41,7 +41,7 @@ local GDMenu = {
         },
         on_open = function(menu, page)
             if not (isserver or IsPlayerAdmin(consoleplayer)) then
-                for i = 9, #page.entries do -- So let's assume the next entries are admin related stuff
+                for i = 7, #page.entries do -- So let's assume the next entries are admin related stuff
                     if page.entries[i].header then continue end
                     page.entries[i].disabled = true
                 end
