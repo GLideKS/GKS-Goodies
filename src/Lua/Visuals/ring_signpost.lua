@@ -122,13 +122,16 @@ local function RingThinker(mo)
     elseif not mo.completed then -- Player found! let's set the corresponding sign icon and color.
         ov.translation = nil
         ov.skin = t.skin
-        ov.sprite = SPR_PLAY
         ov.spriteyoffset = FixedDiv($, skins[ov.skin].highresscale) -- Offset fix for highres characters
-        ov.sprite2 = SPR2_SIGN -- TODO: Make the "Clear!" stay if the character doesn't have it.
-        ov.frame = A
         mo.color = t.player.skincolor
         ov.color = mo.color
         S_StartSound(mo, sfx_s243)
+
+        if skins[t.skin].sprites[SPR2_SIGN].numframes then -- Only change the overlay if the skin has a SIGN sprite.
+            ov.sprite = SPR_PLAY
+            ov.frame = A
+            ov.sprite2 = SPR2_SIGN
+        end
 
         local x, y, z = mo.x, mo.y, mo.z + mo.height / 2
         local radius = FixedMul(mo.info.painchance, mo.scale)
