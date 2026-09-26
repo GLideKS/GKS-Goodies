@@ -1,4 +1,4 @@
-local range = RING_DIST * 3 / 2
+local range = RING_DIST * 2
 
 local global_nametags = CV_RegisterVar({ -- Server's choice to allow this feature or not.
 	name = "allownametags",
@@ -38,13 +38,47 @@ local font_types = { -- To be used with nametags_scale
     [3] = "fixed-center",
 }
 
+local transFlags = {
+    V_10TRANS,
+    V_20TRANS,
+    V_30TRANS,
+    V_40TRANS,
+    V_50TRANS,
+    V_60TRANS,
+    V_70TRANS,
+    V_80TRANS,
+    V_90TRANS
+}
+
+local function ReturnVFlagByDistance(mo, found, dist)
+    local d = R_PointToDist2(mo.x, mo.y, found.x, found.y)
+    local minStart = dist / 6
+
+    if d < minStart then
+        return 0
+    end
+
+    if d >= dist then
+        return V_90TRANS
+    end
+
+    local range = dist - minStart
+    local current = d - minStart
+    local val = FixedDiv(FixedMul(current, 9 * FRACUNIT), range)
+    local index = (FixedFloor(val) / FRACUNIT) + 1
+    if index < 1 then index = 1 end
+    if index > 9 then index = 9 end
+
+    return transFlags[index]
+end
+
 -- Localize to optimize
 local getSpritePatch
 local drawScaled
 local getColormap
 local drawString
 
-local function DrawPlayerNameTag(v, p, c, mo)
+local function DrawPlayerNameTag(v, p, c, mo, customflag)
     local f = P_MobjFlip(mo)
     local height = min(FixedMul(skins[mo.skin].height, mo.scale), mo.height)
     local result = GD_GetScreenCoords(v, p, c, {
@@ -57,7 +91,7 @@ local function DrawPlayerNameTag(v, p, c, mo)
     local x, y = result.x, result.y
     local name, color = mo.player.name, skincolors[mo.color or SKINCOLOR_WHITE].chatcolor
 
-    drawString(x, y - f * (6 * FU), name, color|V_ALLOWLOWERCASE, font_types[nametag_scale.value])
+    drawString(x, y - f * (6 * FU), name, color|V_ALLOWLOWERCASE|(customflag or 0), font_types[nametag_scale.value])
 end
 
 local function Nametags(v, p, c)
@@ -93,7 +127,7 @@ local function Nametags(v, p, c)
 
     for i = 1 ,#found , 1 do
 		local mobj = found[i]
-		DrawPlayerNameTag(v, p, c, mobj)
+		DrawPlayerNameTag(v, p, c, mobj, ReturnVFlagByDistance(pmo, mobj, r))
 	end
 end
 
