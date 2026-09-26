@@ -97,8 +97,6 @@ end, COM_ADMIN)
 local function CustomExitOverride()
     if gamestate != GS_LEVEL then return end
     if not custom_exits[gamemap] then return end
-    if not G_EnoughPlayersFinished() then return end
-
     SetCustomExitFromMap(gamemap)
 end
 
