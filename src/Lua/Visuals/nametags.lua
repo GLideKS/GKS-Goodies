@@ -38,6 +38,22 @@ local drawScaled
 local getColormap
 local drawString
 
+local function DrawPlayerNameTag(v, p, c, mo)
+    local f = P_MobjFlip(mo)
+    local height = min(FixedMul(skins[mo.skin].height, mo.scale), mo.height)
+    local result = GD_GetScreenCoords(v, p, c, {
+        x = mo.x,
+        y = mo.y,
+        z = mo.z + height
+    })
+    if not result or not result.onscreen then return end
+
+    local x, y = result.x, result.y
+    local name, color = mo.player.name, skincolors[mo.color or SKINCOLOR_WHITE].chatcolor
+
+    drawString(x, y - f * (6 * FU), name, color|V_ALLOWLOWERCASE, font_types[nametag_scale.value])
+end
+
 local function Nametags(v, p, c)
     if not global_nametags.value then return end
     if not nametags.value then return end
@@ -63,33 +79,14 @@ local function Nametags(v, p, c)
 	pmo.y - range, pmo.y + range)
 
     if nametag_self.value then
-        local self_result = GD_GetScreenCoords(v, p, c, {
-            x = pmo.x,
-            y = pmo.y,
-            z = pmo.z + pmo.height
-        })
-		if self_result or self_result.onscreen then
-            local self_x, self_y = self_result.x, self_result.y
-            local self_name, self_color = p.name, skincolors[pmo.color or SKINCOLOR_WHITE].chatcolor
-
-            drawString(self_x, self_y - (9 * FU), self_name, self_color|V_ALLOWLOWERCASE, font_types[nametag_scale.value])
-        end
+        DrawPlayerNameTag(v, p, c, pmo)
     end
 
 	if (#found <= 0) then return end
 
     for i = 1 ,#found , 1 do
 		local mobj = found[i]
-		local result = GD_GetScreenCoords(v, p, c, {
-            x = mobj.x,
-            y = mobj.y,
-            z = mobj.z + mobj.height
-        })
-		if not result or not result.onscreen then continue end
-        local x, y = result.x, result.y
-        local name, color = mobj.player.name, skincolors[mobj.color or SKINCOLOR_WHITE].chatcolor
-
-        drawString(x, y - (9 * FU), name, color|V_ALLOWLOWERCASE, font_types[nametag_scale.value])
+		DrawPlayerNameTag(v, p, c, mobj)
 	end
 end
 
