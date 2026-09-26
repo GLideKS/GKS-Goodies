@@ -5,7 +5,6 @@ local directory = { "/",
     "globals.lua",
     "functions.lua",
     {"Libraries",
-        "fireworks.lua",
         "w2s.lua",
         "LugentMenu.lua"
     },
