@@ -78,7 +78,7 @@ local function Nametags(v, p, c)
 	pmo.x - range, pmo.x + range,
 	pmo.y - range, pmo.y + range)
 
-    if nametag_self.value then
+    if nametag_self.value and c.chase then
         DrawPlayerNameTag(v, p, c, pmo)
     end
 
