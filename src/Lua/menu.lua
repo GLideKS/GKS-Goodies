@@ -62,6 +62,7 @@ local GDMenu = {
             {text = "Nametags", cvar = CV_FindVar("nametags"), y_pos = 0},
             {text = "Scale", cvar = CV_FindVar("nametags_scale"), y_pos = 10},
             {text = "Self Nametag", cvar = CV_FindVar("nametags_self"), y_pos = 20},
+            {text = "Distance", cvar = CV_FindVar("nametags_dist"), y_pos = 30},
         },
     },
     {

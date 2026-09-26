@@ -1,4 +1,4 @@
-local range = RING_DIST * 3
+local range = RING_DIST * 3 / 2
 
 local global_nametags = CV_RegisterVar({ -- Server's choice to allow this feature or not.
 	name = "allownametags",
@@ -23,6 +23,12 @@ local nametag_scale = CV_RegisterVar({
 	name = "nametags_scale",
 	defaultvalue = 0,
 	PossibleValue = {tiny = 0, small = 1, medium = 2, big = 3},
+})
+
+local nametag_dist = CV_RegisterVar({
+	name = "nametags_dist",
+	defaultvalue = 2,
+	PossibleValue = {Short = 1, Normal = 2, High = 3, Far = 4},
 })
 
 local font_types = { -- To be used with nametags_scale
@@ -67,16 +73,17 @@ local function Nametags(v, p, c)
     local pmo = p.mo
 	if not pmo or not pmo.valid then return end
     local found = {}
+    local r = (range * nametag_dist.value)
 
 	searchBlockmap("objects", function(mobj, foundmobj)
         if not (foundmobj.type == MT_PLAYER and foundmobj.player) then return end
 		local dist = R_PointToDist2(mobj.x, mobj.y, foundmobj.x, foundmobj.y)
-		if (dist > range) then return end
+		if (dist > r) then return end
 
 		found[#found + 1] = foundmobj
 	end, pmo,
-	pmo.x - range, pmo.x + range,
-	pmo.y - range, pmo.y + range)
+	pmo.x - r, pmo.x + r,
+	pmo.y - r, pmo.y + r)
 
     if nametag_self.value and c.chase then
         DrawPlayerNameTag(v, p, c, pmo)
