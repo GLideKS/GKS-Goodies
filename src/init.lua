@@ -46,6 +46,7 @@ local directory = { "/",
     -- Utilities
 
     {"Utilities",
+        "clear_emeralds.lua",
         "round_control.lua",
         "timelimit_tweaks.lua",
         "tips.lua",
