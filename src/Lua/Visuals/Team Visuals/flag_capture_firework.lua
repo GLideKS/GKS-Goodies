@@ -1,12 +1,72 @@
-local MT_SUPERSPARK = MT_SUPERSPARK
+-- Firework to the player who captured the flag
+-- Borrowed from BattleMod, all credits to it.
+
+SafeFreeslot("MT_EFIREWORK","S_EFIREWORK0","S_EFIREWORK1","S_EFIREWORK2","S_EFIREWORK3")
 local MT_EFIREWORK = MT_EFIREWORK
 local S_EFIREWORK0 = S_EFIREWORK0
+local S_EFIREWORK1 = S_EFIREWORK1
+local S_EFIREWORK2 = S_EFIREWORK2
+local MT_SUPERSPARK = MT_SUPERSPARK
 local P_SpawnMobj = P_SpawnMobj
 local P_IsObjectOnGround = P_IsObjectOnGround
 local addHook = addHook
 
---Firework to the player who captured the flag
---Borrowed from BattleMod, all credits to it.
+function A_SetSkinFirework(fw)
+	S_StartSound(fw, sfx_s227)
+	fw.skin = "sonic"
+end
+
+function A_AdvFireworkFrame1(fw)
+	S_StartSound(fw, sfx_s3kb3)
+	-- Without the below, the object is an MT_NULL (and the object errors)
+	fw.sprite = SPR_PLAY
+    fw.sprite2 = SPR2_XTRA
+	fw.frame = D|FF_FULLBRIGHT
+	fw.momz = fw.speed*2
+end
+
+function A_AdvFireworkFrame2(fw)
+	fw.sprite = SPR_PLAY
+    fw.sprite2 = SPR2_XTRA
+	fw.frame = E|FF_FULLBRIGHT
+	fw.momz = 1+fw.speed/2
+end
+
+function A_AdvFireworkFrame3(fw)
+	fw.sprite = SPR_PLAY
+    fw.sprite2 = SPR2_XTRA
+	fw.frame = E|FF_FULLBRIGHT
+	fw.momz = fw.speed
+	fw.scalespeed = 1+$/4
+	fw.destscale = $*2
+end
+
+mobjinfo[MT_EFIREWORK].flags = mobjinfo[MT_THOK].flags
+
+states[S_EFIREWORK0] = {
+	tics = 21, --Time before the firework actually "explodes"
+	action = A_SetSkinFirework,
+	flags2 = MF2_DONTDRAW,
+	nextstate = S_EFIREWORK1
+}
+
+states[S_EFIREWORK1] = {
+	tics = 21,
+	action = A_AdvFireworkFrame1,
+	nextstate = S_EFIREWORK2
+}
+
+states[S_EFIREWORK2] = {
+	tics = 21,
+	action = A_AdvFireworkFrame2,
+	nextstate = S_NULL
+}
+
+states[S_EFIREWORK2] = {
+	tics = 21,
+	action = A_AdvFireworkFrame3,
+	nextstate = S_NULL
+}
 
 local old = {
 	bluescore = 0,

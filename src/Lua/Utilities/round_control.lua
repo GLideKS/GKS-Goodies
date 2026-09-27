@@ -1,5 +1,7 @@
 local addHook = addHook
 
+-- TODO: Reminder to improve the code. feels a bit jank.
+
 --Defaults
 
 local roundcontrol = CV_RegisterVar({

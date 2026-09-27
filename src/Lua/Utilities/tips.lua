@@ -1,5 +1,7 @@
 local addHook = addHook
 
+-- TODO: Make the time to appear a tip configurable as well.
+
 --List of prefix colors
 GKSGoodies.prefixcolors = {
 	["white"] = "\x80",

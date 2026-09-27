@@ -1,3 +1,5 @@
+-- TODO: Apply to shields as well?
+
 local addHook = addHook
 
 local ffenh_toggle = CV_RegisterVar({
