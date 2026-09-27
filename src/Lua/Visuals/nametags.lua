@@ -110,7 +110,7 @@ local function Nametags(v, p, c)
     local r = (range * nametag_dist.value)
 
 	searchBlockmap("objects", function(mobj, foundmobj)
-        if not (foundmobj.type == MT_PLAYER and foundmobj.player) then return end
+        if not (foundmobj.type == MT_PLAYER and foundmobj.player and not foundmobj.player.spectator) then return end
 		local dist = R_PointToDist2(mobj.x, mobj.y, foundmobj.x, foundmobj.y)
 		if (dist > r) then return end
 
