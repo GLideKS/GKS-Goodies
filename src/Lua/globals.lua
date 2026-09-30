@@ -5,7 +5,7 @@ rawset(_G, "GKSGoodies", {
     lowtime = false,
     currentmusicplaying = mapmusname,
 	racestart_musics = {"RCSTR1", "RCSTR2", "RCSTR3", "RCSTR4"},
-	overtime_musics = {"_OVRTM", "OVTM1", "OVTM2", "HURRY1", "HURRY2", "HURRY3"},
+	overtime_musics = {"_OVRTM", "OVTM1", "OVTM2", "HURRY1", "HURRY2", "HURRY3", "UNHBSS", "NORTRN"},
 	lowtime_musics = {"_PINCH", "LWTM1", "LWTM2", "LWTM3", "LWTM4", "LWTM5"},
 	serversettings = {
 		overtime_sky,
