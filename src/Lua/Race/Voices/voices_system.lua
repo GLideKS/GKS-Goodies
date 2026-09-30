@@ -33,18 +33,18 @@ local function GetVoice(skin, vctype)
 end
 
 addHook("PlayerThink", function(p)
+    if not (gametyperules & GTR_RACE) then return end
+    local mo = p.mo
+    if not (mo and mo.valid and mo.health) then return end
+
     -- Randomize before the cvar check so we should not desync when turning it on or off client side.
-    local skin = skins[p.skin].name
+    local skin = mo.skin
     local v_ready = GetVoice(skin, 1)
     local v_go = GetVoice(skin, 2)
     local v_victory = GetVoice(skin, 3)
     local v_victory_alt = skins[skin].soundsid[SKSPLVCT1 + P_RandomKey(4)]
     local v_hurry = GetVoice(skin, 4)
-
     if not voices.value then return end
-    local mo = p.mo
-    if not (gametyperules & GTR_RACE) then return end
-    if not (mo and mo.valid and mo.health) then return end
 
     -- Countdown
 
