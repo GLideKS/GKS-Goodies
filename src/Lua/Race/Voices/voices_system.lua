@@ -17,8 +17,7 @@ local countdown_voice = {
 local voices = CV_RegisterVar({
 	name = "race_voices",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
-	flags = CV_NETVAR,
+	PossibleValue = CV_TrueFalse
 })
 
 local function GetVoice(skin, vctype)
@@ -34,30 +33,37 @@ local function GetVoice(skin, vctype)
 end
 
 addHook("PlayerThink", function(p)
+    -- Randomize before the cvar check so we should not desync when turning it on or off client side.
+    local skin = skins[p.skin].name
+    local v_ready = GetVoice(skin, 1)
+    local v_go = GetVoice(skin, 2)
+    local v_victory = GetVoice(skin, 3)
+    local v_victory_alt = skins[skin].soundsid[SKSPLVCT1 + P_RandomKey(4)]
+    local v_hurry = GetVoice(skin, 4)
+
     if not voices.value then return end
     local mo = p.mo
     if not (gametyperules & GTR_RACE) then return end
     if not (mo and mo.valid and mo.health) then return end
-    local skin = mo.skin
 
     -- Countdown
 
     if countdown_voice[leveltime] then
         if leveltime == 35 then -- READY
-            S_StartSound(nil, GetVoice(skin, 1) or sfx_defred, p)
+            S_StartSound(nil, v_ready or sfx_defred, p)
         elseif leveltime == 105 then -- SET
             if not GKSR_Voices[skin] then
                 S_StartSound(nil, sfx_defset, p)
             end
         elseif leveltime == 140 then -- GO!
-            S_StartSound(nil, GetVoice(skin, 2) or sfx_defgo, p)
+            S_StartSound(nil, v_go or sfx_defgo, p)
         end
     end
 
     -- Finished victory sound
 
     if (p.pflags & PF_FINISHED) and not mo.racevictory then
-        S_StartSound(mo, GetVoice(skin, 3) or skins[skin].soundsid[SKSPLVCT1 + P_RandomKey(4)] or sfx_none)
+        S_StartSound(mo, v_victory or v_victory_alt or sfx_none)
         mo.racevictory = true
     end
 
@@ -66,7 +72,7 @@ addHook("PlayerThink", function(p)
     for otherp in players.iterate() do -- Not the optimal way, but this is for a single thing.
         if not (otherp.pflags & PF_FINISHED) then continue end
         if not (p.pflags & PF_FINISHED) and not mo.racehurry then
-            S_StartSound(nil, GetVoice(skin, 4) or sfx_none, p)
+            S_StartSound(nil, v_hurry or sfx_none, p)
             mo.racehurry = true
         end
     end
