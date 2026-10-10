@@ -52,6 +52,7 @@ local directory = { "/",
         "tips.lua",
         "enhanced_friendlyfire.lua",
         "map_customexits.lua",
+        "lobby.lua",
     },
 
     "menu.lua",

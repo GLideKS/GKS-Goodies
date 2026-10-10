@@ -3,7 +3,7 @@
 
 -- [[ Set up the map's next level, the code behavior will rely on this. ]] --
 
-local custom_exits = {} -- List of maps that will contain a custom exit.
+rawset(_G, "custom_exits", {}) -- List of maps that will contain a custom exit.
 
 addHook("NetVars", function(net) -- Should be synched in the netgames
     custom_exits = net($)
@@ -92,7 +92,7 @@ local function CustomExitOverride()
     if gamestate != GS_LEVEL then return end
     if not custom_exits[gamemap] then return end
     local newexit = custom_exits[gamemap]
-    G_SetCustomExitVars(newexit)
+    G_SetCustomExitVars(newexit, GD_Lobby.maps[gamemap] and 2 or 0) -- TODO: If it's a lobby map, randomize between all the lobby maps. for now is a fixed one.
 end
 
 addHook("ThinkFrame", CustomExitOverride)
