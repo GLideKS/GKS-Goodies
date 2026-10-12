@@ -80,18 +80,20 @@ local drawString
 
 local function DrawPlayerNameTag(v, p, c, mo, customflag)
     local f = P_MobjFlip(mo)
-    local height = min(FixedMul(skins[mo.skin].height, mo.scale), mo.height)
+    local height = min(FixedMul(skins[mo.skin].height, mo.scale), mo.height) - 5 * FU
     local result = GD_GetScreenCoords(v, p, c, {
         x = mo.x,
         y = mo.y,
-        z = mo.z + height
+        z = mo.z + f * (((height)*3)/2),
+        eflags = mo.eflags,
+        height = height
     })
     if not result or not result.onscreen then return end
 
     local x, y = result.x, result.y
     local name, color = mo.player.name, skincolors[mo.color or SKINCOLOR_WHITE].chatcolor
 
-    drawString(x, y - f * (6 * FU), name, color|V_ALLOWLOWERCASE|(customflag or 0), font_types[nametag_scale.value])
+    drawString(x, y, name, color|V_ALLOWLOWERCASE|(customflag or 0), font_types[nametag_scale.value])
 end
 
 local function Nametags(v, p, c)
