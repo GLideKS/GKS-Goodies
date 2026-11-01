@@ -10,8 +10,6 @@ local allowcharcolor = CV_RegisterVar({
     flags = CV_NETVAR,
 })
 
-local user_color = CV_FindVar("color").value
-
 local function SetSkinPrefColor(p)
     if not allowcharcolor.value then return end -- The server disabled this, don't run it.
 
@@ -20,7 +18,7 @@ local function SetSkinPrefColor(p)
     local issolchar = (p.solchar and p.solchar.istransformed)
     local isteamed = G_GametypeHasTeams()
 
-    p.skincolor = p.gd_alwayscharcolor and skins[skin].prefcolor or user_color
+    p.skincolor = p.gd_alwayscharcolor and skins[skin].prefcolor or $
     if (p.mo and p.mo.valid) and not (issolchar or isteamed) then -- Sol Forms doesn't use pw_super so better exclude them from this check. UNTESTED.
         pmo.color = p.skincolor
     end
@@ -55,10 +53,12 @@ local function compare_and_update() -- PreThinkFrame
 end
 
 local function saveskin(p) --PlayerThink runs AFTER PreThinkFrame
-    if not p.gd_alwayscharcolor then return end
     local mo = p.mo
-    if not (mo and mo.valid) then return end
-    mo.oldskin = skins[p.skin].name --Save the old skin to compare
+    local skin = skins[p.skin].name
+
+    if p.gd_alwayscharcolor and (mo and mo.valid) then
+        mo.oldskin = skin --Save the old skin to compare
+    end
 end
 
 addHook("PreThinkFrame", compare_and_update)
