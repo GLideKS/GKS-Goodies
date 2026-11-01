@@ -3,6 +3,14 @@ local LowTime_Trigger = 30*TICRATE --which seconds remaining will the music trig
 local settings = GKSGoodies.serversettings --settings of the server
 local addHook = addHook
 
+-- Main toggle
+local timelimitmus = CV_RegisterVar({
+	name = "timelimit_music",
+	defaultvalue = 1,
+	PossibleValue = CV_TrueFalse,
+	flags = CV_NETVAR,
+})
+
 --Function to update overtime settings
 local function update_overtime()
     local sky = CV_FindVar("overtime_sky") and CV_FindVar("overtime_sky").value
@@ -39,6 +47,7 @@ end
 
 --Main Overtime and lowtime trigger
 addHook("ThinkFrame", function()
+	if not timelimitmus.value then return end
 	if gamestate != GS_LEVEL then return end
 	if not (gametyperules & GTR_TIMELIMIT) then return end
 	if CBW_Battle then return end -- BattleMod has already this kind of stuff
