@@ -26,22 +26,23 @@ local GDMenu = {
             {text = "Toggle Super Sparkles", action = function() COM_Execute("toggle_supersparkles") end, y_pos = 12},
             {text = "Toggle Windlines", action = function() COM_Execute("toggle_windlines") end, y_pos = 22},
             {text = "Bubble Status", cvar = CV_FindVar("bubble_status"), y_pos = 32},
-            {text = "\x88".."Nametags...", action = function() MENU:GoToPage(2) end, y_pos = 42},
+            {text = "Race voices", cvar = CV_FindVar("race_voices"), y_pos = 42},
+            {text = "\x88".."Nametags...", action = function() MENU:GoToPage(2) end, y_pos = 52},
 
-            {header = true, text = "Server Options", y_pos = 64},
-            {text = "Goal Ring", cvar = CV_FindVar("goalring"), y_pos = 76},
-            {text = "Per-player Goal Ring", cvar = CV_FindVar("goalring_clientsided"), y_pos = 86},
-            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 96},
-            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 106},
-            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 116},
-            {text = "Round Control", cvar = CV_FindVar("roundcontrol"), y_pos = 126},
-            {text = "Token Alternative", cvar = CV_FindVar("token_alt"), y_pos = 136},
-            {text = "\x88".."Friendly Fire tweaks...", action = function() MENU:GoToPage(3) end,y_pos = 146},
-            {text = "\x88".."Race/Competition tweaks...", action = function() MENU:GoToPage(4) end, y_pos = 156},
+            {header = true, text = "Server Options", y_pos = 74},
+            {text = "Goal Ring", cvar = CV_FindVar("goalring"), y_pos = 86},
+            {text = "Per-player Goal Ring", cvar = CV_FindVar("goalring_clientsided"), y_pos = 96},
+            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 106},
+            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 116},
+            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 126},
+            {text = "Round Control", cvar = CV_FindVar("roundcontrol"), y_pos = 136},
+            {text = "Token Alternative", cvar = CV_FindVar("token_alt"), y_pos = 146},
+            {text = "\x88".."Friendly Fire tweaks...", action = function() MENU:GoToPage(3) end,y_pos = 156},
+            {text = "\x88".."Race/Competition tweaks...", action = function() MENU:GoToPage(4) end, y_pos = 166},
         },
         on_open = function(menu, page)
             if not (isserver or IsPlayerAdmin(consoleplayer)) then
-                for i = 7, #page.entries do -- So let's assume the next entries are admin related stuff
+                for i = 8, #page.entries do -- So let's assume the next entries are admin related stuff
                     if page.entries[i].header then continue end
                     page.entries[i].disabled = true
                 end
@@ -55,7 +56,7 @@ local GDMenu = {
         header_color = V_SKYMAP,
         start_item = 1,
         previous_page = 1,
-        previous_item = 5,
+        previous_item = 6,
         no_background = false,
         scroll = false,
         entries = {
@@ -72,7 +73,7 @@ local GDMenu = {
         header_color = V_REDMAP,
         start_item = 1,
         previous_page = 1,
-        previous_item = 14,
+        previous_item = 15,
         no_background = false,
         scroll = false,
         entries = {
@@ -101,13 +102,12 @@ local GDMenu = {
         header_color = V_SKYMAP,
         start_item = 1,
         previous_page = 1,
-        previous_item = 15,
+        previous_item = 16,
         no_background = false,
         scroll = false,
         entries = {
             {text = "Prevent damage on countdown", cvar = CV_FindVar("race_nocountdowndamage"), y_pos = 0},
-            {text = "Race starting music", cvar = CV_FindVar("race_startmusic"), y_pos = 10},
-            {text = "Voices", cvar = CV_FindVar("race_voices"), y_pos = 20},
+            {text = "Race starting music", cvar = CV_FindVar("race_startmusic"), y_pos = 10}
         },
     }
 }

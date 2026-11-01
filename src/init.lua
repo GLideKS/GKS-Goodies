@@ -41,17 +41,18 @@ local directory = { "/",
         "pre22_token.lua",
         "shard_holding.lua",
         "nametags.lua",
+        "always_charactercolor.lua",
     },
 
     -- Utilities
 
     {"Utilities",
         "clear_emeralds.lua",
-        "round_control.lua",
         "timelimit_tweaks.lua",
         "tips.lua",
         "enhanced_friendlyfire.lua",
         "map_customexits.lua",
+        "lobby.lua",
     },
 
     "menu.lua",
