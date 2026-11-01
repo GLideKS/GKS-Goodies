@@ -41,6 +41,7 @@ local directory = { "/",
         "pre22_token.lua",
         "shard_holding.lua",
         "nametags.lua",
+        "always_charactercolor.lua",
     },
 
     -- Utilities
