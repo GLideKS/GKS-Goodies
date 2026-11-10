@@ -63,6 +63,9 @@ end
 
 addHook("PreThinkFrame", compare_and_update)
 addHook("PlayerThink", saveskin)
-addHook("PlayerSpawn", function(p)
+addHook("MobjSpawn", function(mo)
+    local p = mo.player
+
+    if not (mo.valid and mo.player) then return end
     if p.gd_alwayscharcolor then SetSkinPrefColor(p) end -- Set it when respawning as well.
 end, MT_PLAYER)
