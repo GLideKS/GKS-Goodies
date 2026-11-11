@@ -25,24 +25,24 @@ local GDMenu = {
             {header = true, text = "User Options", y_pos = 0},
             {text = "Toggle Super Sparkles", action = function() COM_Execute("toggle_supersparkles") end, y_pos = 12},
             {text = "Toggle Windlines", action = function() COM_Execute("toggle_windlines") end, y_pos = 22},
-            {text = "Bubble Status", cvar = CV_FindVar("bubble_status"), y_pos = 32},
-            {text = "Race voices", cvar = CV_FindVar("race_voices"), y_pos = 42},
-            {text = "\x88".."Nametags...", action = function() MENU:GoToPage(2) end, y_pos = 52},
+            {text = "Use always original skin color", action = function() COM_Execute("alwayscharcolor") end, y_pos = 32},
+            {text = "Bubble Status", cvar = CV_FindVar("bubble_status"), y_pos = 42},
+            {text = "Race voices", cvar = CV_FindVar("race_voices"), y_pos = 52},
+            {text = "\x88".."Nametags...", action = function() MENU:GoToPage(2) end, y_pos = 62},
 
-            {header = true, text = "Server Options", y_pos = 74},
-            {text = "Goal Ring", cvar = CV_FindVar("goalring"), y_pos = 86},
-            {text = "Per-player Goal Ring", cvar = CV_FindVar("goalring_clientsided"), y_pos = 96},
-            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 106},
-            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 116},
-            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 126},
-            {text = "Round Control", cvar = CV_FindVar("roundcontrol"), y_pos = 136},
+            {header = true, text = "Server Options", y_pos = 84},
+            {text = "Goal Ring", cvar = CV_FindVar("goalring"), y_pos = 96},
+            {text = "Per-player Goal Ring", cvar = CV_FindVar("goalring_clientsided"), y_pos = 106},
+            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 116},
+            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 126},
+            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 136},
             {text = "Token Alternative", cvar = CV_FindVar("token_alt"), y_pos = 146},
             {text = "\x88".."Friendly Fire tweaks...", action = function() MENU:GoToPage(3) end,y_pos = 156},
             {text = "\x88".."Race/Competition tweaks...", action = function() MENU:GoToPage(4) end, y_pos = 166},
         },
         on_open = function(menu, page)
             if not (isserver or IsPlayerAdmin(consoleplayer)) then
-                for i = 8, #page.entries do -- So let's assume the next entries are admin related stuff
+                for i = 9, #page.entries do -- So let's assume the next entries are admin related stuff
                     if page.entries[i].header then continue end
                     page.entries[i].disabled = true
                 end
@@ -56,7 +56,7 @@ local GDMenu = {
         header_color = V_SKYMAP,
         start_item = 1,
         previous_page = 1,
-        previous_item = 6,
+        previous_item = 7,
         no_background = false,
         scroll = false,
         entries = {
