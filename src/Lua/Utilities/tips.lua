@@ -109,6 +109,17 @@ end, COM_ADMIN)
 
 addHook("ThinkFrame", function()
 	if not netgame then return end
+
+	-- Only send tips if there's even active players around.
+	local active_players = 0
+
+	for p in players.iterate() do
+		if (p and p.valid and p.quittime) then continue end
+		active_players = $ + 1
+	end
+
+	if not active_players then return end
+
 	if not ((leveltime > 1) and ((leveltime % ((TICRATE * 60) * tiptime.value)) == 0)) then return end
 	if not #GKSGoodies.tips.messages then return end
 
