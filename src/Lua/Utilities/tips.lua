@@ -76,6 +76,14 @@ COM_AddCommand("tips_remove", function(p, arg)
 	end
 end, COM_ADMIN)
 
+-- How much time will a tip appear (in minutes)
+local tiptime = CV_RegisterVar({
+	name = "tips_time",
+	defaultvalue = 4,
+	PossibleValue = {MIN=1, MAX=60},
+	flags = CV_NETVAR,
+})
+
 --Prints the list of tips given
 COM_AddCommand("tips_list", function(p)
 	if #GKSGoodies.tips.messages then
@@ -101,7 +109,7 @@ end, COM_ADMIN)
 
 addHook("ThinkFrame", function()
 	if not netgame then return end
-	if not ((leveltime % 6300) == 700) then return end
+	if not ((leveltime > 1) and ((leveltime % ((TICRATE * 60) * tiptime.value)) == 0)) then return end
 	if not #GKSGoodies.tips.messages then return end
 
 	local prefix = GKSGoodies.serverprefix.text
