@@ -129,6 +129,6 @@ addHook("ThinkFrame", function()
 
 	local tip_message = GKSGoodies.tips.messages[P_RandomRange(1, #GKSGoodies.tips.messages)]
 	local tip_sound = GKSGoodies.tips.sound
-	chatprint(colors[prefix_color].."<"..prefix.."> "..colors["white"]..tip_message)
+	chatprint(colors[prefix_color].."<"..prefix.."> "..colors["yellow"]..tip_message)
 	S_StartSound(nil, tip_sound)
 end)
