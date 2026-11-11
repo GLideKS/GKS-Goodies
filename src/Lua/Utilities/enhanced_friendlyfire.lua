@@ -112,9 +112,9 @@ end
 
 local function PVP(toucher, mo)
     if not ffenh_toggle.value then return end
-	local p1, p2 = toucher.player, mo.player
 	if not (toucher and toucher.valid) then return end
     if not (mo and mo.valid) then return end
+    local p1, p2 = toucher.player, mo.player
 	if not L_ZCollide(toucher, mo) then return end
     if not GD_CanHurtPlayer(p1, p2) then return end
     if not P_PlayerCanDamage(p1, mo) then return end
