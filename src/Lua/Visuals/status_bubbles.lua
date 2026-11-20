@@ -116,9 +116,15 @@ end
 
 --Spawn the bubble if the player is doing one of these actions
 addHook("PlayerThink", function(p)
-    if not bubbles.value then return end
-    if not StatusCheck(p) then return end
     local mo = p.mo
+
+    if not StatusCheck(p) then
+        p.chatactive = false
+        p.menuactive = false
+        return
+    end
+
+    if not bubbles.value then return end
     if not (mo and mo.valid) then return end
 
     if not (mo.bubble and mo.bubble.valid) then
