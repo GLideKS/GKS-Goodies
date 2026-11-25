@@ -23,6 +23,7 @@ local directory = { "/",
 
     {"Coop", -- Coop stuff
         "ring_sharing.lua",
+        "boss_hud.lua",
     },
 
     -- Visuals
