@@ -27,7 +27,7 @@ local old_chatactive = false
 local luasig = "iAmLua"..P_RandomFixed()
 addHook("NetVars", function(n) luasig = n($); end)
 
-local bubble_scale = FU * 3 / 2
+local bubble_scale = FU * 6 / 5
 
 COM_AddCommand("_menucheck", function(p, signature, status)
     if signature ~= luasig then return end
