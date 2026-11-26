@@ -3,7 +3,7 @@
 local rshare = CV_RegisterVar({ -- Global command
 	name = "ring_sharing",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR
 })
 

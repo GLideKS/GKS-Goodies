@@ -6,7 +6,7 @@
 local allowcharcolor = CV_RegisterVar({
 	name = "allowcharcolor",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
     flags = CV_NETVAR,
 })
 

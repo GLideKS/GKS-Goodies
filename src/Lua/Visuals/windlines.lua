@@ -32,7 +32,7 @@ end
 CV_RegisterVar({
 	name = "globalwindlines",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR|CV_CALL,
     func = notice
 })

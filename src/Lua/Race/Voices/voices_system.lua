@@ -17,7 +17,7 @@ local countdown_voice = {
 local voices = CV_RegisterVar({
 	name = "race_voices",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse
+	PossibleValue = CV_OnOff
 })
 
 local function GetVoice(skin, vctype)

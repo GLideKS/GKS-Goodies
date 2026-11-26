@@ -8,7 +8,7 @@ local GTR_RACE = GTR_RACE
 local racestartmusic = CV_RegisterVar({
 	name = "race_startmusic",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR|CV_CALL,
 	func = gd_notice
 })

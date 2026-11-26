@@ -3,7 +3,7 @@
 local tokencvar = CV_RegisterVar({
 	name = "token_alt",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
     flags = CV_NETVAR|CV_CALL,
     func = gd_notice
 })

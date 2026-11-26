@@ -4,7 +4,7 @@
 local goalring = CV_RegisterVar({
 	name = "goalring",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR|CV_CALL,
     func = gd_notice
 })
@@ -12,7 +12,7 @@ local goalring = CV_RegisterVar({
 local gr_clientsided = CV_RegisterVar({
 	name = "goalring_clientsided",
 	defaultvalue = 0,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR
 })
 

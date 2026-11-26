@@ -9,7 +9,7 @@ local bosses_list = {}
 local bosshud = CV_RegisterVar({
 	name = "bosshud",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse
+	PossibleValue = CV_OnOff
 })
 
 -- Adjust as many as you like!

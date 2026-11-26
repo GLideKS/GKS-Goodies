@@ -1,7 +1,7 @@
 local bubbles = CV_RegisterVar({
 	name = "bubble_status",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 })
 
 --All these stuff to sync chatactive and menu active per player.

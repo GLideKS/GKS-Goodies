@@ -5,28 +5,28 @@ local addHook = addHook
 local ffenh_toggle = CV_RegisterVar({
 	name = "friendlyfire_enhanced",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR,
 })
 
 local collide = CV_RegisterVar({
 	name = "ff_collision",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR,
 })
 
 local momentum = CV_RegisterVar({
 	name = "ff_momentum",
 	defaultvalue = 0,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR,
 })
 
 local onlyabilities = CV_RegisterVar({
 	name = "ff_onlyabilities",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR,
 })
 

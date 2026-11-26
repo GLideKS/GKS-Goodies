@@ -3,20 +3,20 @@ local range = RING_DIST * 2
 local global_nametags = CV_RegisterVar({ -- Server's choice to allow this feature or not.
 	name = "allownametags",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
     flags = CV_NETVAR,
 })
 
 local nametags = CV_RegisterVar({ -- User's choice
 	name = "nametags",
 	defaultvalue = 0, -- I doubt many people likes nametags so let's make it disabled by default
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 })
 
 local nametag_self = CV_RegisterVar({ -- Also make appear your nametag as well??
 	name = "nametags_self",
 	defaultvalue = 0,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 })
 
 local nametag_scale = CV_RegisterVar({

@@ -5,7 +5,7 @@ local addHook = addHook
 local nodmgracecd = CV_RegisterVar({
 	name = "race_nocountdowndamage",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR,
 })
 

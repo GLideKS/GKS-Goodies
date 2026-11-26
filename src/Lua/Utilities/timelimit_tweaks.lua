@@ -7,7 +7,7 @@ local addHook = addHook
 local timelimitmus = CV_RegisterVar({
 	name = "timelimit_music",
 	defaultvalue = 1,
-	PossibleValue = CV_TrueFalse,
+	PossibleValue = CV_OnOff,
 	flags = CV_NETVAR,
 })
 
