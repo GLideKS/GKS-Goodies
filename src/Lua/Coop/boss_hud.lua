@@ -1,4 +1,8 @@
-local established_bosses = {}
+
+if not established_bosses then
+    rawset(_G, "established_bosses", {})
+end
+
 local bosses_list = {}
 
 -- Toggle
