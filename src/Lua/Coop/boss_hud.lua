@@ -179,7 +179,7 @@ addHook("HUD", function(v)
 
         local boss_name = established_bosses[mo.type].name or "Boss"
         local boss_namecolor = established_bosses[mo.type].textcolor or textcolor["white"]
-        v.drawString(bar_x + (bar_w / 2), (bar_y - 7) + gap, boss_namecolor..boss_name.."\x80"..":", flags, "thin-center")
+        v.drawString(bar_x + (bar_w / 2), (bar_y - 7) + gap, boss_namecolor..boss_name..":", flags, "thin-center")
 
         -- Bar
 
