@@ -151,47 +151,57 @@ addHook("AddonLoaded", Establish_Bosses) -- In case we found more Bosses in the 
 -- [[ HUD ]] --
 
 local spacing = 3
+local flags = V_SNAPTORIGHT|V_SNAPTOTOP|V_HUDTRANS
+local normal_barcolor = 151
+local normal_bgbarcolor = 253
+local danger_barcolor = 35
+local danger_bgbarcolor = 47
 
-addHook("HUD", function(v)
-    if not G_CoopGametype() then return end -- Of course Co-op only.
-    if not bosshud.value then return end
+rawset(_G, "GD_DrawBossBar", function(v, mo, yoffset, name, tcolor)
+    -- Defaults
+    local boss_name = name or "Boss"
+    local boss_namecolor = tcolor or textcolor["white"]
 
     -- Bar
-    local flags = V_SNAPTORIGHT|V_SNAPTOTOP|V_HUDTRANS
     local bar_w = bhud_w.value
     local bar_h = bhud_h.value
     local bar_x = bhud_x.value - bar_w
-    local bar_y = bhud_y.value
+    local bar_y = bhud_y.value + (yoffset or 0)
     -- Fill
     local fill_w = bar_w - 8
     local fill_h = bar_h - 2
     local fill_x = bar_x + 4
     local fill_y = bar_y + 1
 
+    -- [[ Header ]] --
+    v.drawString(bar_x + (bar_w / 2), (bar_y - 7), boss_namecolor..boss_name..":", flags, "thin-center")
+
+    -- [[ Bar, accounting if mo is nil as well in case we don't need it. ]] --
+    local fill_width = mo and FixedMul(fill_w, FixedDiv(mo.health, mo.info.spawnhealth)) or fill_w
+    local color = mo and ((mo.health < mo.info.spawnhealth / 2) and danger_barcolor or normal_barcolor) or normal_barcolor
+    local bgcolor = mo and ((mo.health < mo.info.spawnhealth / 2) and danger_bgbarcolor or normal_bgbarcolor) or normal_bgbarcolor
+
+    v.drawFill(bar_x + 1, bar_y + 1, bar_w, bar_h, 28|flags)
+    v.drawFill(bar_x, bar_y, bar_w, bar_h, 3|flags)
+    v.drawFill(fill_x, fill_y, fill_w, fill_h, bgcolor|flags)
+    v.drawFill(fill_x + 1, fill_y + 1, fill_width - 2, fill_h - 2, color|flags)
+end)
+
+addHook("HUD", function(v)
+    if not G_CoopGametype() then return end -- Of course Co-op only.
+    if not bosshud.value then return end
+
+    local bar_h = bhud_h.value
+
     for i in pairs(bosses_list) do
         if i > 9 then continue end -- Could happen that there's more than 9 bosses. Don't draw more bars please...
         local gap = i > 1 and (((bar_h + 8) + spacing) * (i - 1)) or 0
         local mo = bosses_list[i]
-
-        if not mo.health then continue end
-
-        -- Header
-
         local boss_name = established_bosses[mo.type].name or "Boss"
         local boss_namecolor = established_bosses[mo.type].textcolor or textcolor["white"]
-        v.drawString(bar_x + (bar_w / 2), (bar_y - 7) + gap, boss_namecolor..boss_name..":", flags, "thin-center")
 
-        -- Bar
-
-        local fill_width = FixedMul(fill_w, FixedDiv(mo.health, mo.info.spawnhealth))
-        local color = ((mo.health < mo.info.spawnhealth / 2) and 35 or 151)
-        local bgcolor = ((mo.health < mo.info.spawnhealth / 2) and 47 or 253)
-
-        v.drawFill(bar_x + 1, gap + bar_y + 1, bar_w, bar_h, 28|flags)
-        v.drawFill(bar_x, gap + bar_y, bar_w, bar_h, 3|flags)
-
-        v.drawFill(fill_x, gap + fill_y, fill_w, fill_h, bgcolor|flags)
-        v.drawFill(fill_x + 1, gap + fill_y + 1, fill_width - 2, fill_h - 2, color|flags)
+        if not mo.health then continue end
+        GD_DrawBossBar(v, mo, gap, boss_name, boss_namecolor)
     end
 end)
 
