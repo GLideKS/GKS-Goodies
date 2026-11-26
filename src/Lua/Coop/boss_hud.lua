@@ -188,6 +188,7 @@ rawset(_G, "GD_DrawBossBar", function(v, mo, yoffset, name, tcolor)
 end)
 
 addHook("HUD", function(v)
+    if LugentMenu:IsActive() then return end
     if not G_CoopGametype() then return end -- Of course Co-op only.
     if not bosshud.value then return end
 
