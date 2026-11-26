@@ -29,20 +29,21 @@ local GDMenu = {
             {text = "Bubble Status", cvar = CV_FindVar("bubble_status"), y_pos = 42},
             {text = "Race voices", cvar = CV_FindVar("race_voices"), y_pos = 52},
             {text = "\x88".."Nametags...", action = function() MENU:GoToPage(2) end, y_pos = 62},
+            {text = "\x88".."Boss Health Bar...", action = function() MENU:GoToPage(5) end, y_pos = 72},
 
-            {header = true, text = "Server Options", y_pos = 84},
-            {text = "Goal Ring", cvar = CV_FindVar("goalring"), y_pos = 96},
-            {text = "Per-player Goal Ring", cvar = CV_FindVar("goalring_clientsided"), y_pos = 106},
-            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 116},
-            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 126},
-            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 136},
-            {text = "Token Alternative", cvar = CV_FindVar("token_alt"), y_pos = 146},
-            {text = "\x88".."Friendly Fire tweaks...", action = function() MENU:GoToPage(3) end,y_pos = 156},
-            {text = "\x88".."Race/Competition tweaks...", action = function() MENU:GoToPage(4) end, y_pos = 166},
+            {header = true, text = "Server Options", y_pos = 94},
+            {text = "Goal Ring", cvar = CV_FindVar("goalring"), y_pos = 106},
+            {text = "Per-player Goal Ring", cvar = CV_FindVar("goalring_clientsided"), y_pos = 116},
+            {text = "Allow Ring Sharing", cvar = CV_FindVar("ring_sharing"), y_pos = 126},
+            {text = "Allow Nametags", cvar = CV_FindVar("allownametags"), y_pos = 136},
+            {text = "Allow Windlines", cvar = CV_FindVar("globalwindlines"), y_pos = 146},
+            {text = "Token Alternative", cvar = CV_FindVar("token_alt"), y_pos = 156},
+            {text = "\x88".."Friendly Fire tweaks...", action = function() MENU:GoToPage(3) end,y_pos = 166},
+            {text = "\x88".."Race/Competition tweaks...", action = function() MENU:GoToPage(4) end, y_pos = 176},
         },
         on_open = function(menu, page)
             if not (isserver or IsPlayerAdmin(consoleplayer)) then
-                for i = 9, #page.entries do -- So let's assume the next entries are admin related stuff
+                for i = 10, #page.entries do -- So let's assume the next entries are admin related stuff
                     if page.entries[i].header then continue end
                     page.entries[i].disabled = true
                 end
@@ -109,7 +110,39 @@ local GDMenu = {
             {text = "Prevent damage on countdown", cvar = CV_FindVar("race_nocountdowndamage"), y_pos = 0},
             {text = "Race starting music", cvar = CV_FindVar("race_startmusic"), y_pos = 10}
         },
-    }
+    },
+    {
+        x_pos = 30,
+        y_pos = 30,
+        start_item = 1,
+        previous_page = 1,
+        previous_item = 8,
+        no_background = false,
+        scroll = false,
+        entries = {
+            {text = "Health Bar", cvar = CV_FindVar("bosshud"),  y_pos = 60},
+            {text = "Horizontal Pos.", cvar = CV_FindVar("bosshud_x"), action = function(menu, item) CV_Set(item.cvar, item.cvar.defaultvalue) end,  y_pos = 70},
+            {text = "Vertical Pos.", cvar = CV_FindVar("bosshud_y"), action = function(menu, item) CV_Set(item.cvar, item.cvar.defaultvalue) end,  y_pos = 80},
+            {text = "Width", cvar = CV_FindVar("bosshud_width"), action = function(menu, item) CV_Set(item.cvar, item.cvar.defaultvalue) end,  y_pos = 90},
+            {text = "Height", cvar = CV_FindVar("bosshud_height"), action = function(menu, item) CV_Set(item.cvar, item.cvar.defaultvalue) end, y_pos = 100},
+        },
+        thinker = function(menu, page)
+            local enabled = CV_FindVar("bosshud").value
+            for i = 2, #page.entries do
+                if page.entries[i].header then continue end
+                if enabled then
+                    page.entries[i].disabled = false
+                else
+                    page.entries[i].disabled = true
+                end
+            end
+        end,
+        drawer = function(v, page)
+            MENU:DrawStandard(v, page)
+            GD_DrawBossBar(v, nil, 0, "Example")
+            v.drawString(160, 150, "Press Enter to reset to Default.", V_ALLOWLOWERCASE|V_YELLOWMAP, "thin-center")
+        end
+    },
 }
 
 COM_AddCommand("gd_menu", function(player)
