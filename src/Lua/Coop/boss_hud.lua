@@ -207,10 +207,10 @@ addHook("HUD", function(v)
 end)
 
 -- Vanilla
-established_bosses[MT_EGGMOBILE].name = "Eggman"
-established_bosses[MT_EGGMOBILE2].name = "Eggman"
-established_bosses[MT_EGGMOBILE3].name = "Eggman"
-established_bosses[MT_EGGMOBILE4].name = "Eggman"
+established_bosses[MT_EGGMOBILE].name = "Egg Mobile"
+established_bosses[MT_EGGMOBILE2].name = "Egg Slimer"
+established_bosses[MT_EGGMOBILE3].name = "Sea Egg"
+established_bosses[MT_EGGMOBILE4].name = "Eggscalibur"
 established_bosses[MT_CYBRAKDEMON].name = "Brak Eggman"
 established_bosses[MT_BLACKEGGMAN].name = "Black Eggman" -- There's a difference...
 established_bosses[MT_FANG].name = "Fang"
